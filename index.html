@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>FlowChat · KI-Agenten für Kundenerlebnisse</title>
-  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80'%3E%3Crect width='100' height='60' x='10' y='10' fill='white' rx='16' ry='16' /%3E%3Cpolygon points='30,70 60,90 90,70' fill='white' /%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Crect width='70' height='44' x='15' y='8' fill='white' rx='12' ry='12' /%3E%3Cpolygon points='25,52 50,68 75,52' fill='white' /%3E%3C/svg%3E">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -41,29 +41,29 @@
     .flow-logo-wrapper {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
     }
     .flow-logo-icon {
-      width: 52px;
-      height: 40px;
+      width: 32px;
+      height: 24px;
       background: white;
-      border-radius: 16px;
+      border-radius: 8px;
       position: relative;
-      box-shadow: 0 0 20px rgba(255,255,255,0.6);
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
     }
     .flow-logo-icon::after {
       content: '';
       position: absolute;
-      bottom: -10px;
-      left: 16px;
-      width: 20px;
-      height: 16px;
+      bottom: -6px;
+      left: 10px;
+      width: 12px;
+      height: 10px;
       background: white;
       clip-path: polygon(0 0, 100% 0, 50% 100%);
-      filter: drop-shadow(0 0 8px rgba(255,255,255,0.6));
+      filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
     }
     .flow-logo-text {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       font-weight: 600;
       letter-spacing: -0.02em;
       background: linear-gradient(to right, #fff, #dddddd);
@@ -79,7 +79,7 @@
       color: #888;
       background: none;
       -webkit-text-fill-color: #888;
-      font-size: 1.6rem;
+      font-size: 1.4rem;
     }
     .flow-nav-right {
       display: flex;
@@ -168,7 +168,6 @@
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.1);
       box-shadow: 0 30px 50px -20px rgba(255,255,255,0.15);
-      backdrop-filter: blur(2px);
     }
     .flow-video-player {
       width: 100%;
@@ -176,7 +175,6 @@
       object-fit: cover;
       border: none;
       outline: none;
-      background: #0c0c0c;
     }
     .flow-footer {
       margin-top: 5rem;
@@ -193,32 +191,31 @@
     .flow-footer-logo {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       flex: 0 0 auto;
     }
     .flow-footer-logo-icon {
-      width: 48px;
-      height: 36px;
+      width: 28px;
+      height: 22px;
       background: white;
-      border-radius: 14px;
+      border-radius: 6px;
       position: relative;
-      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+      box-shadow: 0 0 10px rgba(255,255,255,0.4);
     }
     .flow-footer-logo-icon::after {
       content: '';
       position: absolute;
-      bottom: -9px;
-      left: 14px;
-      width: 18px;
-      height: 14px;
+      bottom: -5px;
+      left: 8px;
+      width: 10px;
+      height: 8px;
       background: white;
       clip-path: polygon(0 0, 100% 0, 50% 100%);
     }
     .flow-footer-logo-text {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       font-weight: 600;
       color: white;
-      letter-spacing: -0.02em;
     }
     .flow-footer-categories {
       display: flex;
@@ -231,16 +228,24 @@
       flex-direction: column;
       gap: 0.8rem;
     }
+    .flow-footer-category-title {
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.2rem;
+      text-shadow: 0 0 12px rgba(255,255,255,0.7);
+    }
     .flow-footer-col a {
       color: #aaa;
       text-decoration: none;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       transition: all 0.2s;
-      font-weight: 400;
     }
     .flow-footer-col a:hover {
       color: white;
-      text-shadow: 0 0 15px rgba(255,255,255,0.7);
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
     }
     .flow-footer-contact {
       flex: 0 0 auto;
@@ -308,8 +313,8 @@
       body { padding: 0 1rem; }
       .flow-headline { font-size: 2.5rem; }
       .flow-button { padding: 0.8rem 2rem; font-size: 1rem; }
-      .flow-logo-text { font-size: 1.3rem; }
-      .flow-logo-text span { font-size: 1.3rem; }
+      .flow-logo-text { font-size: 1.2rem; }
+      .flow-logo-text span { font-size: 1.2rem; }
       .flow-footer-categories {
         flex-direction: column;
         gap: 1.5rem;
@@ -326,9 +331,9 @@
       </div>
       <div class="flow-nav-right">
         <a href="https://www.flow-chat.de/" target="_self">Home</a>
-        <a href="#">Produkt</a>
-        <a href="#">Preise</a>
-        <a href="#">Security</a>
+        <a href="/guide">Erklärung</a>
+        <a href="/contact">Kontakt</a>
+        <a href="/pricing">Preise</a>
       </div>
     </div>
 
@@ -355,7 +360,7 @@
         </div>
       </div>
       <div class="flow-video-placeholder">
-        <video class="flow-video-player" controls playsinline preload="metadata">
+        <video class="flow-video-player" controls playsinline preload="metadata" poster="#t=15">
           <source src="https://www.dropbox.com/scl/fi/p3gh7gq9jfly832u1mmfj/FlowChat.mov?rlkey=schvo0ass350k4dvdlr9glslf&st=vyv2f765&dl=1" type="video/mp4">
         </video>
       </div>
@@ -369,18 +374,19 @@
         </div>
         <div class="flow-footer-categories">
           <div class="flow-footer-col">
-            <a href="#">Product</a>
-            <a href="#">Customer Service</a>
-            <a href="#">Pricing</a>
+            <div class="flow-footer-category-title">PRODUCT</div>
+            <a href="/pricing">Preise (pricing)</a>
+            <a href="/guide">Erklärung (guide)</a>
+            <a href="/changelog">Änderungen (changelog)</a>
           </div>
           <div class="flow-footer-col">
-            <a href="#">Security</a>
-            <a href="#">Datenschutz</a>
-            <a href="#">Impressum</a>
+            <div class="flow-footer-category-title">UNTERNEHMEN</div>
+            <a href="/about">Über uns (about)</a>
+            <a href="/contact">Kontakt Aufnehmen (contact)</a>
           </div>
         </div>
         <div class="flow-footer-contact">
-          <a href="/Contact" class="contact-btn">Kontakt</a>
+          <a href="/contact" class="contact-btn">Kontakt</a>
         </div>
       </div>
       <div class="flow-copyright">
