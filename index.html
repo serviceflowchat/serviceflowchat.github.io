@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>FlowChat · KI-Agenten für Kundenerlebnisse</title>
+  <!-- Favicon – Logo.png wird als Icon für den Tab verwendet -->
+  <link rel="icon" type="image/png" href="Logo.png">
+  <link rel="shortcut icon" href="Logo.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -30,7 +33,7 @@
       margin: 0 auto;
     }
 
-    /* Navigation – jetzt mit Logo (Logo.png aus lokalem Ordner) */
+    /* Navigation – mit Logo (Logo.png aus lokalem Ordner) */
     .flow-nav {
       display: flex;
       justify-content: space-between;
@@ -43,7 +46,7 @@
     .flow-logo-wrapper {
       display: flex;
       align-items: center;
-      gap: 12px; /* kleiner Abstand zwischen Logo und Schrift */
+      gap: 12px;
     }
 
     .flow-logo-img {
@@ -61,6 +64,14 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    /* Der Domain-Teil ".de" und "Flow-chat" – wir machen Flow-chat.de insgesamt kleiner */
+    .flow-logo-text {
+      font-size: 1.6rem; /* etwas kleiner als vorher (war 1.8rem) */
     }
 
     .flow-logo-text span {
@@ -68,6 +79,7 @@
       color: #888;
       background: none;
       -webkit-text-fill-color: #888;
+      font-size: 1.6rem; /* gleiche Größe wie Hauptteil */
     }
 
     .flow-nav-right {
@@ -95,7 +107,7 @@
       align-items: center;
     }
 
-    /* Überschrift – mit modernem white glow (wie Button vorher) */
+    /* Überschrift – mit modernem white glow */
     .flow-headline {
       font-size: clamp(2.8rem, 6vw, 5.2rem);
       font-weight: 600;
@@ -103,7 +115,7 @@
       letter-spacing: -0.02em;
       margin-bottom: 1.5rem;
       color: #ffffff;
-      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7); /* intensiver white glow */
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
     }
 
     .flow-headline span {
@@ -126,7 +138,7 @@
       position: relative;
     }
 
-    /* Button – ganz clean, kein farbiger Schatten mehr */
+    /* Button – mit neuem Text "Starte jetzt deinen ChatBot!" */
     .flow-button {
       background-color: #ffffff;
       color: #000000;
@@ -140,7 +152,7 @@
       justify-content: center;
       cursor: pointer;
       transition: 0.2s ease;
-      box-shadow: 0 0 25px rgba(255,255,255,0.3); /* leichter weißer Schein */
+      box-shadow: 0 0 25px rgba(255,255,255,0.3);
       border: 1px solid rgba(255,255,255,0.2);
       position: relative;
     }
@@ -150,8 +162,6 @@
       transform: scale(1.02);
       box-shadow: 0 0 35px rgba(255,255,255,0.6);
     }
-
-    /* Der farbige Schatten wurde komplett entfernt (kein ::after) */
 
     .flow-credit-note {
       display: flex;
@@ -236,18 +246,19 @@
       .flow-headline { font-size: 2.5rem; }
       .flow-button { padding: 0.8rem 2rem; font-size: 1rem; }
       .flow-logo-img { height: 32px; }
-      .flow-logo-text { font-size: 1.4rem; }
+      .flow-logo-text { font-size: 1.3rem; } /* auf mobil noch etwas kleiner */
+      .flow-logo-text span { font-size: 1.3rem; }
     }
   </style>
 </head>
 <body>
   <div class="flow-page">
-    <!-- Navigation mit Logo (Logo.png aus demselben Ordner) -->
+    <!-- Navigation mit Logo – Flow-chat.de jetzt kleiner (1.6rem) -->
     <div class="flow-nav">
       <div class="flow-logo-wrapper">
-        <!-- Logo.png wird aus dem lokalen Speicher geladen (gleicher Ordner wie index.html) -->
+        <!-- Logo.png als Bild (und gleichzeitig Favicon über link) -->
         <img src="Logo.png" alt="FlowChat Logo" class="flow-logo-img" onerror="this.style.display='none'">
-        <div class="flow-logo-text">FLOWCHAT<span>.de</span></div>
+        <div class="flow-logo-text">Flow-chat<span>.de</span></div>
       </div>
       <div class="flow-nav-right">
         <a href="#">Produkt</a>
@@ -256,7 +267,7 @@
       </div>
     </div>
 
-    <!-- Hauptbereich mit deutschen Texten + white glow auf der headline -->
+    <!-- Hauptbereich -->
     <div class="flow-hero">
       <!-- Linke Spalte -->
       <div>
@@ -272,8 +283,9 @@
         </p>
 
         <div class="flow-cta-group">
+          <!-- Button mit dem neuen Text: "Starte jetzt deinen ChatBot!" -->
           <button class="flow-button">
-            Deinen ChatBot erstellen
+            Starte jetzt deinen ChatBot!
           </button>
           <div class="flow-credit-note">
             <i class="far fa-credit-card"></i>
@@ -282,7 +294,7 @@
         </div>
       </div>
 
-      <!-- Rechte Spalte: gleich geblieben -->
+      <!-- Rechte Spalte: Videoplatzhalter -->
       <div class="flow-video-placeholder">
         <i class="fas fa-play-circle"></i>
         <p>Product demo · soon</p>
