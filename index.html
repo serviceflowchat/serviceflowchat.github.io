@@ -30,6 +30,7 @@
       margin: 0 auto;
     }
 
+    /* Navigation – jetzt mit Logo (Logo.png aus lokalem Ordner) */
     .flow-nav {
       display: flex;
       justify-content: space-between;
@@ -39,7 +40,20 @@
       margin-bottom: 2rem;
     }
 
-    .flow-logo {
+    .flow-logo-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px; /* kleiner Abstand zwischen Logo und Schrift */
+    }
+
+    .flow-logo-img {
+      height: 40px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.3));
+    }
+
+    .flow-logo-text {
       font-size: 1.8rem;
       font-weight: 600;
       letter-spacing: -0.02em;
@@ -49,7 +63,7 @@
       background-clip: text;
     }
 
-    .flow-logo span {
+    .flow-logo-text span {
       font-weight: 300;
       color: #888;
       background: none;
@@ -81,7 +95,7 @@
       align-items: center;
     }
 
-    /* Überschrift – KEIN glow mehr, nur reines weiß */
+    /* Überschrift – mit modernem white glow (wie Button vorher) */
     .flow-headline {
       font-size: clamp(2.8rem, 6vw, 5.2rem);
       font-weight: 600;
@@ -89,7 +103,7 @@
       letter-spacing: -0.02em;
       margin-bottom: 1.5rem;
       color: #ffffff;
-      /* text-shadow komplett entfernt */
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7); /* intensiver white glow */
     }
 
     .flow-headline span {
@@ -104,7 +118,6 @@
       font-weight: 350;
     }
 
-    /* Button-Gruppe: enthält button + credit + farbigen schatten oben */
     .flow-cta-group {
       display: flex;
       align-items: center;
@@ -113,13 +126,13 @@
       position: relative;
     }
 
-    /* Der Button selbst: quadratischer, aber rund (ca. 12px radius), ohne pfeil */
+    /* Button – ganz clean, kein farbiger Schatten mehr */
     .flow-button {
       background-color: #ffffff;
       color: #000000;
       border: none;
       padding: 1rem 2.8rem;
-      border-radius: 12px;         /* bisschen quadratisch, aber rund */
+      border-radius: 12px;
       font-size: 1.2rem;
       font-weight: 600;
       display: inline-flex;
@@ -127,33 +140,18 @@
       justify-content: center;
       cursor: pointer;
       transition: 0.2s ease;
-      box-shadow: 0 0 25px rgba(255,255,255,0.3);
+      box-shadow: 0 0 25px rgba(255,255,255,0.3); /* leichter weißer Schein */
       border: 1px solid rgba(255,255,255,0.2);
       position: relative;
-      z-index: 2;
     }
 
     .flow-button:hover {
       background-color: #f0f0f0;
       transform: scale(1.02);
-      box-shadow: 0 0 35px rgba(255,255,255,0.5);
+      box-shadow: 0 0 35px rgba(255,255,255,0.6);
     }
 
-    /* Neuer farbiger Schatten NUR oberhalb des Buttons */
-    .flow-button::after {
-      content: '';
-      position: absolute;
-      top: -20px;          /* schwebt oberhalb */
-      left: 10%;
-      width: 80%;
-      height: 30px;
-      background: linear-gradient(180deg, #ff6a00 0%, #ff00a6 80%);
-      filter: blur(20px);
-      border-radius: 50%;
-      opacity: 0.8;
-      z-index: -1;
-      pointer-events: none;
-    }
+    /* Der farbige Schatten wurde komplett entfernt (kein ::after) */
 
     .flow-credit-note {
       display: flex;
@@ -237,14 +235,20 @@
       body { padding: 1rem; }
       .flow-headline { font-size: 2.5rem; }
       .flow-button { padding: 0.8rem 2rem; font-size: 1rem; }
+      .flow-logo-img { height: 32px; }
+      .flow-logo-text { font-size: 1.4rem; }
     }
   </style>
 </head>
 <body>
   <div class="flow-page">
-    <!-- Navigation unverändert -->
+    <!-- Navigation mit Logo (Logo.png aus demselben Ordner) -->
     <div class="flow-nav">
-      <div class="flow-logo">FLOWCHAT<span>.de</span></div>
+      <div class="flow-logo-wrapper">
+        <!-- Logo.png wird aus dem lokalen Speicher geladen (gleicher Ordner wie index.html) -->
+        <img src="Logo.png" alt="FlowChat Logo" class="flow-logo-img" onerror="this.style.display='none'">
+        <div class="flow-logo-text">FLOWCHAT<span>.de</span></div>
+      </div>
       <div class="flow-nav-right">
         <a href="#">Produkt</a>
         <a href="#">Preise</a>
@@ -252,17 +256,15 @@
       </div>
     </div>
 
-    <!-- Hauptbereich mit angepassten Texten -->
+    <!-- Hauptbereich mit deutschen Texten + white glow auf der headline -->
     <div class="flow-hero">
       <!-- Linke Spalte -->
       <div>
-        <!-- Überschrift: glow entfernt, deutscher Text -->
         <h1 class="flow-headline">
           <span>KI-Agenten für</span>
           <span>einzigartige</span>
           <span>Kundenerlebnisse</span>
         </h1>
-        <!-- Untertext deutsch -->
         <p class="flow-subheadline">
           FlowChat ist die umfassende Plattform zum Erstellen<br>
           und Bereitstellen von KI-Supportagenten<br>
@@ -270,11 +272,9 @@
         </p>
 
         <div class="flow-cta-group">
-          <!-- Button ohne Pfeil, deutsch, mit farbigem Schatten (::after) -->
           <button class="flow-button">
             Deinen ChatBot erstellen
           </button>
-          <!-- Credit Hinweis deutsch -->
           <div class="flow-credit-note">
             <i class="far fa-credit-card"></i>
             <span>Keine Kreditkarte erforderlich</span>
@@ -289,7 +289,6 @@
       </div>
     </div>
 
-    <!-- Footer leicht angepasst -->
     <div class="flow-footer-note">
       Flow‑chat.de – KI‑Chatbots für professionelle Kundeninteraktion
     </div>
