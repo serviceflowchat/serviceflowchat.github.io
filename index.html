@@ -12,6 +12,7 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
       background-color: #000000;
       font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -22,6 +23,7 @@
       flex-direction: column;
       padding: 0 2rem;
     }
+
     .flow-page {
       max-width: 1400px;
       width: 100%;
@@ -30,6 +32,7 @@
       display: flex;
       flex-direction: column;
     }
+
     .flow-nav {
       display: flex;
       justify-content: space-between;
@@ -39,11 +42,13 @@
       margin-bottom: 2rem;
       position: relative;
     }
+
     .flow-logo-wrapper {
       display: flex;
       align-items: center;
       gap: 8px;
     }
+
     .flow-logo-icon {
       width: 32px;
       height: 24px;
@@ -52,6 +57,7 @@
       position: relative;
       box-shadow: 0 0 15px rgba(255,255,255,0.5);
     }
+
     .flow-logo-icon::after {
       content: '';
       position: absolute;
@@ -63,6 +69,7 @@
       clip-path: polygon(0 0, 100% 0, 50% 100%);
       filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
     }
+
     .flow-logo-text {
       font-size: 1.4rem;
       font-weight: 600;
@@ -75,6 +82,7 @@
       align-items: center;
       gap: 2px;
     }
+
     .flow-logo-text span {
       font-weight: 300;
       color: #888;
@@ -82,11 +90,13 @@
       -webkit-text-fill-color: #888;
       font-size: 1.4rem;
     }
+
     .flow-nav-right {
       display: flex;
       gap: 2rem;
       align-items: center;
     }
+
     .flow-nav-right a {
       color: #eee;
       text-decoration: none;
@@ -94,9 +104,11 @@
       transition: border-color 0.2s;
       font-size: 0.95rem;
     }
+
     .flow-nav-right a:hover {
       border-color: #fff;
     }
+
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -105,45 +117,153 @@
       font-size: 1.8rem;
       cursor: pointer;
       z-index: 1001;
+      transition: all 0.3s ease;
     }
+
+    .mobile-menu-btn:hover {
+      color: var(--accent-color);
+      text-shadow: 0 0 15px rgba(255,255,255,0.7);
+    }
+
     .mobile-menu-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.95);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 9998;
       display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
+
     .mobile-menu-overlay.active {
-      display: flex;
+      display: block;
+      opacity: 1;
     }
-    .mobile-menu-overlay a {
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: rgba(10, 10, 10, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 9999;
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu-header {
+      padding: 25px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-menu-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-menu-logo-icon {
+      width: 32px;
+      height: 24px;
+      background: white;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    .mobile-menu-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      width: 12px;
+      height: 10px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .mobile-menu-logo-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .mobile-close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 10px 15px;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
+
+    .mobile-menu-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mobile-menu-link {
+      display: flex;
+      align-items: center;
+      padding: 18px 20px;
       color: white;
       text-decoration: none;
-      font-size: 1.8rem;
-      font-weight: 500;
-      transition: all 0.2s;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      border: 1px solid transparent;
     }
-    .mobile-menu-overlay a:hover {
-      text-shadow: 0 0 20px rgba(255,255,255,0.7);
+
+    .mobile-menu-link i {
+      margin-right: 15px;
+      width: 24px;
+      text-align: center;
+      font-size: 1.2rem;
     }
-    .close-menu-btn {
-      position: absolute;
-      top: 2rem;
-      right: 2rem;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2.5rem;
-      cursor: pointer;
+
+    .mobile-menu-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
     }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+
     .flow-hero {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -151,6 +271,7 @@
       align-items: center;
       margin-bottom: 4rem;
     }
+
     .flow-headline {
       font-size: clamp(2.8rem, 6vw, 5.2rem);
       font-weight: 600;
@@ -160,9 +281,11 @@
       color: #ffffff;
       text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
     }
+
     .flow-headline span {
       display: block;
     }
+
     .flow-subheadline {
       font-size: 1.2rem;
       color: #bbbbbb;
@@ -170,12 +293,14 @@
       margin-bottom: 2.5rem;
       font-weight: 350;
     }
+
     .flow-cta-group {
       display: flex;
       align-items: center;
       gap: 2rem;
       flex-wrap: wrap;
     }
+
     .flow-button {
       background-color: #ffffff;
       color: #000000;
@@ -194,11 +319,13 @@
       text-decoration: none;
       color: #000000;
     }
+
     .flow-button:hover {
       background-color: #f0f0f0;
       transform: scale(1.02);
       box-shadow: 0 0 35px rgba(255,255,255,0.6);
     }
+
     .flow-credit-note {
       display: flex;
       align-items: center;
@@ -206,10 +333,12 @@
       color: #888;
       font-size: 0.9rem;
     }
+
     .flow-credit-note i {
       font-size: 1rem;
       color: #aaa;
     }
+
     .flow-video-placeholder {
       width: 100%;
       aspect-ratio: 16/9;
@@ -219,6 +348,7 @@
       border: 1px solid rgba(255,255,255,0.1);
       box-shadow: 0 30px 50px -20px rgba(255,255,255,0.15);
     }
+
     .flow-video-player {
       width: 100%;
       height: 100%;
@@ -227,9 +357,11 @@
       outline: none;
       background: #0c0c0c;
     }
+
     .flow-feature-section {
       margin: 5rem 0 3rem 0;
     }
+
     .flow-feature-header {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -237,6 +369,7 @@
       margin-bottom: 3rem;
       align-items: start;
     }
+
     .flow-feature-title {
       font-size: 2.2rem;
       font-weight: 600;
@@ -244,22 +377,26 @@
       text-shadow: 0 0 25px rgba(255,255,255,0.6);
       line-height: 1.2;
     }
+
     .flow-feature-description {
       color: #aaa;
       font-size: 1rem;
       line-height: 1.6;
     }
+
     .flow-showcase {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
       margin: 2rem 0;
     }
+
     .flow-showcase-item {
       display: flex;
       flex-direction: column;
       gap: 1rem;
     }
+
     .flow-showcase-image {
       width: 100%;
       aspect-ratio: 784/800;
@@ -269,12 +406,14 @@
       border: 1px solid rgba(255,255,255,0.1);
       box-shadow: 0 20px 35px -15px rgba(255,255,255,0.15);
     }
+
     .flow-showcase-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
+
     .flow-showcase-item h3 {
       font-size: 1.4rem;
       font-weight: 600;
@@ -282,16 +421,19 @@
       text-shadow: 0 0 15px rgba(255,255,255,0.5);
       margin-top: 0.5rem;
     }
+
     .flow-showcase-item p {
       color: #aaa;
       font-size: 0.9rem;
       line-height: 1.5;
     }
+
     .flow-footer {
       margin-top: 5rem;
       border-top: 1px solid rgba(255,255,255,0.05);
       padding: 3rem 0 2rem 0;
     }
+
     .flow-footer-content {
       display: flex;
       flex-wrap: wrap;
@@ -299,12 +441,14 @@
       align-items: center;
       gap: 2rem;
     }
+
     .flow-footer-logo {
       display: flex;
       align-items: center;
       gap: 8px;
       flex: 0 0 auto;
     }
+
     .flow-footer-logo-icon {
       width: 28px;
       height: 22px;
@@ -313,6 +457,7 @@
       position: relative;
       box-shadow: 0 0 10px rgba(255,255,255,0.4);
     }
+
     .flow-footer-logo-icon::after {
       content: '';
       position: absolute;
@@ -323,22 +468,26 @@
       background: white;
       clip-path: polygon(0 0, 100% 0, 50% 100%);
     }
+
     .flow-footer-logo-text {
       font-size: 1.1rem;
       font-weight: 600;
       color: white;
     }
+
     .flow-footer-categories {
       display: flex;
       gap: 3rem;
       flex-wrap: wrap;
       justify-content: center;
     }
+
     .flow-footer-col {
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
     }
+
     .flow-footer-category-title {
       color: white;
       font-size: 0.95rem;
@@ -348,19 +497,23 @@
       margin-bottom: 0.2rem;
       text-shadow: 0 0 12px rgba(255,255,255,0.7);
     }
+
     .flow-footer-col a {
       color: #aaa;
       text-decoration: none;
       font-size: 0.9rem;
       transition: all 0.2s;
     }
+
     .flow-footer-col a:hover {
       color: white;
       text-shadow: 0 0 10px rgba(255,255,255,0.5);
     }
+
     .flow-footer-contact {
       flex: 0 0 auto;
     }
+
     .flow-footer-contact .contact-btn {
       display: inline-block;
       background: transparent;
@@ -373,11 +526,13 @@
       transition: all 0.2s;
       white-space: nowrap;
     }
+
     .flow-footer-contact .contact-btn:hover {
       background: rgba(255,255,255,0.1);
       border-color: white;
       box-shadow: 0 0 20px rgba(255,255,255,0.3);
     }
+
     .flow-copyright {
       margin-top: 3rem;
       padding-top: 1.5rem;
@@ -386,6 +541,7 @@
       color: #555;
       font-size: 0.8rem;
     }
+
     @media (max-width: 900px) {
       .flow-nav-right {
         display: none;
@@ -431,6 +587,7 @@
         text-align: center;
       }
     }
+
     @media (max-width: 500px) {
       body { padding: 0 1rem; }
       .flow-headline { font-size: 2.5rem; }
@@ -445,12 +602,32 @@
   </style>
 </head>
 <body>
-  <div class="mobile-menu-overlay" id="mobileMenu">
-    <button class="close-menu-btn" id="closeMenuBtn"><i class="fas fa-times"></i></button>
-    <a href="https://www.flow-chat.de/">Home</a>
-    <a href="/guide">Erklärung</a>
-    <a href="/contact">Kontakt</a>
-    <a href="/pricing">Preise</a>
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="mobile-menu-logo">
+        <div class="mobile-menu-logo-icon"></div>
+        <span class="mobile-menu-logo-text">FlowChat</span>
+      </div>
+      <button class="mobile-close-btn" id="mobileCloseBtn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="mobile-menu-content">
+      <a href="https://www.flow-chat.de/" class="mobile-menu-link" data-page="home">
+        <i class="fas fa-home"></i> Home
+      </a>
+      <a href="/guide" class="mobile-menu-link" data-page="guide">
+        <i class="fas fa-compass"></i> Erklärung
+      </a>
+      <a href="/contact" class="mobile-menu-link" data-page="contact">
+        <i class="fas fa-envelope"></i> Kontakt
+      </a>
+      <a href="/pricing" class="mobile-menu-link" data-page="pricing">
+        <i class="fas fa-euro-sign"></i> Preise
+      </a>
+    </div>
   </div>
 
   <div class="flow-page">
@@ -465,7 +642,9 @@
         <a href="/contact">Kontakt</a>
         <a href="/pricing">Preise</a>
       </div>
-      <button class="mobile-menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
 
     <div class="flow-hero">
@@ -559,25 +738,31 @@
   </div>
 
   <script>
-    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
-    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
 
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
+    function toggleMobileMenu() {
+      mobileMenu.classList.toggle('active');
+      mobileMenuOverlay.classList.toggle('active');
+      document.body.classList.toggle('no-scroll');
+    }
 
-    closeMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.remove('active');
-      document.body.style.overflow = '';
-    });
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+    mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
 
-    mobileMenu.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') {
-        mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
-      }
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        toggleMobileMenu();
+        setTimeout(() => {
+          window.location.href = href;
+        }, 300);
+      });
     });
   </script>
 </body>
