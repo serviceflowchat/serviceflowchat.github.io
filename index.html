@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>FlowChat · KI Agents für Kundenerlebnisse</title>
-  <!-- Font Awesome (Icons) & einfache System-UI – clean & professionell -->
+  <title>FlowChat · KI-Agenten für Kundenerlebnisse</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -25,14 +24,12 @@
       padding: 2rem;
     }
 
-    /* Hauptcontainer – sauberes Raster für Text und Video */
     .flow-page {
       max-width: 1400px;
       width: 100%;
       margin: 0 auto;
     }
 
-    /* Navigationsleiste – sehr reduziert, nur Domain + Andeutung */
     .flow-nav {
       display: flex;
       justify-content: space-between;
@@ -77,7 +74,6 @@
       border-color: #fff;
     }
 
-    /* Zweispalten-Layout: links Text + Button, rechts Videoplatzhalter */
     .flow-hero {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -85,14 +81,15 @@
       align-items: center;
     }
 
-    /* Linke Spalte */
+    /* Überschrift – KEIN glow mehr, nur reines weiß */
     .flow-headline {
       font-size: clamp(2.8rem, 6vw, 5.2rem);
       font-weight: 600;
       line-height: 1.1;
       letter-spacing: -0.02em;
       margin-bottom: 1.5rem;
-      text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+      color: #ffffff;
+      /* text-shadow komplett entfernt */
     }
 
     .flow-headline span {
@@ -107,40 +104,55 @@
       font-weight: 350;
     }
 
-    /* Button-Gruppe */
+    /* Button-Gruppe: enthält button + credit + farbigen schatten oben */
     .flow-cta-group {
       display: flex;
       align-items: center;
       gap: 2rem;
       flex-wrap: wrap;
+      position: relative;
     }
 
+    /* Der Button selbst: quadratischer, aber rund (ca. 12px radius), ohne pfeil */
     .flow-button {
       background-color: #ffffff;
       color: #000000;
       border: none;
-      padding: 1rem 2.5rem;
-      border-radius: 60px;
-      font-size: 1.1rem;
+      padding: 1rem 2.8rem;
+      border-radius: 12px;         /* bisschen quadratisch, aber rund */
+      font-size: 1.2rem;
       font-weight: 600;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      justify-content: center;
       cursor: pointer;
       transition: 0.2s ease;
       box-shadow: 0 0 25px rgba(255,255,255,0.3);
       border: 1px solid rgba(255,255,255,0.2);
+      position: relative;
+      z-index: 2;
     }
 
     .flow-button:hover {
       background-color: #f0f0f0;
       transform: scale(1.02);
-      box-shadow: 0 0 40px rgba(255,255,255,0.5);
+      box-shadow: 0 0 35px rgba(255,255,255,0.5);
     }
 
-    .flow-button i {
-      font-size: 1rem;
-      color: #222;
+    /* Neuer farbiger Schatten NUR oberhalb des Buttons */
+    .flow-button::after {
+      content: '';
+      position: absolute;
+      top: -20px;          /* schwebt oberhalb */
+      left: 10%;
+      width: 80%;
+      height: 30px;
+      background: linear-gradient(180deg, #ff6a00 0%, #ff00a6 80%);
+      filter: blur(20px);
+      border-radius: 50%;
+      opacity: 0.8;
+      z-index: -1;
+      pointer-events: none;
     }
 
     .flow-credit-note {
@@ -156,7 +168,7 @@
       color: #aaa;
     }
 
-    /* Rechte Spalte – Videoplatzhalter (später echte Einbettung) */
+    /* Rechte Spalte – Videoplatzhalter */
     .flow-video-placeholder {
       width: 100%;
       aspect-ratio: 16/9;
@@ -193,7 +205,6 @@
       border: 1px solid #222;
     }
 
-    /* winzige Fußnote / rechtlicher Hinweis – dezent */
     .flow-footer-note {
       margin-top: 5rem;
       text-align: center;
@@ -203,7 +214,6 @@
       padding-top: 2rem;
     }
 
-    /* komplett responsive */
     @media (max-width: 900px) {
       .flow-hero {
         grid-template-columns: 1fr;
@@ -216,7 +226,7 @@
         max-width: 100%;
       }
       .flow-nav-right {
-        display: none;  /* auf mobil erstmal unsichtbar, bleibt clean */
+        display: none;
       }
       .flow-nav {
         padding: 1rem 0 2rem 0;
@@ -226,15 +236,13 @@
     @media (max-width: 500px) {
       body { padding: 1rem; }
       .flow-headline { font-size: 2.5rem; }
-      .flow-button { padding: 0.8rem 1.8rem; font-size: 1rem; }
+      .flow-button { padding: 0.8rem 2rem; font-size: 1rem; }
     }
-
-    /* Trustpilot / altes Zeug komplett weg – alles neu */
   </style>
 </head>
 <body>
   <div class="flow-page">
-    <!-- minimale Navigation – nur Marke und dezente Links (wirkt professionell) -->
+    <!-- Navigation unverändert -->
     <div class="flow-nav">
       <div class="flow-logo">FLOWCHAT<span>.de</span></div>
       <div class="flow-nav-right">
@@ -244,45 +252,47 @@
       </div>
     </div>
 
-    <!-- Hauptbereich – genau nach Vorgabe: links Text + Button, rechts Video-Platzhalter -->
+    <!-- Hauptbereich mit angepassten Texten -->
     <div class="flow-hero">
       <!-- Linke Spalte -->
       <div>
+        <!-- Überschrift: glow entfernt, deutscher Text -->
         <h1 class="flow-headline">
-          <span>gute dekcraft hat</span>
-          <span>einfach AI agents for</span>
-          <span>magical customer</span>
-          <span>experiences</span>
+          <span>KI-Agenten für</span>
+          <span>einzigartige</span>
+          <span>Kundenerlebnisse</span>
         </h1>
+        <!-- Untertext deutsch -->
         <p class="flow-subheadline">
-          FlowChat is the complete platform for building and<br>
-          deploying AI support agents for your business.
+          FlowChat ist die umfassende Plattform zum Erstellen<br>
+          und Bereitstellen von KI-Supportagenten<br>
+          für Ihr Unternehmen.
         </p>
 
         <div class="flow-cta-group">
+          <!-- Button ohne Pfeil, deutsch, mit farbigem Schatten (::after) -->
           <button class="flow-button">
-            Build your agent NOW <i class="fas fa-arrow-right"></i>
+            Deinen ChatBot erstellen
           </button>
+          <!-- Credit Hinweis deutsch -->
           <div class="flow-credit-note">
             <i class="far fa-credit-card"></i>
-            <span>No credit card required</span>
+            <span>Keine Kreditkarte erforderlich</span>
           </div>
         </div>
       </div>
 
-      <!-- Rechte Spalte: rechteckiger Video-Container (später Video) -->
+      <!-- Rechte Spalte: gleich geblieben -->
       <div class="flow-video-placeholder">
         <i class="fas fa-play-circle"></i>
         <p>Product demo · soon</p>
       </div>
     </div>
 
-    <!-- ganz dezenter Footer – nur um Domain zu zeigen -->
+    <!-- Footer leicht angepasst -->
     <div class="flow-footer-note">
       Flow‑chat.de – KI‑Chatbots für professionelle Kundeninteraktion
     </div>
   </div>
-
-  <!-- Keine Kommentare, kein altes JavaScript – nur pure Startseite -->
 </body>
 </html>
