@@ -37,6 +37,7 @@
       padding: 1.5rem 0 3rem 0;
       border-bottom: 1px solid rgba(255,255,255,0.05);
       margin-bottom: 2rem;
+      position: relative;
     }
     .flow-logo-wrapper {
       display: flex;
@@ -95,6 +96,53 @@
     }
     .flow-nav-right a:hover {
       border-color: #fff;
+    }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+    }
+    .mobile-menu-overlay.active {
+      display: flex;
+    }
+    .mobile-menu-overlay a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.8rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .mobile-menu-overlay a:hover {
+      text-shadow: 0 0 20px rgba(255,255,255,0.7);
+    }
+    .close-menu-btn {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2.5rem;
+      cursor: pointer;
     }
     .flow-hero {
       display: grid;
@@ -170,7 +218,6 @@
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.1);
       box-shadow: 0 30px 50px -20px rgba(255,255,255,0.15);
-      position: relative;
     }
     .flow-video-player {
       width: 100%;
@@ -340,6 +387,12 @@
       font-size: 0.8rem;
     }
     @media (max-width: 900px) {
+      .flow-nav-right {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
       .flow-hero {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -349,9 +402,6 @@
       }
       .flow-subheadline {
         max-width: 100%;
-      }
-      .flow-nav-right {
-        display: none;
       }
       .flow-nav {
         padding: 1rem 0 2rem 0;
@@ -395,6 +445,14 @@
   </style>
 </head>
 <body>
+  <div class="mobile-menu-overlay" id="mobileMenu">
+    <button class="close-menu-btn" id="closeMenuBtn"><i class="fas fa-times"></i></button>
+    <a href="https://www.flow-chat.de/">Home</a>
+    <a href="/guide">Erklärung</a>
+    <a href="/contact">Kontakt</a>
+    <a href="/pricing">Preise</a>
+  </div>
+
   <div class="flow-page">
     <div class="flow-nav">
       <div class="flow-logo-wrapper">
@@ -407,6 +465,7 @@
         <a href="/contact">Kontakt</a>
         <a href="/pricing">Preise</a>
       </div>
+      <button class="mobile-menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
     </div>
 
     <div class="flow-hero">
@@ -432,8 +491,9 @@
         </div>
       </div>
       <div class="flow-video-placeholder">
-        <video class="flow-video-player" controls playsinline preload="metadata" poster="Showcase.png">
-          <source src="https://www.dropbox.com/scl/fi/p3gh7gq9jfly832u1mmfj/FlowChat.mov?rlkey=schvo0ass350k4dvdlr9glslf&st=vyv2f765&dl=1" type="video/mp4">
+        <video class="flow-video-player" controls playsinline preload="metadata" poster="Showcase2.png">
+          <source src="Showcase.mov" type="video/mp4">
+          <source src="Showcase.mov" type="video/quicktime">
         </video>
       </div>
     </div>
@@ -497,5 +557,28 @@
       </div>
     </div>
   </div>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
 </body>
 </html>
