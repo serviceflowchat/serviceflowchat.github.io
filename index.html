@@ -36,7 +36,7 @@
     .fade-up {
       opacity: 0;
       transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
 
     .fade-up.visible {
@@ -470,7 +470,7 @@
 
     .flow-feature-boxes {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
       margin: 3rem 0 5rem 0;
     }
@@ -480,12 +480,15 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 2rem;
       padding: 2.5rem 2rem;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      cursor: default;
     }
 
     .flow-feature-box:hover {
-      border-color: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+      transform: scale(1.02);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.25);
+      background: rgba(20, 20, 20, 0.8);
     }
 
     .flow-box-header {
@@ -521,73 +524,6 @@
       line-height: 1.6;
     }
 
-    .flow-custom-section {
-      display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      gap: 4rem;
-      align-items: center;
-      margin: 6rem 0;
-    }
-
-    .flow-custom-left {
-      margin-top: -2rem;
-    }
-
-    .flow-custom-left h2 {
-      font-size: 3.5rem;
-      font-weight: 600;
-      color: white;
-      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
-      margin-bottom: 1.5rem;
-      line-height: 1.1;
-    }
-
-    .flow-custom-left p {
-      color: #aaa;
-      font-size: 1.2rem;
-      line-height: 1.6;
-      max-width: 90%;
-    }
-
-    .flow-custom-right {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-
-    .flow-custom-image {
-      aspect-ratio: 402/620;
-      border-radius: 2rem;
-      overflow: hidden;
-      transition: transform 0.3s ease;
-      width: 100%;
-      position: relative;
-    }
-
-    .flow-custom-image::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      box-shadow: inset 0 0 30px 10px rgba(0, 0, 0, 0.7);
-      border-radius: 2rem;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .flow-custom-image:hover {
-      transform: scale(1.02);
-    }
-
-    .flow-custom-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    
     .flow-footer {
       margin-top: 5rem;
       border-top: 1px solid rgba(255,255,255,0.05);
@@ -733,20 +669,6 @@
       .flow-feature-boxes {
         grid-template-columns: 1fr;
       }
-      .flow-custom-section {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-      .flow-custom-left {
-        margin-top: 0;
-      }
-      .flow-custom-left p {
-        max-width: 100%;
-      }
-      .flow-custom-right {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
-      }
       .flow-footer-content {
         flex-direction: column;
         align-items: flex-start;
@@ -771,18 +693,8 @@
       .flow-button { padding: 0.8rem 2rem; font-size: 1rem; }
       .flow-logo-text { font-size: 1.2rem; }
       .flow-logo-text span { font-size: 1.2rem; }
-      .flow-custom-right {
-        grid-template-columns: 1fr;
-      }
-      .flow-footer-categories {
-        flex-direction: column;
-        gap: 1.5rem;
-      }
       .flow-box-title {
         font-size: 1.6rem;
-      }
-      .flow-custom-left h2 {
-        font-size: 2.5rem;
       }
     }
   </style>
@@ -827,17 +739,17 @@
 
     <div class="flow-hero">
       <div>
-        <h1 class="flow-headline fade-up visible" id="heroTitle">
+        <h1 class="flow-headline fade-up" id="heroTitle">
           <span>KI-Agenten für</span>
           <span>einzigartige</span>
           <span>Kundenerlebnisse</span>
         </h1>
-        <p class="flow-subheadline fade-up delay-1 visible" id="heroText">
+        <p class="flow-subheadline fade-up delay-1" id="heroText">
           FlowChat ist die umfassende Plattform zum Erstellen<br>
           und Bereitstellen von KI-Supportagenten<br>
           für Ihr Unternehmen.
         </p>
-        <div class="flow-cta-group fade-up delay-2 visible" id="heroCta">
+        <div class="flow-cta-group fade-up delay-2" id="heroCta">
           <a href="/pricing" class="flow-button">
             Meeting vereinbaren
           </a>
@@ -847,8 +759,8 @@
           </div>
         </div>
       </div>
-      <div class="flow-video-placeholder fade-up delay-3 visible" id="heroVideo">
-        <video class="flow-video-player" controls playsinline preload="metadata" poster="Showcase2.png">
+      <div class="flow-video-placeholder fade-up delay-3" id="heroVideo">
+        <video class="flow-video-player" controls playsinline preload="metadata">
           <source src="Showcase.mov" type="video/mp4">
           <source src="Showcase.mov" type="video/quicktime">
         </video>
@@ -897,7 +809,20 @@
             APIs, Client-Bibliotheken und Komponenten, um Support tief in Ihr Produkt zu integrieren.
           </div>
         </div>
-        <div class="flow-feature-box fade-up delay-1" id="box2">
+        
+        <div class="flow-feature-box fade-up delay-1" id="boxCustomChat">
+          <div class="flow-box-header">
+            <div class="flow-box-icon">
+              <i class="fas fa-comment-dots"></i>
+            </div>
+            <div class="flow-box-title">Custom ChatBox</div>
+          </div>
+          <div class="flow-box-text">
+            Volles Chat-Interface nach Ihren Wünschen – wir passen jede Farbe, jedes Design, jede Antwort, jeden Link, alle Vorschläge und noch vieles mehr an.
+          </div>
+        </div>
+
+        <div class="flow-feature-box fade-up delay-2" id="box2">
           <div class="flow-box-header">
             <div class="flow-box-icon">
               <i class="fas fa-paint-brush"></i>
@@ -906,24 +831,6 @@
           </div>
           <div class="flow-box-text">
             Volle Anpassung – Gestalten Sie Ihre Chatbox nach Ihren Wünschen: von Button-Designs, Texten, Verhalten und Farben über Chatverläufe, Tipps, Logos, Bot-Namen bis hin zu individuellem Training – alles nach Ihren Vorstellungen.
-          </div>
-        </div>
-      </div>
-
-      <div class="flow-custom-section">
-        <div class="flow-custom-left fade-up" id="customLeft">
-          <h2>Custom ChatBox</h2>
-          <p>Volles Chat-Interface nach Ihren Wünschen – wir passen jede Farbe, jedes Design, jede Antwort, jeden Link, alle Vorschläge und noch vieles mehr an.</p>
-        </div>
-        <div class="flow-custom-right fade-up delay-1" id="customRight">
-          <div class="flow-custom-image">
-            <img src="design1.png" alt="Design 1" onerror="this.style.background='#222'">
-          </div>
-          <div class="flow-custom-image">
-            <img src="design2.png" alt="Design 2" onerror="this.style.background='#222'">
-          </div>
-          <div class="flow-custom-image">
-            <img src="design3.png" alt="Design 3" onerror="this.style.background='#222'">
           </div>
         </div>
       </div>
@@ -992,18 +899,15 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.15 });
 
     fadeElements.forEach(element => {
       observer.observe(element);
     });
-
-    document.getElementById('heroTitle').classList.add('visible');
-    document.getElementById('heroText').classList.add('visible');
-    document.getElementById('heroCta').classList.add('visible');
-    document.getElementById('heroVideo').classList.add('visible');
   </script>
 </body>
 </html>
