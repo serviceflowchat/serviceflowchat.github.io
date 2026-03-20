@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>FlowChat · Erklärung & Wiki</title>
+  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Crect width='70' height='44' x='15' y='8' fill='white' rx='12' ry='12' /%3E%3Cpolygon points='25,52 50,68 75,52' fill='white' /%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000000;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #ffffff;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 0 2rem;
+    }
+
+    .flow-page {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    .delay-4 {
+      transition-delay: 0.4s;
+    }
+
+    .delay-5 {
+      transition-delay: 0.5s;
+    }
+
+    .flow-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0 3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 2rem;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: navFadeIn 0.8s ease forwards;
+    }
+
+    @keyframes navFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .flow-logo-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .flow-logo-icon {
+      width: 32px;
+      height: 24px;
+      background: white;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    .flow-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      width: 12px;
+      height: 10px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+    }
+
+    .flow-logo-text {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #fff, #dddddd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .flow-logo-text span {
+      font-weight: 300;
+      color: #888;
+      background: none;
+      -webkit-text-fill-color: #888;
+      font-size: 1.4rem;
+    }
+
+    .flow-nav-right {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .flow-nav-right a {
+      color: #eee;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .flow-nav-right a:hover {
+      border-color: #fff;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 1001;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      text-shadow: 0 0 15px rgba(255,255,255,0.7);
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 9998;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-menu-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: rgba(10, 10, 10, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 9999;
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu-header {
+      padding: 25px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-menu-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-menu-logo-icon {
+      width: 32px;
+      height: 24px;
+      background: white;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    .mobile-menu-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      width: 12px;
+      height: 10px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .mobile-menu-logo-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .mobile-close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 10px 15px;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
+
+    .mobile-menu-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mobile-menu-link {
+      display: flex;
+      align-items: center;
+      padding: 18px 20px;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      border: 1px solid transparent;
+    }
+
+    .mobile-menu-link i {
+      margin-right: 15px;
+      width: 24px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .mobile-menu-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    .wiki-container {
+      display: flex;
+      gap: 3rem;
+      margin: 2rem 0 4rem 0;
+      min-height: 500px;
+    }
+
+    .wiki-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 2rem;
+      align-self: flex-start;
+    }
+
+    .wiki-sidebar-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: white;
+      text-shadow: 0 0 15px rgba(255,255,255,0.5);
+      letter-spacing: 1px;
+    }
+
+    .wiki-category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .wiki-category-item {
+      padding: 0.8rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+
+    .wiki-category-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateX(5px);
+    }
+
+    .wiki-category-item.active {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: white;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+
+    .wiki-content {
+      flex: 1;
+      background: rgba(10, 10, 10, 0.6);
+      border-radius: 2rem;
+      padding: 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .wiki-article {
+      display: none;
+    }
+
+    .wiki-article.active {
+      display: block;
+      animation: fadeInContent 0.5s ease;
+    }
+
+    @keyframes fadeInContent {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .article-title {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .article-text {
+      color: #aaa;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .step-list {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      margin-bottom: 2rem;
+      padding-left: 1.5rem;
+      border-left: 2px solid rgba(255, 215, 0, 0.5);
+    }
+
+    .step-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #FFD700;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    .step-desc {
+      color: #bbb;
+      line-height: 1.6;
+    }
+
+    .highlight-box {
+      background: rgba(255, 215, 0, 0.1);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .highlight-box h4 {
+      color: #FFD700;
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+    }
+
+    .highlight-box p {
+      color: #ccc;
+    }
+
+    .author-section {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: black;
+      overflow: hidden;
+    }
+
+    .author-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .author-info {
+      flex: 1;
+    }
+
+    .author-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .author-title {
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    .flow-footer {
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 3rem 0 2rem 0;
+    }
+
+    .flow-footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .flow-footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .flow-footer-logo-icon {
+      width: 28px;
+      height: 22px;
+      background: white;
+      border-radius: 6px;
+      position: relative;
+      box-shadow: 0 0 10px rgba(255,255,255,0.4);
+    }
+
+    .flow-footer-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 8px;
+      width: 10px;
+      height: 8px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .flow-footer-logo-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .flow-footer-categories {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .flow-footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .flow-footer-category-title {
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.2rem;
+      text-shadow: 0 0 12px rgba(255,255,255,0.7);
+    }
+
+    .flow-footer-col a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .flow-footer-col a:hover {
+      color: white;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+
+    .flow-footer-contact {
+      flex: 0 0 auto;
+    }
+
+    .flow-footer-contact .contact-btn {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 0.7rem 2rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .flow-footer-contact .contact-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: white;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .flow-copyright {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+      color: #555;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .flow-nav-right {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .wiki-container {
+        flex-direction: column;
+      }
+      .wiki-sidebar {
+        width: 100%;
+        position: static;
+        margin-bottom: 1.5rem;
+      }
+      .wiki-category-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .wiki-category-item {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+      }
+      .wiki-content {
+        padding: 1.5rem;
+      }
+      .article-title {
+        font-size: 1.8rem;
+      }
+      .flow-footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+      }
+      .flow-footer-categories {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .flow-footer-contact {
+        width: 100%;
+      }
+      .flow-footer-contact .contact-btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 500px) {
+      body { padding: 0 1rem; }
+      .flow-logo-text { font-size: 1.2rem; }
+      .flow-logo-text span { font-size: 1.2rem; }
+      .wiki-content {
+        padding: 1rem;
+      }
+      .article-title {
+        font-size: 1.4rem;
+      }
+      .step-title {
+        font-size: 1.1rem;
+      }
+      .wiki-category-item {
+        font-size: 0.85rem;
+        padding: 0.6rem 0.8rem;
+      }
+      .flow-footer-categories {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="mobile-menu-logo">
+        <div class="mobile-menu-logo-icon"></div>
+        <span class="mobile-menu-logo-text">FlowChat</span>
+      </div>
+      <button class="mobile-close-btn" id="mobileCloseBtn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="mobile-menu-content">
+      <a href="https://www.flow-chat.de/" class="mobile-menu-link"><i class="fas fa-home"></i> Home</a>
+      <a href="/guide" class="mobile-menu-link"><i class="fas fa-compass"></i> Erklärung</a>
+      <a href="/contact" class="mobile-menu-link"><i class="fas fa-envelope"></i> Kontakt</a>
+      <a href="/pricing" class="mobile-menu-link"><i class="fas fa-euro-sign"></i> Preise</a>
+    </div>
+  </div>
+
+  <div class="flow-page">
+    <div class="flow-nav">
+      <div class="flow-logo-wrapper">
+        <div class="flow-logo-icon"></div>
+        <div class="flow-logo-text">Flow-chat<span>.de</span></div>
+      </div>
+      <div class="flow-nav-right">
+        <a href="https://www.flow-chat.de/">Home</a>
+        <a href="/guide">Erklärung</a>
+        <a href="/contact">Kontakt</a>
+        <a href="/pricing">Preise</a>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="pricing-header fade-up">
+      <h1>Wiki & Erklärung</h1>
+      <p>Alles über die Erstellung deines KI-Assistenten</p>
+    </div>
+
+    <div class="wiki-container">
+      <div class="wiki-sidebar fade-up delay-1">
+        <div class="wiki-sidebar-title">
+          <i class="fas fa-book-open"></i> Kategorien
+        </div>
+        <div class="wiki-category-list">
+          <div class="wiki-category-item active" data-category="aufbau">
+            <i class="fas fa-robot"></i> Wie baut ihr meinen KI-Assistenten?
+          </div>
+        </div>
+      </div>
+
+      <div class="wiki-content fade-up delay-2">
+        <div class="wiki-article active" id="article-aufbau">
+          <h1 class="article-title">Wie baut ihr meinen KI-Assistenten?</h1>
+          <div class="article-text">
+            <p>Der Aufbau deines KI-Assistenten erfolgt Schritt für Schritt – mit dem Ziel, dass er nicht nur funktioniert, sondern aktiv Kunden gewinnt, Support übernimmt und Prozesse automatisiert.</p>
+          </div>
+
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-title">1. Analyse & Planung</div>
+              <div class="step-desc">Wir starten mit einem klaren Verständnis deines Unternehmens: Welche Fragen stellen deine Kunden am häufigsten? Was soll automatisiert werden? (Support, Leads, Verkäufe). Welche Ziele verfolgst du mit dem KI-Assistenten?<br><br>Ziel: Dein Bot soll sich wie ein echter Mitarbeiter verhalten – nicht wie ein einfacher Chatbot.</div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-title">2. Aufbau der Wissensbasis</div>
+              <div class="step-desc">Dein KI-Assistent wird mit allen wichtigen Inhalten gefüttert: Website-Inhalte, PDFs & Dokumente, Produktinfos & FAQs. Optional: CRM-, Ticket- oder Support-Daten.<br><br>Dadurch kann die KI präzise und relevante Antworten liefern.</div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-title">3. Training & Individualisierung</div>
+              <div class="step-desc">Jetzt wird dein Assistent komplett auf dich angepasst: Tonalität (professionell, locker, verkaufsstark), Antwortverhalten & Logik, Automationen (z. B. Termine, Weiterleitungen).</div>
+            </div>
+
+            <div class="highlight-box">
+              <h4><i class="fas fa-palette"></i> Design & Anpassung (WICHTIG)</h4>
+              <p>Dein KI-Chatbot ist vollständig anpassbar (ab Standard Plan):<br><br>
+              • Fully customized Design<br>
+              • Light Theme / individuelles Styling<br>
+              • Farben frei wählbar (Chat, Button, UI)<br>
+              • Anpassbarer Chat-Button<br>
+              • Einbindung perfekt in deine Website<br><br>
+              Ergebnis: Der Bot passt sich 100% deinem Branding an.</p>
+            </div>
+
+            <div class="step-item">
+              <div class="step-title">4. Testing & Optimierung</div>
+              <div class="step-desc">Bevor dein Bot live geht: Simulation echter Gespräche, Optimierung der Antworten, Feinschliff für perfekte Qualität.</div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-title">5. Launch & Integration</div>
+              <div class="step-desc">Dein KI-Assistent wird eingebunden in: Website, WhatsApp, Instagram, Messenger, Tools wie Shopify, Slack, etc.<br><br>Ab jetzt arbeitet dein Bot 24/7 für dich.</div>
+            </div>
+          </div>
+
+          <div class="author-section">
+            <div class="author-avatar" id="authorAvatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="author-info">
+              <div class="author-name">Nexoo</div>
+              <div class="author-title">Project Inhaber · FlowChat Team</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-footer">
+      <div class="flow-footer-content">
+        <div class="flow-footer-logo">
+          <div class="flow-footer-logo-icon"></div>
+          <span class="flow-footer-logo-text">FlowChat</span>
+        </div>
+        <div class="flow-footer-categories">
+          <div class="flow-footer-col">
+            <div class="flow-footer-category-title">PRODUCT</div>
+            <a href="/pricing">Preise (pricing)</a>
+            <a href="/guide">Erklärung (guide)</a>
+            <a href="/changelog">Änderungen (changelog)</a>
+          </div>
+          <div class="flow-footer-col">
+            <div class="flow-footer-category-title">UNTERNEHMEN</div>
+            <a href="/about">Über uns (about)</a>
+            <a href="/contact">Kontakt Aufnehmen (contact)</a>
+          </div>
+        </div>
+        <div class="flow-footer-contact">
+          <a href="/contact" class="contact-btn">Kontakt</a>
+        </div>
+      </div>
+      <div class="flow-copyright">
+        © 2026 FlowChat, Inc.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+    function toggleMobileMenu() {
+      mobileMenu.classList.toggle('active');
+      mobileMenuOverlay.classList.toggle('active');
+      document.body.classList.toggle('no-scroll');
+    }
+
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+    mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        toggleMobileMenu();
+        setTimeout(() => {
+          window.location.href = href;
+        }, 300);
+      });
+    });
+
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    fadeElements.forEach(element => {
+      observer.observe(element);
+    });
+
+    const categoryItems = document.querySelectorAll('.wiki-category-item');
+    const articles = document.querySelectorAll('.wiki-article');
+
+    categoryItems.forEach(item => {
+      item.addEventListener('click', function() {
+        categoryItems.forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+        
+        const category = this.getAttribute('data-category');
+        articles.forEach(article => {
+          article.classList.remove('active');
+        });
+        document.getElementById(`article-${category}`).classList.add('active');
+        
+        window.scrollTo({
+          top: document.querySelector('.wiki-container').offsetTop - 100,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    const savedAvatar = localStorage.getItem('Nexoo.png');
+    const authorAvatarDiv = document.getElementById('authorAvatar');
+    
+    if (savedAvatar) {
+      authorAvatarDiv.innerHTML = `<img src="${savedAvatar}" alt="Nexoo">`;
+    } else {
+      authorAvatarDiv.innerHTML = '<i class="fas fa-user"></i>';
+    }
+  </script>
+</body>
+</html>
