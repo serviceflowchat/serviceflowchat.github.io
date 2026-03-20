@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>FlowChat · Kontakt</title>
+  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Crect width='70' height='44' x='15' y='8' fill='white' rx='12' ry='12' /%3E%3Cpolygon points='25,52 50,68 75,52' fill='white' /%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000000;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #ffffff;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 0 2rem;
+    }
+
+    .flow-page {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    .delay-4 {
+      transition-delay: 0.4s;
+    }
+
+    .delay-5 {
+      transition-delay: 0.5s;
+    }
+
+    .flow-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0 3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 2rem;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: navFadeIn 0.8s ease forwards;
+    }
+
+    @keyframes navFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .flow-logo-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .flow-logo-icon {
+      width: 32px;
+      height: 24px;
+      background: white;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    .flow-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      width: 12px;
+      height: 10px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+    }
+
+    .flow-logo-text {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #fff, #dddddd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .flow-logo-text span {
+      font-weight: 300;
+      color: #888;
+      background: none;
+      -webkit-text-fill-color: #888;
+      font-size: 1.4rem;
+    }
+
+    .flow-nav-right {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .flow-nav-right a {
+      color: #eee;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .flow-nav-right a:hover {
+      border-color: #fff;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 1001;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      text-shadow: 0 0 15px rgba(255,255,255,0.7);
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 9998;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-menu-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: rgba(10, 10, 10, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 9999;
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu-header {
+      padding: 25px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-menu-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-menu-logo-icon {
+      width: 32px;
+      height: 24px;
+      background: white;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    .mobile-menu-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      width: 12px;
+      height: 10px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .mobile-menu-logo-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .mobile-close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 10px 15px;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
+
+    .mobile-menu-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mobile-menu-link {
+      display: flex;
+      align-items: center;
+      padding: 18px 20px;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      border: 1px solid transparent;
+    }
+
+    .mobile-menu-link i {
+      margin-right: 15px;
+      width: 24px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .mobile-menu-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    .contact-header {
+      text-align: center;
+      margin: 1rem 0 2rem 0;
+    }
+
+    .contact-header h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-header p {
+      color: #aaa;
+      font-size: 1.1rem;
+    }
+
+    .contact-container {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      max-width: 800px;
+      margin: 0 auto 4rem auto;
+    }
+
+    .contact-form-card {
+      background: rgba(10, 10, 10, 0.6);
+      border-radius: 2rem;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .form-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-subtitle {
+      color: #aaa;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      color: white;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 1rem 1.5rem;
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: white;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+
+    .form-group input:hover, .form-group textarea:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .char-counter {
+      text-align: right;
+      color: #888;
+      font-size: 0.75rem;
+      margin-top: 0.3rem;
+    }
+
+    .stars-container {
+      display: flex;
+      gap: 0.8rem;
+      margin: 1rem 0 1.5rem 0;
+    }
+
+    .star {
+      font-size: 2.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #444;
+    }
+
+    .star:hover {
+      transform: scale(1.1);
+    }
+
+    .star.selected {
+      color: #FFD700;
+    }
+
+    .rating-text {
+      color: #aaa;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+
+    .contact-method-toggle {
+      margin: 1rem 0;
+      text-align: center;
+    }
+
+    .toggle-link {
+      color: #888;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: color 0.2s;
+      text-decoration: underline;
+    }
+
+    .toggle-link:hover {
+      color: #FFD700;
+    }
+
+    .contact-field {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .contact-field.fade-out {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+    }
+
+    .contact-field.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: transparent;
+      border: 2px solid #FFD700;
+      color: #FFD700;
+      padding: 1rem;
+      border-radius: 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+      background: #FFD700;
+      color: black;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+      transform: scale(1.02);
+    }
+
+    .submit-btn.loading {
+      opacity: 0.7;
+      cursor: wait;
+      pointer-events: none;
+    }
+
+    .error-message {
+      color: #ff4444;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+
+    .success-message {
+      color: #4caf50;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      text-align: center;
+      padding: 1rem;
+      background: rgba(76, 175, 80, 0.1);
+      border-radius: 20px;
+      border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+
+    .contact-info-card {
+      background: rgba(10, 10, 10, 0.6);
+      border-radius: 2rem;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .contact-info-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 0.8rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 40px;
+    }
+
+    .contact-info-item i {
+      font-size: 1.3rem;
+      color: #FFD700;
+    }
+
+    .contact-info-item span {
+      color: #ddd;
+      font-size: 1rem;
+    }
+
+    .feedback-section {
+      margin-top: 1rem;
+    }
+
+    .flow-footer {
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 2rem 0;
+      text-align: center;
+    }
+
+    .flow-footer p {
+      color: #555;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .flow-nav-right {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .contact-container {
+        padding: 0 1rem;
+      }
+      .contact-form-card, .contact-info-card {
+        padding: 1.5rem;
+      }
+      .star {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      body { padding: 0 1rem; }
+      .contact-header h1 { font-size: 2.2rem; }
+      .flow-logo-text { font-size: 1.2rem; }
+      .flow-logo-text span { font-size: 1.2rem; }
+      .star {
+        font-size: 1.8rem;
+      }
+      .contact-info-item {
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="mobile-menu-logo">
+        <div class="mobile-menu-logo-icon"></div>
+        <span class="mobile-menu-logo-text">FlowChat</span>
+      </div>
+      <button class="mobile-close-btn" id="mobileCloseBtn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="mobile-menu-content">
+      <a href="https://www.flow-chat.de/" class="mobile-menu-link"><i class="fas fa-home"></i> Home</a>
+      <a href="/guide" class="mobile-menu-link"><i class="fas fa-compass"></i> Erklärung</a>
+      <a href="/contact" class="mobile-menu-link"><i class="fas fa-envelope"></i> Kontakt</a>
+      <a href="/pricing" class="mobile-menu-link"><i class="fas fa-euro-sign"></i> Preise</a>
+    </div>
+  </div>
+
+  <div class="flow-page">
+    <div class="flow-nav">
+      <div class="flow-logo-wrapper">
+        <div class="flow-logo-icon"></div>
+        <div class="flow-logo-text">Flow-chat<span>.de</span></div>
+      </div>
+      <div class="flow-nav-right">
+        <a href="https://www.flow-chat.de/">Home</a>
+        <a href="/guide">Erklärung</a>
+        <a href="/contact">Kontakt</a>
+        <a href="/pricing">Preise</a>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="contact-header">
+      <h1 class="fade-up">Contact Us</h1>
+      <p class="fade-up delay-1">Wir freuen uns auf deine Nachricht</p>
+    </div>
+
+    <div class="contact-container">
+      <div class="contact-form-card fade-up delay-2">
+        <h2 class="form-title">Sende uns eine Email</h2>
+        <p class="form-subtitle">Wir antworten innerhalb von 24-48 Stunden</p>
+
+        <form id="contactForm">
+          <div class="form-group">
+            <label>Deine Email *</label>
+            <input type="email" id="contactEmail" placeholder="name@beispiel.de" required>
+          </div>
+          <div class="form-group">
+            <label>Deine Nachricht *</label>
+            <textarea id="contactMessage" placeholder="Schreib uns alles, was du wissen möchtest..." maxlength="500" required></textarea>
+            <div class="char-counter"><span id="contactCharCount">0</span>/500 Zeichen</div>
+          </div>
+          <div id="contactFormError" class="error-message"></div>
+          <button type="button" class="submit-btn" id="contactSubmitBtn">Nachricht senden</button>
+        </form>
+      </div>
+
+      <div class="contact-form-card fade-up delay-3">
+        <h2 class="form-title">Feedback geben</h2>
+        <p class="form-subtitle">Deine Meinung hilft uns, besser zu werden</p>
+
+        <div class="stars-container" id="starContainer">
+          <i class="fas fa-star star" data-rating="1"></i>
+          <i class="fas fa-star star" data-rating="2"></i>
+          <i class="fas fa-star star" data-rating="3"></i>
+          <i class="fas fa-star star" data-rating="4"></i>
+          <i class="fas fa-star star" data-rating="5"></i>
+        </div>
+        <div class="rating-text" id="ratingText">Klicke auf die Sterne, um zu bewerten</div>
+
+        <div id="feedbackContactField" class="contact-field">
+          <div class="form-group">
+            <label id="contactFieldLabel">Deine Email *</label>
+            <input type="email" id="feedbackContactValue" placeholder="name@beispiel.de" required>
+          </div>
+        </div>
+
+        <div class="contact-method-toggle">
+          <span class="toggle-link" id="toggleContactMethod">Ich will nicht meine Email eingeben</span>
+        </div>
+
+        <div class="form-group">
+          <label>Dein Feedback *</label>
+          <textarea id="feedbackMessage" placeholder="Was können wir besser machen? Was gefällt dir besonders?" maxlength="500" required></textarea>
+          <div class="char-counter"><span id="feedbackCharCount">0</span>/500 Zeichen</div>
+        </div>
+
+        <div id="feedbackFormError" class="error-message"></div>
+        <button type="button" class="submit-btn" id="feedbackSubmitBtn">Feedback senden</button>
+      </div>
+
+      <div class="contact-info-card fade-up delay-4">
+        <h2 class="contact-info-title">Contact Us</h2>
+        <div class="contact-info-item">
+          <i class="fas fa-phone-alt"></i>
+          <span>+49 163 3614950</span>
+        </div>
+        <div class="contact-info-item">
+          <i class="fas fa-envelope"></i>
+          <span>flowchat.business@gmail.com</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-footer">
+      <p>© 2026 FlowChat, Inc.</p>
+    </div>
+  </div>
+
+  <script>
+    emailjs.init("NEvniNBosBkUbtmNB");
+
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+    function toggleMobileMenu() {
+      mobileMenu.classList.toggle('active');
+      mobileMenuOverlay.classList.toggle('active');
+      document.body.classList.toggle('no-scroll');
+    }
+
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+    mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        toggleMobileMenu();
+        setTimeout(() => {
+          window.location.href = href;
+        }, 300);
+      });
+    });
+
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    fadeElements.forEach(element => {
+      observer.observe(element);
+    });
+
+    let selectedRating = 0;
+    let usePhoneInstead = false;
+    const starContainer = document.getElementById('starContainer');
+    const stars = document.querySelectorAll('.star');
+    const ratingText = document.getElementById('ratingText');
+    const feedbackContactField = document.getElementById('feedbackContactField');
+    const contactFieldLabel = document.getElementById('contactFieldLabel');
+    const feedbackContactValue = document.getElementById('feedbackContactValue');
+    const toggleLink = document.getElementById('toggleContactMethod');
+
+    function getRatingColor(rating) {
+      if (rating >= 4) return '#4caf50';
+      if (rating === 3) return '#FFD700';
+      if (rating === 2) return '#ff9800';
+      return '#ff4444';
+    }
+
+    function updateStars(rating) {
+      stars.forEach((star, index) => {
+        const starRating = parseInt(star.getAttribute('data-rating'));
+        if (starRating <= rating) {
+          star.style.color = getRatingColor(rating);
+          star.classList.add('selected');
+        } else {
+          star.style.color = '#444';
+          star.classList.remove('selected');
+        }
+      });
+      
+      if (rating >= 4) ratingText.textContent = 'Sehr gut! Vielen Dank für deine positive Bewertung ⭐';
+      else if (rating === 3) ratingText.textContent = 'Danke für dein ehrliches Feedback! Wir arbeiten daran 💛';
+      else if (rating === 2) ratingText.textContent = 'Danke für dein Feedback! Wir werden uns verbessern 🧡';
+      else if (rating === 1) ratingText.textContent = 'Danke für deine Ehrlichkeit! Wir nehmen das sehr ernst ❤️';
+      else ratingText.textContent = 'Klicke auf die Sterne, um zu bewerten';
+    }
+
+    stars.forEach(star => {
+      star.addEventListener('click', function() {
+        selectedRating = parseInt(this.getAttribute('data-rating'));
+        updateStars(selectedRating);
+      });
+    });
+
+    function switchContactMethod() {
+      const field = document.getElementById('feedbackContactField');
+      field.classList.add('fade-out');
+      
+      setTimeout(() => {
+        usePhoneInstead = !usePhoneInstead;
+        
+        if (usePhoneInstead) {
+          contactFieldLabel.textContent = 'Deine Telefonnummer *';
+          feedbackContactValue.type = 'tel';
+          feedbackContactValue.placeholder = '+49 123 456789';
+          toggleLink.textContent = 'Ich will nicht meine Nummer eingeben';
+        } else {
+          contactFieldLabel.textContent = 'Deine Email *';
+          feedbackContactValue.type = 'email';
+          feedbackContactValue.placeholder = 'name@beispiel.de';
+          toggleLink.textContent = 'Ich will nicht meine Email eingeben';
+        }
+        
+        feedbackContactValue.value = '';
+        field.classList.remove('fade-out');
+        field.classList.add('fade-in');
+        
+        setTimeout(() => {
+          field.classList.remove('fade-in');
+        }, 300);
+      }, 300);
+    }
+
+    toggleLink.addEventListener('click', switchContactMethod);
+
+    const contactMessage = document.getElementById('contactMessage');
+    const contactCharCount = document.getElementById('contactCharCount');
+    const feedbackMessage = document.getElementById('feedbackMessage');
+    const feedbackCharCount = document.getElementById('feedbackCharCount');
+
+    contactMessage.addEventListener('input', function() {
+      contactCharCount.textContent = this.value.length;
+    });
+
+    feedbackMessage.addEventListener('input', function() {
+      feedbackCharCount.textContent = this.value.length;
+    });
+
+    document.getElementById('contactSubmitBtn').addEventListener('click', function() {
+      const email = document.getElementById('contactEmail').value.trim();
+      const message = document.getElementById('contactMessage').value.trim();
+      const errorDiv = document.getElementById('contactFormError');
+      
+      if (!email) {
+        errorDiv.textContent = 'Bitte gib deine Email-Adresse ein.';
+        return;
+      }
+      
+      if (!email.includes('@') || !email.includes('.')) {
+        errorDiv.textContent = 'Bitte gib eine gültige Email-Adresse ein.';
+        return;
+      }
+      
+      if (!message) {
+        errorDiv.textContent = 'Bitte gib eine Nachricht ein.';
+        return;
+      }
+      
+      if (message.length < 10) {
+        errorDiv.textContent = 'Die Nachricht muss mindestens 10 Zeichen lang sein.';
+        return;
+      }
+      
+      const btn = this;
+      btn.textContent = 'Wird gesendet...';
+      btn.classList.add('loading');
+      errorDiv.textContent = '';
+      
+      const templateParams = {
+        from_email: email,
+        message: message
+      };
+      
+      emailjs.send('service_1melj6k', 'template_8ssr0mc', templateParams)
+        .then(() => {
+          errorDiv.style.color = '#4caf50';
+          errorDiv.textContent = '✅ Nachricht erfolgreich gesendet! Wir melden uns in Kürze.';
+          document.getElementById('contactEmail').value = '';
+          document.getElementById('contactMessage').value = '';
+          contactCharCount.textContent = '0';
+          btn.textContent = 'Nachricht senden';
+          btn.classList.remove('loading');
+          
+          setTimeout(() => {
+            errorDiv.style.color = '#ff4444';
+            errorDiv.textContent = '';
+          }, 5000);
+        })
+        .catch(() => {
+          errorDiv.textContent = 'Fehler beim Senden. Bitte versuche es später erneut.';
+          btn.textContent = 'Nachricht senden';
+          btn.classList.remove('loading');
+        });
+    });
+
+    document.getElementById('feedbackSubmitBtn').addEventListener('click', function() {
+      const contactValue = document.getElementById('feedbackContactValue').value.trim();
+      const message = document.getElementById('feedbackMessage').value.trim();
+      const errorDiv = document.getElementById('feedbackFormError');
+      
+      if (selectedRating === 0) {
+        errorDiv.textContent = 'Bitte wähle eine Bewertung mit den Sternen aus.';
+        return;
+      }
+      
+      if (!contactValue) {
+        errorDiv.textContent = usePhoneInstead ? 'Bitte gib deine Telefonnummer ein.' : 'Bitte gib deine Email-Adresse ein.';
+        return;
+      }
+      
+      if (!usePhoneInstead && (!contactValue.includes('@') || !contactValue.includes('.'))) {
+        errorDiv.textContent = 'Bitte gib eine gültige Email-Adresse ein.';
+        return;
+      }
+      
+      if (!message) {
+        errorDiv.textContent = 'Bitte gib dein Feedback ein.';
+        return;
+      }
+      
+      if (message.length < 10) {
+        errorDiv.textContent = 'Das Feedback muss mindestens 10 Zeichen lang sein.';
+        return;
+      }
+      
+      const btn = this;
+      btn.textContent = 'Wird gesendet...';
+      btn.classList.add('loading');
+      errorDiv.textContent = '';
+      
+      const templateParams = {
+        rating: selectedRating,
+        contact_method: usePhoneInstead ? 'Telefon' : 'Email',
+        contact_value: contactValue,
+        feedback: message
+      };
+      
+      emailjs.send('service_1melj6k', 'template_kwp1n6g', templateParams)
+        .then(() => {
+          errorDiv.style.color = '#4caf50';
+          errorDiv.textContent = 'Feedback erfolgreich gesendet! Vielen Dank!';
+          selectedRating = 0;
+          updateStars(0);
+          document.getElementById('feedbackContactValue').value = '';
+          document.getElementById('feedbackMessage').value = '';
+          feedbackCharCount.textContent = '0';
+          btn.textContent = 'Feedback senden';
+          btn.classList.remove('loading');
+          
+          setTimeout(() => {
+            errorDiv.style.color = '#ff4444';
+            errorDiv.textContent = '';
+          }, 5000);
+        })
+        .catch(() => {
+          errorDiv.textContent = 'Fehler beim Senden. Bitte versuche es später erneut.';
+          btn.textContent = 'Feedback senden';
+          btn.classList.remove('loading');
+        });
+    });
+  </script>
+</body>
+</html>
