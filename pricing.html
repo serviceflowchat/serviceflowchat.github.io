@@ -389,14 +389,6 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .annual-note {
-      font-size: 0.8rem;
-      color: #888;
-      margin-bottom: 0.2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
     .current-price {
       font-size: 2.2rem;
       font-weight: 700;
@@ -427,6 +419,35 @@
       border: 1px solid rgba(76, 175, 80, 0.3);
       display: inline-block;
       margin: 0.3rem 0;
+    }
+
+    .annual-option {
+      margin-top: 0.8rem;
+      padding-top: 0.8rem;
+      border-top: 1px dashed rgba(255, 255, 255, 0.1);
+      font-size: 0.85rem;
+    }
+
+    .annual-price {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      color: #aaa;
+    }
+
+    .annual-price strong {
+      color: white;
+      font-size: 1rem;
+    }
+
+    .annual-save {
+      background: rgba(76, 175, 80, 0.2);
+      color: #4caf50;
+      padding: 0.2rem 0.5rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      border: 1px solid rgba(76, 175, 80, 0.3);
     }
 
     .features-list {
@@ -749,11 +770,17 @@
           <i class="fas fa-star"></i> Basic
         </div>
         <div class="price-container">
-          <div class="annual-note">Jahreszahlung (12 Monate) · 10% Rabatt</div>
-          <div class="current-price">711,00 € <span>/Jahr</span></div>
-          <div class="old-price">948,00 €</div>
-          <div class="save-badge">10% sparen</div>
-          <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #aaa;">monatlich 59,25 €</div>
+          <div class="current-price">79,00 € <span>/Monat</span></div>
+          <div class="old-price">83,00 €</div>
+          <div class="save-badge">5% sparen</div>
+          
+          <div class="annual-option">
+            <div class="annual-price">
+              <strong>711,00 €</strong> <span>/Jahr</span>
+              <span class="annual-save">+5% extra Rabatt</span>
+            </div>
+            <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 59,25 €</div>
+          </div>
         </div>
         <div class="features-list">
           <div class="feature-subtitle">Für wen</div>
@@ -782,11 +809,17 @@
           <i class="fas fa-star"></i> Standard
         </div>
         <div class="price-container">
-          <div class="annual-note">Jahreszahlung (12 Monate) · 15% Rabatt</div>
-          <div class="current-price">1.938,00 € <span>/Jahr</span></div>
-          <div class="old-price">2.280,00 €</div>
-          <div class="save-badge">15% sparen</div>
-          <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #aaa;">monatlich 161,50 €</div>
+          <div class="current-price">190,00 € <span>/Monat</span></div>
+          <div class="old-price">210,00 €</div>
+          <div class="save-badge">10% sparen</div>
+          
+          <div class="annual-option">
+            <div class="annual-price">
+              <strong>1.938,00 €</strong> <span>/Jahr</span>
+              <span class="annual-save">+5% extra Rabatt</span>
+            </div>
+            <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 161,50 €</div>
+          </div>
         </div>
         <div class="features-list">
           <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Basic enthalten +:</strong></div>
@@ -810,11 +843,17 @@
           <i class="fas fa-star"></i> Pro
         </div>
         <div class="price-container">
-          <div class="annual-note">Jahreszahlung (12 Monate) · 20% Rabatt</div>
-          <div class="current-price">4.598,00 € <span>/Jahr</span></div>
-          <div class="old-price">5.748,00 €</div>
+          <div class="current-price">479,00 € <span>/Monat</span></div>
+          <div class="old-price">600,00 €</div>
           <div class="save-badge">20% sparen</div>
-          <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #aaa;">monatlich 383,17 €</div>
+          
+          <div class="annual-option">
+            <div class="annual-price">
+              <strong>4.598,00 €</strong> <span>/Jahr</span>
+              <span class="annual-save">+5% extra Rabatt</span>
+            </div>
+            <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 383,17 €</div>
+          </div>
         </div>
         <div class="features-list">
           <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Standard enthalten +:</strong></div>
