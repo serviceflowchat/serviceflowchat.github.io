@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>FlowChat · Über uns</title>
+  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Crect width='70' height='44' x='15' y='8' fill='white' rx='12' ry='12' /%3E%3Cpolygon points='25,52 50,68 75,52' fill='white' /%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000000;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #ffffff;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 0 2rem;
+    }
+
+    .flow-page {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    .delay-4 {
+      transition-delay: 0.4s;
+    }
+
+    .delay-5 {
+      transition-delay: 0.5s;
+    }
+
+    .flow-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0 3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 2rem;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: navFadeIn 0.8s ease forwards;
+    }
+
+    @keyframes navFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .flow-logo-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .flow-logo-icon {
+      width: 32px;
+      height: 24px;
+      background: white;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    .flow-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      width: 12px;
+      height: 10px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+    }
+
+    .flow-logo-text {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #fff, #dddddd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .flow-logo-text span {
+      font-weight: 300;
+      color: #888;
+      background: none;
+      -webkit-text-fill-color: #888;
+      font-size: 1.4rem;
+    }
+
+    .flow-nav-right {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .flow-nav-right a {
+      color: #eee;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .flow-nav-right a:hover {
+      border-color: #fff;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 1001;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      text-shadow: 0 0 15px rgba(255,255,255,0.7);
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 9998;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-menu-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: rgba(10, 10, 10, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 9999;
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu-header {
+      padding: 25px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-menu-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-menu-logo-icon {
+      width: 32px;
+      height: 24px;
+      background: white;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    .mobile-menu-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      width: 12px;
+      height: 10px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .mobile-menu-logo-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .mobile-close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 10px 15px;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
+
+    .mobile-menu-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mobile-menu-link {
+      display: flex;
+      align-items: center;
+      padding: 18px 20px;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      border: 1px solid transparent;
+    }
+
+    .mobile-menu-link i {
+      margin-right: 15px;
+      width: 24px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .mobile-menu-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    .about-header {
+      text-align: center;
+      margin: 1rem 0 3rem 0;
+    }
+
+    .about-header h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+      margin-bottom: 0.5rem;
+    }
+
+    .about-header p {
+      color: #aaa;
+      font-size: 1.1rem;
+    }
+
+    .about-content {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .about-text {
+      background: rgba(10, 10, 10, 0.6);
+      border-radius: 2rem;
+      padding: 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 3rem;
+    }
+
+    .about-text p {
+      color: #bbb;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+
+    .highlight-text {
+      color: #FFD700;
+      font-weight: 600;
+    }
+
+    .team-section {
+      margin: 3rem 0;
+    }
+
+    .team-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .team-card {
+      background: rgba(10, 10, 10, 0.8);
+      border-radius: 2rem;
+      padding: 2rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .team-card:hover {
+      transform: scale(1.03);
+      border-color: rgba(255, 215, 0, 0.5);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+    }
+
+    .team-avatar {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      font-weight: bold;
+      color: black;
+      overflow: hidden;
+    }
+
+    .team-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .team-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.3rem;
+    }
+
+    .team-role {
+      color: #FFD700;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .team-bio {
+      color: #aaa;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .values-section {
+      margin: 3rem 0;
+    }
+
+    .values-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .value-card {
+      background: rgba(10, 10, 10, 0.6);
+      border-radius: 1.5rem;
+      padding: 1.8rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .value-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 215, 0, 0.3);
+    }
+
+    .value-icon {
+      font-size: 2.5rem;
+      color: #FFD700;
+      margin-bottom: 1rem;
+    }
+
+    .value-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.8rem;
+    }
+
+    .value-card p {
+      color: #aaa;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .stats-section {
+      background: rgba(255, 215, 0, 0.05);
+      border-radius: 2rem;
+      padding: 2.5rem;
+      margin: 3rem 0;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #FFD700;
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+
+    .stat-label {
+      color: #aaa;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .cta-section {
+      text-align: center;
+      margin: 3rem 0 4rem 0;
+      padding: 2.5rem;
+      background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+      border-radius: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .cta-section h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      color: #aaa;
+      margin-bottom: 2rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: transparent;
+      border: 2px solid #FFD700;
+      color: #FFD700;
+      padding: 1rem 2.5rem;
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background: #FFD700;
+      color: black;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+      transform: scale(1.02);
+    }
+
+    .flow-footer {
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 3rem 0 2rem 0;
+    }
+
+    .flow-footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .flow-footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .flow-footer-logo-icon {
+      width: 28px;
+      height: 22px;
+      background: white;
+      border-radius: 6px;
+      position: relative;
+      box-shadow: 0 0 10px rgba(255,255,255,0.4);
+    }
+
+    .flow-footer-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 8px;
+      width: 10px;
+      height: 8px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .flow-footer-logo-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .flow-footer-categories {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .flow-footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .flow-footer-category-title {
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.2rem;
+      text-shadow: 0 0 12px rgba(255,255,255,0.7);
+    }
+
+    .flow-footer-col a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .flow-footer-col a:hover {
+      color: white;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+
+    .flow-footer-contact {
+      flex: 0 0 auto;
+    }
+
+    .flow-footer-contact .contact-btn {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 0.7rem 2rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .flow-footer-contact .contact-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: white;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .flow-copyright {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+      color: #555;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .flow-nav-right {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .about-text {
+        padding: 1.5rem;
+      }
+      .flow-footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+      }
+      .flow-footer-categories {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .flow-footer-contact {
+        width: 100%;
+      }
+      .flow-footer-contact .contact-btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 500px) {
+      body { padding: 0 1rem; }
+      .about-header h1 { font-size: 2.2rem; }
+      .flow-logo-text { font-size: 1.2rem; }
+      .flow-logo-text span { font-size: 1.2rem; }
+      .team-avatar {
+        width: 100px;
+        height: 100px;
+        font-size: 2.5rem;
+      }
+      .team-name {
+        font-size: 1.2rem;
+      }
+      .values-title, .team-title {
+        font-size: 1.5rem;
+      }
+      .stat-number {
+        font-size: 2rem;
+      }
+      .cta-section h2 {
+        font-size: 1.4rem;
+      }
+      .flow-footer-categories {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="mobile-menu-logo">
+        <div class="mobile-menu-logo-icon"></div>
+        <span class="mobile-menu-logo-text">FlowChat</span>
+      </div>
+      <button class="mobile-close-btn" id="mobileCloseBtn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="mobile-menu-content">
+      <a href="https://www.flow-chat.de/" class="mobile-menu-link"><i class="fas fa-home"></i> Home</a>
+      <a href="/guide" class="mobile-menu-link"><i class="fas fa-compass"></i> Erklärung</a>
+      <a href="/contact" class="mobile-menu-link"><i class="fas fa-envelope"></i> Kontakt</a>
+      <a href="/pricing" class="mobile-menu-link"><i class="fas fa-euro-sign"></i> Preise</a>
+    </div>
+  </div>
+
+  <div class="flow-page">
+    <div class="flow-nav">
+      <div class="flow-logo-wrapper">
+        <div class="flow-logo-icon"></div>
+        <div class="flow-logo-text">Flow-chat<span>.de</span></div>
+      </div>
+      <div class="flow-nav-right">
+        <a href="https://www.flow-chat.de/">Home</a>
+        <a href="/guide">Erklärung</a>
+        <a href="/contact">Kontakt</a>
+        <a href="/pricing">Preise</a>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="about-header">
+      <h1 class="fade-up">Über uns</h1>
+      <p class="fade-up delay-1">Die Menschen hinter FlowChat</p>
+    </div>
+
+    <div class="about-content">
+      <div class="about-text fade-up delay-2">
+        <p>Wir sind <span class="highlight-text">FlowChat</span> – ein junges, dynamisches Team aus Entwicklern, KI-Experten und Visionären. Seit <span class="highlight-text">2025</span> helfen wir Unternehmen dabei, ihre Kundenkommunikation auf ein völlig neues Level zu heben.</p>
+        <p>Unsere Mission ist es, <span class="highlight-text">maßgeschneiderte KI-Assistenten und Chatbots</span> zu entwickeln, die nicht nur intelligent antworten, sondern aktiv Kunden gewinnen, Support übernehmen und Geschäftsprozesse automatisieren. Wir glauben, dass großartiger Kundenservice rund um die Uhr verfügbar sein sollte – ohne dass dabei die persönliche Note verloren geht.</p>
+        <p>Was uns auszeichnet? Wir bauen keine standardisierten Chatbots. Jeder unserer KI-Assistenten wird <span class="highlight-text">individuell auf dein Unternehmen zugeschnitten</span> – von der Tonalität über das Design bis hin zu komplexen Integrationen. Wir verstehen die einzigartigen Herausforderungen deines Business und entwickeln genau die Lösung, die zu dir passt.</p>
+        <p>Unser Ansatz ist simpel: <span class="highlight-text">Technologie, die funktioniert. Support, der begeistert. Ergebnisse, die sichtbar sind.</span> Ob du ein kleines Startup bist oder ein etabliertes Unternehmen – wir haben den richtigen Plan für dich.</p>
+      </div>
+
+      <div class="team-section">
+        <h2 class="team-title fade-up delay-3">Unsere Gründer</h2>
+        <div class="team-grid">
+          <div class="team-card fade-up delay-4">
+            <div class="team-avatar" id="liamAvatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="team-name">Liam Parlar</div>
+            <div class="team-role">Founder & CEO</div>
+            <div class="team-bio">Liam ist der Visionär hinter FlowChat. Mit seiner Leidenschaft für KI und Kundenerfahrung treibt er die strategische Ausrichtung des Unternehmens voran und sorgt dafür, dass jeder Kunde die perfekte Lösung für sein Business erhält.</div>
+          </div>
+          <div class="team-card fade-up delay-5">
+            <div class="team-avatar" id="lucaAvatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="team-name">Luca Agbegna</div>
+            <div class="team-role">Co-founder & CTO</div>
+            <div class="team-bio">Luca ist der Technologie-Experte hinter unseren KI-Assistenten. Er entwickelt die Architektur, die es ermöglicht, dass unsere Bots nicht nur intelligent, sondern auch zuverlässig und sicher arbeiten.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="values-section">
+        <h2 class="values-title fade-up delay-2">Unsere Werte</h2>
+        <div class="values-grid">
+          <div class="value-card fade-up delay-3">
+            <div class="value-icon"><i class="fas fa-rocket"></i></div>
+            <h3>Innovation</h3>
+            <p>Wir setzen auf modernste KI-Technologien und entwickeln ständig neue Lösungen, um dein Business voranzubringen.</p>
+          </div>
+          <div class="value-card fade-up delay-4">
+            <div class="value-icon"><i class="fas fa-handshake"></i></div>
+            <h3>Vertrauen</h3>
+            <p>Deine Daten sind sicher. Wir arbeiten mit höchsten Sicherheitsstandards und garantieren absolute Diskretion.</p>
+          </div>
+          <div class="value-card fade-up delay-5">
+            <div class="value-icon"><i class="fas fa-headset"></i></div>
+            <h3>Kundenzentrierung</h3>
+            <p>Du stehst im Mittelpunkt. Wir hören zu, verstehen deine Bedürfnisse und entwickeln genau die Lösung, die du brauchst.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-section fade-up delay-2">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number">2025</div>
+            <div class="stat-label">Gegründet</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Aktive KI-Assistenten</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Kundenzufriedenheit</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-section fade-up delay-3">
+        <h2>Bereit für deinen eigenen KI-Assistenten?</h2>
+        <p>Lass uns gemeinsam darüber sprechen, wie wir dein Business mit KI auf das nächste Level bringen können.</p>
+        <a href="/pricing" class="cta-button">Meeting vereinbaren</a>
+      </div>
+    </div>
+
+    <div class="flow-footer">
+      <div class="flow-footer-content">
+        <div class="flow-footer-logo">
+          <div class="flow-footer-logo-icon"></div>
+          <span class="flow-footer-logo-text">FlowChat</span>
+        </div>
+        <div class="flow-footer-categories">
+          <div class="flow-footer-col">
+            <div class="flow-footer-category-title">PRODUCT</div>
+            <a href="/pricing">Preise (pricing)</a>
+            <a href="/guide">Erklärung (guide)</a>
+            <a href="/changelog">Änderungen (changelog)</a>
+          </div>
+          <div class="flow-footer-col">
+            <div class="flow-footer-category-title">UNTERNEHMEN</div>
+            <a href="/about">Über uns (about)</a>
+            <a href="/contact">Kontakt Aufnehmen (contact)</a>
+          </div>
+        </div>
+        <div class="flow-footer-contact">
+          <a href="/contact" class="contact-btn">Kontakt</a>
+        </div>
+      </div>
+      <div class="flow-copyright">
+        © 2026 FlowChat, Inc.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+    function toggleMobileMenu() {
+      mobileMenu.classList.toggle('active');
+      mobileMenuOverlay.classList.toggle('active');
+      document.body.classList.toggle('no-scroll');
+    }
+
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+    mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        toggleMobileMenu();
+        setTimeout(() => {
+          window.location.href = href;
+        }, 300);
+      });
+    });
+
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    fadeElements.forEach(element => {
+      observer.observe(element);
+    });
+
+    const liamAvatar = localStorage.getItem('Liam.png');
+    const lucaAvatar = localStorage.getItem('Luca.png');
+    
+    const liamAvatarDiv = document.getElementById('liamAvatar');
+    const lucaAvatarDiv = document.getElementById('lucaAvatar');
+    
+    if (liamAvatar) {
+      liamAvatarDiv.innerHTML = `<img src="${liamAvatar}" alt="Liam Parlar">`;
+    } else {
+      liamAvatarDiv.innerHTML = '<i class="fas fa-user"></i>';
+    }
+    
+    if (lucaAvatar) {
+      lucaAvatarDiv.innerHTML = `<img src="${lucaAvatar}" alt="Luca Agbegna">`;
+    } else {
+      lucaAvatarDiv.innerHTML = '<i class="fas fa-user"></i>';
+    }
+  </script>
+</body>
+</html>
