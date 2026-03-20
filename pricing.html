@@ -6,6 +6,8 @@
   <title>FlowChat · Preise & Pläne</title>
   <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Crect width='70' height='44' x='15' y='8' fill='white' rx='12' ry='12' /%3E%3Cpolygon points='25,52 50,68 75,52' fill='white' /%3E%3C/svg%3E">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- EmailJS SDK einbinden -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -804,6 +806,11 @@
       box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
     }
 
+    .submit-btn.loading {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
     .success-screen {
       text-align: center;
       padding: 4rem 2rem;
@@ -843,6 +850,13 @@
     .back-home-btn:hover {
       transform: scale(1.05);
       box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+    }
+
+    .error-message {
+      color: #ff4444;
+      font-size: 0.85rem;
+      margin-top: 0.3rem;
+      text-align: center;
     }
 
     .flow-footer {
@@ -1221,7 +1235,7 @@
 
         <!-- Booking Form -->
         <div class="booking-form">
-          <form id="bookingForm" onsubmit="submitForm(event)">
+          <form id="bookingForm">
             <div class="form-row">
               <div class="form-group">
                 <label>Vorname *</label>
@@ -1304,7 +1318,8 @@
               </div>
             </div>
 
-            <button type="submit" class="submit-btn">Meeting anfragen</button>
+            <div id="formError" class="error-message"></div>
+            <button type="button" class="submit-btn" id="submitBtn" onclick="submitForm()">Meeting anfragen</button>
           </form>
         </div>
       </div>
@@ -1354,6 +1369,9 @@
   </div>
 
   <script>
+    // EmailJS initialisieren mit deiner Public Key (die du noch brauchst)
+    emailjs.init("YDWmiDx4PCrhw8Rkx"); // WICHTIG: Du musst deinen Public Key von EmailJS hier einfügen!
+
     // Animation on load
     document.addEventListener('DOMContentLoaded', function() {
       const fadeElements = document.querySelectorAll('.fade-element');
@@ -1518,59 +1536,98 @@
       document.querySelector(`[data-method="${method}"]`).classList.add('active');
     }
 
-    function submitForm(event) {
-      event.preventDefault();
+    function submitForm() {
+      const errorDiv = document.getElementById('formError');
+      errorDiv.textContent = '';
 
-      // Validate email match
+      // Get form values
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
       const email = document.getElementById('email').value;
       const confirmEmail = document.getElementById('confirmEmail').value;
-      
+      const phone = document.getElementById('phone').value;
+
+      // Validate required fields
+      if (!firstName || !lastName || !email || !confirmEmail) {
+        errorDiv.textContent = 'Bitte füllen Sie alle Pflichtfelder aus.';
+        return;
+      }
+
+      // Validate email match
       if (email !== confirmEmail) {
-        alert('E-Mail-Adressen stimmen nicht überein!');
+        errorDiv.textContent = 'E-Mail-Adressen stimmen nicht überein!';
         return;
       }
 
       // Validate business fields if business is true
       if (isBusiness) {
-        if (!document.getElementById('companyName').value || !document.getElementById('legalOwner').value) {
-          alert('Bitte füllen Sie alle Pflichtfelder für Ihr Unternehmen aus.');
+        const companyName = document.getElementById('companyName').value;
+        const legalOwner = document.getElementById('legalOwner').value;
+        if (!companyName || !legalOwner) {
+          errorDiv.textContent = 'Bitte füllen Sie alle Pflichtfelder für Ihr Unternehmen aus.';
           return;
         }
       }
 
-      // Here you would normally send to EmailJS
-      console.log('Form submitted:', {
+      // Show loading state
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.textContent = 'Wird gesendet...';
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      // Prepare template parameters for EmailJS
+      const templateParams = {
+        to_email: 'flowchat.business@gmail.com',
         plan: currentPlan,
-        interval: currentInterval,
-        firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
+        plan_name: currentPlanType,
+        interval: currentInterval === 'monthly' ? 'monatlich' : 'jährlich',
+        first_name: firstName,
+        last_name: lastName,
         email: email,
-        phone: document.getElementById('phone').value,
-        isBusiness: isBusiness,
-        paymentMethod: currentPaymentMethod
-      });
+        phone: phone || 'nicht angegeben',
+        is_business: isBusiness ? 'Ja' : 'Nein',
+        company_name: isBusiness ? document.getElementById('companyName').value : 'nicht zutreffend',
+        legal_owner: isBusiness ? document.getElementById('legalOwner').value : 'nicht zutreffend',
+        company_location: isBusiness ? (document.getElementById('companyLocation').value || 'nicht angegeben') : 'nicht zutreffend',
+        postal_code: isBusiness ? (document.getElementById('postalCode').value || 'nicht angegeben') : 'nicht zutreffend',
+        business_number: isBusiness ? (document.getElementById('businessNumber').value || 'nicht angegeben') : 'nicht zutreffend',
+        payment_method: currentPaymentMethod
+      };
 
-      // Fade out booking section
-      const bookingSection = document.getElementById('bookingSection');
-      const bookingElements = bookingSection.querySelectorAll('.fade-element');
-      bookingElements.forEach(el => {
-        el.classList.remove('visible');
-      });
+      // Send email via EmailJS
+      emailjs.send('service_aqffj86', 'template_rm2qqtu', templateParams)
+        .then(function(response) {
+          console.log('Email erfolgreich gesendet!', response);
+          
+          // Fade out booking section
+          const bookingSection = document.getElementById('bookingSection');
+          const bookingElements = bookingSection.querySelectorAll('.fade-element');
+          bookingElements.forEach(el => {
+            el.classList.remove('visible');
+          });
 
-      setTimeout(() => {
-        bookingSection.classList.add('hidden-section');
-        
-        // Show success section
-        const successSection = document.getElementById('successSection');
-        successSection.classList.remove('hidden-section');
-        
-        const successElements = successSection.querySelectorAll('.fade-element');
-        successElements.forEach(el => {
           setTimeout(() => {
-            el.classList.add('visible');
-          }, 100);
+            bookingSection.classList.add('hidden-section');
+            
+            // Show success section
+            const successSection = document.getElementById('successSection');
+            successSection.classList.remove('hidden-section');
+            
+            const successElements = successSection.querySelectorAll('.fade-element');
+            successElements.forEach(el => {
+              setTimeout(() => {
+                el.classList.add('visible');
+              }, 100);
+            });
+          }, 600);
+        })
+        .catch(function(error) {
+          console.log('Fehler beim Senden:', error);
+          errorDiv.textContent = 'Fehler beim Senden. Bitte versuchen Sie es später erneut.';
+          submitBtn.textContent = 'Meeting anfragen';
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
         });
-      }, 600);
     }
   </script>
 </body>
