@@ -425,8 +425,8 @@
     }
 
     .flow-showcase {
-      display: flex;
-      flex-wrap: nowrap;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
       margin: 2rem 0;
     }
@@ -435,13 +435,11 @@
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      flex: 1;
-      min-width: 0;
       transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
 
     .flow-showcase-item:hover {
-      transform: scale(1.02);
+      transform: translateY(-8px);
     }
 
     .flow-showcase-image {
@@ -458,7 +456,7 @@
     .flow-showcase-item:hover .flow-showcase-image {
       border-color: rgba(255, 255, 255, 0.8);
       box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
-      transform: scale(1.03);
+      transform: scale(1.02);
     }
 
     .flow-showcase-image img {
@@ -466,11 +464,11 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.4s ease;
+      transition: transform 0.5s ease;
     }
 
     .flow-showcase-item:hover .flow-showcase-image img {
-      transform: scale(1.05);
+      transform: scale(1.08);
     }
 
     .flow-showcase-item h3 {
@@ -498,8 +496,8 @@
     }
 
     .flow-feature-boxes {
-      display: flex;
-      flex-wrap: nowrap;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
       margin: 3rem 0 5rem 0;
     }
@@ -511,15 +509,13 @@
       padding: 2.5rem 2rem;
       transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       cursor: default;
-      flex: 1;
-      min-width: 0;
     }
 
     .flow-feature-box:hover {
-      transform: scale(1.03);
-      border-color: rgba(255, 255, 255, 0.8);
-      box-shadow: 0 0 45px rgba(255, 255, 255, 0.35);
-      background: rgba(30, 30, 30, 0.9);
+      transform: scale(1.02);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.25);
+      background: rgba(20, 20, 20, 0.8);
     }
 
     .flow-box-header {
@@ -547,7 +543,6 @@
       background: rgba(255, 215, 0, 0.2);
       border-color: rgba(255, 215, 0, 0.5);
       box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-      transform: scale(1.05);
     }
 
     .flow-box-title {
@@ -712,24 +707,11 @@
         gap: 1rem;
       }
       .flow-showcase {
-        flex-direction: row;
-        overflow-x: auto;
-        gap: 1.5rem;
-        padding-bottom: 0.5rem;
-      }
-      .flow-showcase-item {
-        min-width: 280px;
-        flex: none;
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
       }
       .flow-feature-boxes {
-        flex-direction: row;
-        overflow-x: auto;
-        gap: 1.5rem;
-        padding-bottom: 0.5rem;
-      }
-      .flow-feature-box {
-        min-width: 280px;
-        flex: none;
+        grid-template-columns: 1fr;
       }
       .flow-footer-content {
         flex-direction: column;
@@ -757,17 +739,6 @@
       .flow-logo-text span { font-size: 1.2rem; }
       .flow-box-title {
         font-size: 1.6rem;
-      }
-      .flow-showcase-item {
-        min-width: 260px;
-      }
-      .flow-feature-box {
-        min-width: 260px;
-        padding: 1.5rem;
-      }
-      .flow-box-header {
-        flex-direction: column;
-        text-align: center;
       }
     }
   </style>
