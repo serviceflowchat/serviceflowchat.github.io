@@ -568,6 +568,194 @@
       color: #ddd;
     }
 
+    .chat-preview-section {
+      margin: 4rem 0;
+    }
+
+    .chat-preview-container {
+      background: #0a0a0a;
+      border-radius: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .chat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background: rgba(0, 0, 0, 0.5);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .chat-header h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .mode-toggle {
+      display: flex;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.3rem;
+      border-radius: 40px;
+    }
+
+    .mode-btn {
+      background: transparent;
+      border: none;
+      color: #888;
+      padding: 0.3rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mode-btn.active {
+      background: white;
+      color: black;
+    }
+
+    .chat-window {
+      min-height: 400px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .chat-window.dark {
+      background: #0f0f0f;
+    }
+
+    .chat-window.light {
+      background: #f5f5f5;
+    }
+
+    .chat-message {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .chat-avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: bold;
+      color: black;
+      flex-shrink: 0;
+    }
+
+    .chat-bubble {
+      max-width: 70%;
+      padding: 0.8rem 1rem;
+      border-radius: 1.2rem;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .chat-window.dark .chat-bubble.bot {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-bottom-left-radius: 0.3rem;
+    }
+
+    .chat-window.light .chat-bubble.bot {
+      background: #e8e8e8;
+      color: #1a1a1a;
+      border-bottom-left-radius: 0.3rem;
+    }
+
+    .chat-window.dark .chat-bubble.user {
+      background: rgba(255, 215, 0, 0.2);
+      color: white;
+      border-bottom-right-radius: 0.3rem;
+      margin-left: auto;
+    }
+
+    .chat-window.light .chat-bubble.user {
+      background: #FFD700;
+      color: #1a1a1a;
+      border-bottom-right-radius: 0.3rem;
+      margin-left: auto;
+    }
+
+    .chat-input-area {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .chat-window.light .chat-input-area {
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-input-area input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 0.8rem 1.2rem;
+      color: white;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .chat-window.light .chat-input-area input {
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: #1a1a1a;
+    }
+
+    .chat-input-area input:focus {
+      border-color: #FFD700;
+    }
+
+    .chat-input-area button {
+      background: transparent;
+      border: 1px solid #FFD700;
+      color: #FFD700;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.85rem;
+    }
+
+    .chat-input-area button:hover {
+      background: #FFD700;
+      color: black;
+    }
+
+    .preview-note {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.75rem;
+      color: #666;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
     .flow-footer {
       margin-top: 5rem;
       border-top: 1px solid rgba(255,255,255,0.05);
@@ -713,6 +901,9 @@
       .flow-feature-boxes {
         grid-template-columns: 1fr;
       }
+      .chat-bubble {
+        max-width: 85%;
+      }
       .flow-footer-content {
         flex-direction: column;
         align-items: flex-start;
@@ -739,6 +930,13 @@
       .flow-logo-text span { font-size: 1.2rem; }
       .flow-box-title {
         font-size: 1.6rem;
+      }
+      .chat-bubble {
+        max-width: 90%;
+      }
+      .mode-btn {
+        padding: 0.2rem 0.6rem;
+        font-size: 0.7rem;
       }
     }
   </style>
@@ -880,6 +1078,40 @@
       </div>
     </div>
 
+    <div class="chat-preview-section fade-up delay-2">
+      <div class="flow-feature-header">
+        <div class="flow-feature-title">Live Chat Preview</div>
+        <div class="flow-feature-description">Erlebe deinen zukünftigen KI-Assistenten – genau so personalisierbar wie du es dir vorstellst.</div>
+      </div>
+
+      <div class="chat-preview-container">
+        <div class="chat-header">
+          <h3><i class="fas fa-comment-dots"></i> FlowChat Assistant</h3>
+          <div class="mode-toggle">
+            <button class="mode-btn active" data-mode="dark">Dark</button>
+            <button class="mode-btn" data-mode="light">Light</button>
+          </div>
+        </div>
+        <div class="chat-window dark" id="chatWindow">
+          <div class="chat-message">
+            <div class="chat-avatar">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div class="chat-bubble bot">
+              Hey! Willkommen bei FlowChat! 👋<br>Was kann ich heute für dich tun?
+            </div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" id="chatInput" placeholder="Nachricht eingeben... (Preview)">
+          <button id="sendBtn" disabled style="opacity:0.5; cursor:not-allowed;">Senden</button>
+        </div>
+        <div class="preview-note">
+          💡 Dies ist eine Live-Vorschau – dein echter Chatbot wird genau so aussehen und voll funktionsfähig sein.
+        </div>
+      </div>
+    </div>
+
     <div class="flow-footer">
       <div class="flow-footer-content">
         <div class="flow-footer-logo">
@@ -950,6 +1182,24 @@
 
     fadeElements.forEach(element => {
       observer.observe(element);
+    });
+
+    const modeBtns = document.querySelectorAll('.mode-btn');
+    const chatWindow = document.getElementById('chatWindow');
+
+    modeBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        modeBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const mode = this.getAttribute('data-mode');
+        chatWindow.classList.remove('dark', 'light');
+        chatWindow.classList.add(mode);
+      });
+    });
+
+    const chatInput = document.getElementById('chatInput');
+    chatInput.addEventListener('focus', function() {
+      this.placeholder = 'Dies ist eine Vorschau – bald kannst du hier chatten!';
     });
   </script>
 
