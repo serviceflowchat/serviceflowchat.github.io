@@ -329,10 +329,13 @@
 
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
       margin: 0 0 4rem 0;
       align-items: stretch;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .pricing-card {
@@ -1289,101 +1292,74 @@
         <p class="fade-up delay-1">Wählen Sie den perfekten Plan für Ihr Unternehmen</p>
       </div>
 
-      <div class="pricing-grid">
-        <div class="pricing-card basic fade-up delay-2" onclick="selectPlan('basic', 'Basic', 'basic')">
-          <div class="plan-name">
-            <i class="fas fa-star"></i> Basic
-          </div>
-          <div class="trial-period">48 Stunden Testphase</div>
-          <div class="price-container">
-            <div class="current-price">79,00 € <span>/Monat</span> <span class="old-price">83,00 €</span> <span class="save-badge">5% sparen</span></div>
-            <div class="annual-option">
-              <div class="annual-price">
-                <strong>711,00 €</strong> <span>/Jahr</span>
-                <span class="annual-save">+5% extra Rabatt</span>
-              </div>
-              <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 59,25 €</div>
-            </div>
-          </div>
-          <div class="features-list">
-            <div class="feature-subtitle">Support</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> Basic Support</div>
-            <div class="feature-subtitle">Für wen</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> Kleine Unternehmen, einfacher Chatbot für Website</div>
-            <div class="feature-subtitle">Models</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> Zugang zu allen Modellen: OpenAI, Anthropic, Gemini, DeepSeek, Grok, Meta, Moonshot AI</div>
-            <div class="feature-subtitle">Features</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> 5 aktivierte AI-Aktionen für Ihren Chatbot</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> 10 MB für Ihren KI-Agenten</div>
-            <div class="feature-subtitle">Integrationen</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> Shopify, Whatsapp, Instagram, Messenger, Slack, Calendly, Wordpress</div>
-            <div class="feature-subtitle">Analytics</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> Basis-Analytics wöchentlich per E-Mail</div>
-          </div>
-          <button class="select-btn">Meeting vereinbaren</button>
+    <div class="pricing-grid">
+      <div class="pricing-card popular fade-up delay-2" onclick="selectPlan('standard', 'Standard', 'popular')">
+        <div class="popular-badge">Beliebt</div>
+        <div class="plan-name">
+          <i class="fas fa-star"></i> Standard
         </div>
+        <div class="trial-period">3 Tage Testphase</div>
+        <div class="price-container">
+          <div class="current-price">190,00 € <span>/Monat</span> <span class="old-price">210,00 €</span> <span class="save-badge">10% sparen</span></div>
+          <div class="annual-option">
+            <div class="annual-price">
+              <strong>1.938,00 €</strong> <span>/Jahr</span>
+              <span class="annual-save">+5% extra Rabatt</span>
+            </div>
+            <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 161,50 €</div>
+          </div>
+        </div>
+        <div class="features-list">
+          <div class="feature-subtitle">Support</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Premium Support</div>
+          <div class="feature-subtitle">Für wen</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Kleine & mittlere Unternehmen, professioneller Chatbot</div>
+          <div class="feature-subtitle">Models</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Zugang zu allen Modellen: OpenAI, Anthropic, Gemini, DeepSeek, Grok, Meta, Moonshot AI</div>
+          <div class="feature-subtitle">Features</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> 8 aktivierte AI-Aktionen für Ihren Chatbot</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> 20 MB für Ihren KI-Agenten</div>
+          <div class="feature-subtitle">Integrationen</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Shopify, Whatsapp, Instagram, Messenger, Slack, Calendly, Wordpress</div>
+          <div class="feature-subtitle">Personalisierung</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Ihr Agent erkennt eingeloggte Benutzer und antwortet mit personalisierten Informationen</div>
+          <div class="feature-subtitle">Automatisierung</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Automatisches Retraining alle 24 Stunden</div>
+          <div class="feature-subtitle">Analytics</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Basis-Analytics wöchentlich per E-Mail</div>
+        </div>
+        <button class="select-btn">Meeting vereinbaren</button>
+      </div>
 
-        <div class="pricing-card popular fade-up delay-3" onclick="selectPlan('standard', 'Standard', 'popular')">
-          <div class="popular-badge">Beliebt</div>
-          <div class="plan-name">
-            <i class="fas fa-star"></i> Standard
-          </div>
-          <div class="trial-period">3 Tage Testphase</div>
-          <div class="price-container">
-            <div class="current-price">190,00 € <span>/Monat</span> <span class="old-price">210,00 €</span> <span class="save-badge">10% sparen</span></div>
-            <div class="annual-option">
-              <div class="annual-price">
-                <strong>1.938,00 €</strong> <span>/Jahr</span>
-                <span class="annual-save">+5% extra Rabatt</span>
-              </div>
-              <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 161,50 €</div>
-            </div>
-          </div>
-          <div class="features-list">
-            <div class="feature-subtitle">Support</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> Premium Support</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Basic enthalten</strong></div>
-            <div class="feature-subtitle">Features</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> 8 aktivierte AI-Aktionen für Ihren Chatbot</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> 20 MB für Ihren KI-Agenten</div>
-            <div class="feature-subtitle">Personalisierung</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> Ihr Agent erkennt eingeloggte Benutzer und antwortet mit personalisierten Informationen</div>
-            <div class="feature-subtitle">Automatisierung</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> Automatisches Retraining alle 24 Stunden</div>
-          </div>
-          <button class="select-btn">Meeting vereinbaren</button>
+      <div class="pricing-card pro fade-up delay-3" onclick="selectPlan('pro', 'Pro', 'pro')">
+        <div class="plan-name">
+          <i class="fas fa-star"></i> Pro
         </div>
-
-        <div class="pricing-card pro fade-up delay-4" onclick="selectPlan('pro', 'Pro', 'pro')">
-          <div class="plan-name">
-            <i class="fas fa-star"></i> Pro
-          </div>
-          <div class="trial-period">7 Tage Testphase</div>
-          <div class="price-container">
-            <div class="current-price">479,00 € <span>/Monat</span> <span class="old-price">600,00 €</span> <span class="save-badge">20% sparen</span></div>
-            <div class="annual-option">
-              <div class="annual-price">
-                <strong>4.598,00 €</strong> <span>/Jahr</span>
-                <span class="annual-save">+5% extra Rabatt</span>
-              </div>
-              <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 383,17 €</div>
+        <div class="trial-period">7 Tage Testphase</div>
+        <div class="price-container">
+          <div class="current-price">479,00 € <span>/Monat</span> <span class="old-price">600,00 €</span> <span class="save-badge">20% sparen</span></div>
+          <div class="annual-option">
+            <div class="annual-price">
+              <strong>4.598,00 €</strong> <span>/Jahr</span>
+              <span class="annual-save">+5% extra Rabatt</span>
             </div>
+            <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 383,17 €</div>
           </div>
-          <div class="features-list">
-            <div class="feature-subtitle">Support</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> Premium Support</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Standard enthalten</strong></div>
-            <div class="feature-subtitle">Features</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> 12 aktivierte AI-Aktionen für Ihren Chatbot</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> 40 MB für Ihren KI-Agenten</div>
-            <div class="feature-subtitle">Analytics</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> Erweiterte Analytics auf Anfrage per E-Mail</div>
-            <div class="feature-subtitle">Quellen</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> Quellen-Vorschläge (Erkennt Content-Lücken, erkennt widersprüchliche Quellen)</div>
-            <div class="feature-item"><i class="fas fa-circle-check"></i> Tickets als Quelle (Trainieren Sie Ihren Agenten mit Zendesk- und Salesforce-Tickets)</div>
-          </div>
-          <button class="select-btn">Meeting vereinbaren</button>
         </div>
+        <div class="features-list">
+          <div class="feature-subtitle">Support</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Premium Support</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Standard enthalten</strong></div>
+          <div class="feature-subtitle">Features</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> 12 aktivierte AI-Aktionen für Ihren Chatbot</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> 40 MB für Ihren KI-Agenten</div>
+          <div class="feature-subtitle">Analytics</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Erweiterte Analytics auf Anfrage per E-Mail</div>
+          <div class="feature-subtitle">Quellen</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Quellen-Vorschläge (Erkennt Content-Lücken, erkennt widersprüchliche Quellen)</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Tickets als Quelle (Trainieren Sie Ihren Agenten mit Zendesk- und Salesforce-Tickets)</div>
+        </div>
+        <button class="select-btn">Meeting vereinbaren</button>
       </div>
     </div>
 
@@ -1402,7 +1378,6 @@
             </div>
             <div class="plan-switch-wrapper">
               <select class="plan-switch-select" id="planSwitch" onchange="switchPlan(this.value)">
-                <option value="basic">Basic</option>
                 <option value="standard">Standard</option>
                 <option value="pro">Pro</option>
               </select>
@@ -1668,18 +1643,6 @@
     let currentContactMethod = 'email';
 
     const planData = {
-      basic: {
-        name: 'Basic',
-        class: 'basic',
-        icon: 'fas fa-star',
-        monthlyPrice: '79,00 €',
-        yearlyPrice: '711,00 €',
-        monthlySaving: '5% sparen',
-        yearlySaving: '+5% extra',
-        monthlyOld: '83,00 €',
-        yearlyOld: '948,00 €',
-        paysafe: true
-      },
       standard: {
         name: 'Standard',
         class: 'popular',
