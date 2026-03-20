@@ -33,6 +33,38 @@
       flex-direction: column;
     }
 
+    /* Animation Classes */
+    .fade-element {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-element.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-element-delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .fade-element-delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .fade-element-delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    .fade-element-delay-4 {
+      transition-delay: 0.4s;
+    }
+
+    .hidden-section {
+      display: none !important;
+    }
+
     .flow-nav {
       display: flex;
       justify-content: space-between;
@@ -358,7 +390,7 @@
     .plan-name {
       font-size: 1.8rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.2rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -366,6 +398,13 @@
 
     .plan-name i {
       font-size: 1.5rem;
+    }
+
+    .trial-period {
+      color: #aaa;
+      font-size: 0.85rem;
+      margin-bottom: 0.8rem;
+      font-style: italic;
     }
 
     .basic .plan-name {
@@ -384,7 +423,7 @@
     }
 
     .price-container {
-      margin: 1rem 0;
+      margin: 0.5rem 0 1rem 0;
       padding: 0.8rem 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
@@ -395,6 +434,7 @@
       display: flex;
       align-items: baseline;
       gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
     .current-price span {
@@ -407,7 +447,7 @@
       color: #888;
       text-decoration: line-through;
       font-size: 1rem;
-      margin-top: 0.2rem;
+      margin-left: 0.5rem;
     }
 
     .save-badge {
@@ -418,7 +458,7 @@
       color: #4caf50;
       border: 1px solid rgba(76, 175, 80, 0.3);
       display: inline-block;
-      margin: 0.3rem 0;
+      margin-left: 0.5rem;
     }
 
     .annual-option {
@@ -452,7 +492,7 @@
 
     .features-list {
       flex: 1;
-      margin: 1rem 0;
+      margin: 0.5rem 0;
       display: flex;
       flex-direction: column;
       gap: 0.7rem;
@@ -546,6 +586,263 @@
       background: #ff00ff;
       color: black;
       box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+    }
+
+    .booking-form-section {
+      margin: 2rem 0 4rem 0;
+    }
+
+    .selected-plan-box {
+      background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+      border-radius: 2rem;
+      padding: 2rem;
+      border: 2px solid;
+      margin-bottom: 2rem;
+    }
+
+    .selected-plan-box.basic {
+      border-color: #00ff00;
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
+    }
+
+    .selected-plan-box.popular {
+      border-color: #FFD700;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    }
+
+    .selected-plan-box.pro {
+      border-color: #ff00ff;
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.2);
+    }
+
+    .selected-plan-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .selected-plan-title {
+      font-size: 2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .plan-switch-select {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .plan-switch-select option {
+      background: #1a1a1a;
+    }
+
+    .payment-interval {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .interval-option {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 40px;
+      padding: 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .interval-option.active {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .interval-option .price {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .interval-option .saving {
+      font-size: 0.8rem;
+      color: #4caf50;
+    }
+
+    .booking-form {
+      background: rgba(10, 10, 10, 0.8);
+      border-radius: 2rem;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      color: #aaa;
+      font-size: 0.85rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 40px;
+      padding: 0.8rem 1.2rem;
+      color: white;
+      font-size: 0.95rem;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: white;
+    }
+
+    .business-toggle {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 40px;
+    }
+
+    .toggle-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 0.5rem 2rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-btn.active {
+      background: white;
+      color: black;
+      border-color: white;
+    }
+
+    .business-fields {
+      display: none;
+    }
+
+    .business-fields.visible {
+      display: block;
+    }
+
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .payment-method {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 40px;
+      padding: 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .payment-method.active {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: white;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .payment-method.disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .payment-method i {
+      margin-right: 0.5rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #00ff00, #00cc00);
+      border: none;
+      padding: 1rem;
+      border-radius: 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1.5rem;
+    }
+
+    .submit-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+    }
+
+    .success-screen {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .success-icon {
+      font-size: 5rem;
+      color: #00ff00;
+      filter: drop-shadow(0 0 30px rgba(0, 255, 0, 0.5));
+      margin-bottom: 2rem;
+    }
+
+    .success-screen h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+    }
+
+    .success-screen p {
+      color: #aaa;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .back-home-btn {
+      display: inline-block;
+      background: white;
+      color: black;
+      padding: 1rem 3rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .back-home-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
     }
 
     .flow-footer {
@@ -679,6 +976,9 @@
       .pricing-card.popular:hover {
         transform: scale(1.03);
       }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
       .flow-footer-content {
         flex-direction: column;
         align-items: flex-start;
@@ -758,118 +1058,269 @@
       </button>
     </div>
 
-    <div class="pricing-header">
-      <h1>Preise & Pläne</h1>
-      <p>Wählen Sie den perfekten Plan für Ihr Unternehmen</p>
+    <!-- Pricing Section -->
+    <div id="pricingSection">
+      <div class="pricing-header">
+        <h1 class="fade-element" id="pricingTitle">Preise & Pläne</h1>
+        <p class="fade-element fade-element-delay-1" id="pricingSubtitle">Wählen Sie den perfekten Plan für Ihr Unternehmen</p>
+      </div>
+
+      <div class="pricing-grid" id="pricingGrid">
+        <!-- Basic Plan -->
+        <div class="pricing-card basic fade-element fade-element-delay-2" id="basicCard">
+          <div class="plan-name">
+            <i class="fas fa-star"></i> Basic
+          </div>
+          <div class="trial-period">48 Stunden Testphase</div>
+          <div class="price-container">
+            <div class="current-price">79,00 € <span>/Monat</span> <span class="old-price">83,00 €</span> <span class="save-badge">5% sparen</span></div>
+            
+            <div class="annual-option">
+              <div class="annual-price">
+                <strong>711,00 €</strong> <span>/Jahr</span>
+                <span class="annual-save">+5% extra Rabatt</span>
+              </div>
+              <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 59,25 €</div>
+            </div>
+          </div>
+          <div class="features-list">
+            <div class="feature-subtitle">Support</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Basic Support</div>
+            
+            <div class="feature-subtitle">Für wen</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Kleine Unternehmen, einfacher Chatbot für Website</div>
+            
+            <div class="feature-subtitle">Models</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Zugang zu allen Modellen: OpenAI, Anthropic, Gemini, DeepSeek, Grok, Meta, Moonshot AI</div>
+            
+            <div class="feature-subtitle">Features</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> 5 aktivierte AI-Aktionen für Ihren Chatbot</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> 10 MB für Ihren KI-Agenten</div>
+            
+            <div class="feature-subtitle">Integrationen</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Shopify, Whatsapp, Instagram, Messenger, Slack, Calendly, Wordpress</div>
+            
+            <div class="feature-subtitle">Analytics</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Basis-Analytics wöchentlich per E-Mail</div>
+          </div>
+          <button class="select-btn" onclick="selectPlan('basic', 'Basic', 'basic')">Meeting vereinbaren</button>
+        </div>
+
+        <!-- Standard Plan (Popular) -->
+        <div class="pricing-card popular fade-element fade-element-delay-3" id="standardCard">
+          <div class="popular-badge">Beliebt</div>
+          <div class="plan-name">
+            <i class="fas fa-star"></i> Standard
+          </div>
+          <div class="trial-period">3 Tage Testphase</div>
+          <div class="price-container">
+            <div class="current-price">190,00 € <span>/Monat</span> <span class="old-price">210,00 €</span> <span class="save-badge">10% sparen</span></div>
+            
+            <div class="annual-option">
+              <div class="annual-price">
+                <strong>1.938,00 €</strong> <span>/Jahr</span>
+                <span class="annual-save">+5% extra Rabatt</span>
+              </div>
+              <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 161,50 €</div>
+            </div>
+          </div>
+          <div class="features-list">
+            <div class="feature-subtitle">Support</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Premium Support</div>
+            
+            <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Basic enthalten</strong></div>
+            
+            <div class="feature-subtitle">Features</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> 8 aktivierte AI-Aktionen für Ihren Chatbot</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> 20 MB für Ihren KI-Agenten</div>
+            
+            <div class="feature-subtitle">Personalisierung</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Ihr Agent erkennt eingeloggte Benutzer und antwortet mit personalisierten Informationen</div>
+            
+            <div class="feature-subtitle">Automatisierung</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Automatisches Retraining alle 24 Stunden</div>
+          </div>
+          <button class="select-btn" onclick="selectPlan('standard', 'Standard', 'popular')">Meeting vereinbaren</button>
+        </div>
+
+        <!-- Pro Plan -->
+        <div class="pricing-card pro fade-element fade-element-delay-4" id="proCard">
+          <div class="plan-name">
+            <i class="fas fa-star"></i> Pro
+          </div>
+          <div class="trial-period">7 Tage Testphase</div>
+          <div class="price-container">
+            <div class="current-price">479,00 € <span>/Monat</span> <span class="old-price">600,00 €</span> <span class="save-badge">20% sparen</span></div>
+            
+            <div class="annual-option">
+              <div class="annual-price">
+                <strong>4.598,00 €</strong> <span>/Jahr</span>
+                <span class="annual-save">+5% extra Rabatt</span>
+              </div>
+              <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 383,17 €</div>
+            </div>
+          </div>
+          <div class="features-list">
+            <div class="feature-subtitle">Support</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Premium Support</div>
+            
+            <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Standard enthalten</strong></div>
+            
+            <div class="feature-subtitle">Features</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> 12 aktivierte AI-Aktionen für Ihren Chatbot</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> 40 MB für Ihren KI-Agenten</div>
+            
+            <div class="feature-subtitle">Analytics</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Erweiterte Analytics auf Anfrage per E-Mail</div>
+            
+            <div class="feature-subtitle">Quellen</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Quellen-Vorschläge (Erkennt Content-Lücken, erkennt widersprüchliche Quellen)</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Tickets als Quelle (Trainieren Sie Ihren Agenten mit Zendesk- und Salesforce-Tickets)</div>
+          </div>
+          <button class="select-btn" onclick="selectPlan('pro', 'Pro', 'pro')">Meeting vereinbaren</button>
+        </div>
+      </div>
     </div>
 
-    <div class="pricing-grid">
-      <!-- Basic Plan -->
-      <div class="pricing-card basic">
-        <div class="plan-name">
-          <i class="fas fa-star"></i> Basic
-        </div>
-        <div class="price-container">
-          <div class="current-price">79,00 € <span>/Monat</span></div>
-          <div class="old-price">83,00 €</div>
-          <div class="save-badge">5% sparen</div>
-          
-          <div class="annual-option">
-            <div class="annual-price">
-              <strong>711,00 €</strong> <span>/Jahr</span>
-              <span class="annual-save">+5% extra Rabatt</span>
-            </div>
-            <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 59,25 €</div>
-          </div>
-        </div>
-        <div class="features-list">
-          <div class="feature-subtitle">Für wen</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> Kleine Unternehmen, einfacher Chatbot für Website</div>
-          
-          <div class="feature-subtitle">Models</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> Zugang zu allen Modellen: OpenAI, Anthropic, Gemini, DeepSeek, Grok, Meta, Moonshot AI</div>
-          
-          <div class="feature-subtitle">Features</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> 5 aktivierte AI-Aktionen für Ihren Chatbot</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> 10 MB für Ihren KI-Agenten</div>
-          
-          <div class="feature-subtitle">Integrationen</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> Shopify, Whatsapp, Instagram, Messenger, Slack, Calendly, Wordpress</div>
-          
-          <div class="feature-subtitle">Analytics</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> Basis-Analytics wöchentlich per E-Mail</div>
-        </div>
-        <button class="select-btn">Meeting vereinbaren</button>
+    <!-- Booking Form Section (initially hidden) -->
+    <div id="bookingSection" class="hidden-section">
+      <div class="pricing-header">
+        <h1 class="fade-element" id="bookingTitle">Meeting vereinbaren</h1>
+        <p class="fade-element fade-element-delay-1" id="bookingSubtitle">Vereinbare ein Meeting mit uns und wir erzählen dir alles über unsere Chatbots und helfen dir deinen Chatbot einzurichten.</p>
       </div>
 
-      <!-- Standard Plan (Popular) -->
-      <div class="pricing-card popular">
-        <div class="popular-badge">Beliebt</div>
-        <div class="plan-name">
-          <i class="fas fa-star"></i> Standard
-        </div>
-        <div class="price-container">
-          <div class="current-price">190,00 € <span>/Monat</span></div>
-          <div class="old-price">210,00 €</div>
-          <div class="save-badge">10% sparen</div>
-          
-          <div class="annual-option">
-            <div class="annual-price">
-              <strong>1.938,00 €</strong> <span>/Jahr</span>
-              <span class="annual-save">+5% extra Rabatt</span>
+      <div class="booking-form-section fade-element fade-element-delay-2" id="bookingFormSection">
+        <!-- Selected Plan Box -->
+        <div class="selected-plan-box" id="selectedPlanBox">
+          <div class="selected-plan-header">
+            <div class="selected-plan-title">
+              <i class="fas fa-star" id="selectedPlanIcon"></i>
+              <span id="selectedPlanName">Basic</span>
             </div>
-            <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 161,50 €</div>
+            <select class="plan-switch-select" id="planSwitch" onchange="switchPlan(this.value)">
+              <option value="basic">Basic wechseln</option>
+              <option value="standard">Standard wechseln</option>
+              <option value="pro">Pro wechseln</option>
+            </select>
           </div>
-        </div>
-        <div class="features-list">
-          <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Basic enthalten +:</strong></div>
-          
-          <div class="feature-subtitle">Features</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> 8 aktivierte AI-Aktionen für Ihren Chatbot</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> 20 MB für Ihren KI-Agenten</div>
-          
-          <div class="feature-subtitle">Personalisierung</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> Ihr Agent erkennt eingeloggte Benutzer und antwortet mit personalisierten Informationen</div>
-          
-          <div class="feature-subtitle">Automatisierung</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> Automatisches Retraining alle 24 Stunden</div>
-        </div>
-        <button class="select-btn">Meeting vereinbaren</button>
-      </div>
 
-      <!-- Pro Plan -->
-      <div class="pricing-card pro">
-        <div class="plan-name">
-          <i class="fas fa-star"></i> Pro
-        </div>
-        <div class="price-container">
-          <div class="current-price">479,00 € <span>/Monat</span></div>
-          <div class="old-price">600,00 €</div>
-          <div class="save-badge">20% sparen</div>
-          
-          <div class="annual-option">
-            <div class="annual-price">
-              <strong>4.598,00 €</strong> <span>/Jahr</span>
-              <span class="annual-save">+5% extra Rabatt</span>
+          <!-- Payment Interval -->
+          <div class="payment-interval" id="paymentInterval">
+            <div class="interval-option active" data-interval="monthly" onclick="setInterval('monthly')">
+              <div class="price" id="monthlyPrice">79,00 €</div>
+              <div class="saving" id="monthlySaving">5% sparen</div>
+              <div style="font-size: 0.8rem;">monatlich</div>
             </div>
-            <div style="color: #888; font-size: 0.75rem; margin-top: 0.2rem;">monatlich 383,17 €</div>
+            <div class="interval-option" data-interval="yearly" onclick="setInterval('yearly')">
+              <div class="price" id="yearlyPrice">711,00 €</div>
+              <div class="saving" id="yearlySaving">+5% extra</div>
+              <div style="font-size: 0.8rem;">jährlich</div>
+            </div>
           </div>
         </div>
-        <div class="features-list">
-          <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Standard enthalten +:</strong></div>
-          
-          <div class="feature-subtitle">Features</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> 12 aktivierte AI-Aktionen für Ihren Chatbot</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> 40 MB für Ihren KI-Agenten</div>
-          
-          <div class="feature-subtitle">Analytics</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> Erweiterte Analytics auf Anfrage per E-Mail</div>
-          
-          <div class="feature-subtitle">Quellen</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> Quellen-Vorschläge (Erkennt Content-Lücken, erkennt widersprüchliche Quellen)</div>
-          <div class="feature-item"><i class="fas fa-circle-check"></i> Tickets als Quelle (Trainieren Sie Ihren Agenten mit Zendesk- und Salesforce-Tickets)</div>
+
+        <!-- Booking Form -->
+        <div class="booking-form">
+          <form id="bookingForm" onsubmit="submitForm(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Vorname *</label>
+                <input type="text" id="firstName" required>
+              </div>
+              <div class="form-group">
+                <label>Nachname *</label>
+                <input type="text" id="lastName" required>
+              </div>
+            </div>
+
+            <!-- Business Toggle -->
+            <div class="business-toggle">
+              <span>Für ein Unternehmen?</span>
+              <div>
+                <button type="button" class="toggle-btn active" id="businessNo" onclick="setBusiness(false)">Nein</button>
+                <button type="button" class="toggle-btn" id="businessYes" onclick="setBusiness(true)">Ja</button>
+              </div>
+            </div>
+
+            <!-- Business Fields (hidden by default) -->
+            <div class="business-fields" id="businessFields">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Unternehmensname *</label>
+                  <input type="text" id="companyName">
+                </div>
+                <div class="form-group">
+                  <label>Rechtlicher Inhaber *</label>
+                  <input type="text" id="legalOwner">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Unternehmensort (optional)</label>
+                  <input type="text" id="companyLocation">
+                </div>
+                <div class="form-group">
+                  <label>Postleitzahl (optional)</label>
+                  <input type="text" id="postalCode">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Unternehmensnummer (optional)</label>
+                <input type="text" id="businessNumber">
+              </div>
+            </div>
+
+            <!-- Contact Fields -->
+            <div class="form-row">
+              <div class="form-group">
+                <label>Telefon (optional)</label>
+                <input type="tel" id="phone">
+              </div>
+              <div class="form-group">
+                <label>E-Mail *</label>
+                <input type="email" id="email" required>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>E-Mail bestätigen *</label>
+              <input type="email" id="confirmEmail" required>
+            </div>
+
+            <!-- Payment Methods -->
+            <div style="margin: 1rem 0; color: #aaa;">Zahlungsmethode wählen</div>
+            <div class="payment-methods">
+              <div class="payment-method active" data-method="paypal" onclick="setPaymentMethod('paypal')">
+                <i class="fab fa-paypal"></i> PayPal
+              </div>
+              <div class="payment-method" data-method="paysafecard" id="paysafeMethod" onclick="setPaymentMethod('paysafecard')">
+                <i class="fas fa-credit-card"></i> Paysafecard
+              </div>
+              <div class="payment-method" data-method="applepay" onclick="setPaymentMethod('applepay')">
+                <i class="fab fa-apple"></i> Apple Pay
+              </div>
+              <div class="payment-method" data-method="googlepay" onclick="setPaymentMethod('googlepay')">
+                <i class="fab fa-google"></i> Google Pay
+              </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Meeting anfragen</button>
+          </form>
         </div>
-        <button class="select-btn">Meeting vereinbaren</button>
+      </div>
+    </div>
+
+    <!-- Success Screen (initially hidden) -->
+    <div id="successSection" class="hidden-section">
+      <div class="success-screen fade-element">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Formular erfolgreich abgesendet!</h2>
+        <p>Sie erhalten in Kürze (24 bis 48 Stunden) eine E-Mail.</p>
+        <p style="color: #888; font-size: 0.9rem;">Wenn die E-Mail nicht ankommt, überprüfen Sie bitte Ihren Spam-Ordner.</p>
+        <p style="color: #888; font-size: 0.9rem;">Bitte erstellen Sie keine weiteren Formulare!</p>
+        <a href="https://www.flow-chat.de/" class="back-home-btn">Zurück zur Startseite</a>
       </div>
     </div>
 
@@ -903,32 +1354,224 @@
   </div>
 
   <script>
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
-    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
-
-    function toggleMobileMenu() {
-      mobileMenu.classList.toggle('active');
-      mobileMenuOverlay.classList.toggle('active');
-      document.body.classList.toggle('no-scroll');
-    }
-
-    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-    mobileCloseBtn.addEventListener('click', toggleMobileMenu);
-    mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
-
-    mobileMenuLinks.forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const href = this.getAttribute('href');
-        toggleMobileMenu();
+    // Animation on load
+    document.addEventListener('DOMContentLoaded', function() {
+      const fadeElements = document.querySelectorAll('.fade-element');
+      fadeElements.forEach(el => {
         setTimeout(() => {
-          window.location.href = href;
-        }, 300);
+          el.classList.add('visible');
+        }, 100);
       });
     });
+
+    // State variables
+    let currentPlan = 'basic';
+    let currentPlanType = 'Basic';
+    let currentPlanClass = 'basic';
+    let currentInterval = 'monthly';
+    let isBusiness = false;
+    let currentPaymentMethod = 'paypal';
+
+    // Plan data
+    const planData = {
+      basic: {
+        name: 'Basic',
+        class: 'basic',
+        icon: 'fas fa-star',
+        monthlyPrice: '79,00 €',
+        yearlyPrice: '711,00 €',
+        monthlySaving: '5% sparen',
+        yearlySaving: '+5% extra',
+        monthlyOld: '83,00 €',
+        yearlyOld: '948,00 €',
+        paysafe: true
+      },
+      standard: {
+        name: 'Standard',
+        class: 'popular',
+        icon: 'fas fa-star',
+        monthlyPrice: '190,00 €',
+        yearlyPrice: '1.938,00 €',
+        monthlySaving: '10% sparen',
+        yearlySaving: '+5% extra',
+        monthlyOld: '210,00 €',
+        yearlyOld: '2.280,00 €',
+        paysafe: false
+      },
+      pro: {
+        name: 'Pro',
+        class: 'pro',
+        icon: 'fas fa-star',
+        monthlyPrice: '479,00 €',
+        yearlyPrice: '4.598,00 €',
+        monthlySaving: '20% sparen',
+        yearlySaving: '+5% extra',
+        monthlyOld: '600,00 €',
+        yearlyOld: '5.748,00 €',
+        paysafe: false
+      }
+    };
+
+    function selectPlan(planId, planName, planClass) {
+      currentPlan = planId;
+      currentPlanType = planName;
+      currentPlanClass = planClass;
+
+      // Hide pricing section with fade
+      const pricingSection = document.getElementById('pricingSection');
+      const pricingElements = pricingSection.querySelectorAll('.fade-element');
+      pricingElements.forEach(el => {
+        el.classList.remove('visible');
+      });
+
+      setTimeout(() => {
+        pricingSection.classList.add('hidden-section');
+        
+        // Show booking section with fade
+        const bookingSection = document.getElementById('bookingSection');
+        bookingSection.classList.remove('hidden-section');
+        
+        const bookingElements = bookingSection.querySelectorAll('.fade-element');
+        bookingElements.forEach(el => {
+          setTimeout(() => {
+            el.classList.add('visible');
+          }, 100);
+        });
+
+        // Update selected plan box
+        updateSelectedPlanBox();
+      }, 600);
+    }
+
+    function updateSelectedPlanBox() {
+      const box = document.getElementById('selectedPlanBox');
+      box.className = `selected-plan-box ${currentPlanClass}`;
+      
+      document.getElementById('selectedPlanIcon').className = `fas fa-star ${currentPlanClass}`;
+      document.getElementById('selectedPlanName').textContent = currentPlanType;
+      
+      document.getElementById('planSwitch').value = currentPlan;
+      
+      // Update prices
+      document.getElementById('monthlyPrice').textContent = planData[currentPlan].monthlyPrice;
+      document.getElementById('yearlyPrice').textContent = planData[currentPlan].yearlyPrice;
+      document.getElementById('monthlySaving').textContent = planData[currentPlan].monthlySaving;
+      document.getElementById('yearlySaving').textContent = planData[currentPlan].yearlySaving;
+      
+      // Update paysafecard availability
+      const paysafeMethod = document.getElementById('paysafeMethod');
+      if (planData[currentPlan].paysafe) {
+        paysafeMethod.classList.remove('disabled');
+        paysafeMethod.style.opacity = '1';
+        paysafeMethod.style.cursor = 'pointer';
+      } else {
+        paysafeMethod.classList.add('disabled');
+        paysafeMethod.style.opacity = '0.3';
+        paysafeMethod.style.cursor = 'not-allowed';
+        if (currentPaymentMethod === 'paysafecard') {
+          setPaymentMethod('paypal');
+        }
+      }
+    }
+
+    function switchPlan(planId) {
+      selectPlan(planId, planData[planId].name, planData[planId].class);
+    }
+
+    function setInterval(interval) {
+      currentInterval = interval;
+      
+      // Update active class
+      document.querySelectorAll('.interval-option').forEach(el => {
+        el.classList.remove('active');
+      });
+      document.querySelector(`[data-interval="${interval}"]`).classList.add('active');
+    }
+
+    function setBusiness(value) {
+      isBusiness = value;
+      
+      // Update toggle buttons
+      document.getElementById('businessNo').classList.toggle('active', !value);
+      document.getElementById('businessYes').classList.toggle('active', value);
+      
+      // Show/hide business fields
+      const businessFields = document.getElementById('businessFields');
+      if (value) {
+        businessFields.classList.add('visible');
+      } else {
+        businessFields.classList.remove('visible');
+      }
+    }
+
+    function setPaymentMethod(method) {
+      if (method === 'paysafecard' && !planData[currentPlan].paysafe) {
+        return; // Paysafecard not available for this plan
+      }
+      
+      currentPaymentMethod = method;
+      
+      // Update active class
+      document.querySelectorAll('.payment-method').forEach(el => {
+        el.classList.remove('active');
+      });
+      document.querySelector(`[data-method="${method}"]`).classList.add('active');
+    }
+
+    function submitForm(event) {
+      event.preventDefault();
+
+      // Validate email match
+      const email = document.getElementById('email').value;
+      const confirmEmail = document.getElementById('confirmEmail').value;
+      
+      if (email !== confirmEmail) {
+        alert('E-Mail-Adressen stimmen nicht überein!');
+        return;
+      }
+
+      // Validate business fields if business is true
+      if (isBusiness) {
+        if (!document.getElementById('companyName').value || !document.getElementById('legalOwner').value) {
+          alert('Bitte füllen Sie alle Pflichtfelder für Ihr Unternehmen aus.');
+          return;
+        }
+      }
+
+      // Here you would normally send to EmailJS
+      console.log('Form submitted:', {
+        plan: currentPlan,
+        interval: currentInterval,
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: email,
+        phone: document.getElementById('phone').value,
+        isBusiness: isBusiness,
+        paymentMethod: currentPaymentMethod
+      });
+
+      // Fade out booking section
+      const bookingSection = document.getElementById('bookingSection');
+      const bookingElements = bookingSection.querySelectorAll('.fade-element');
+      bookingElements.forEach(el => {
+        el.classList.remove('visible');
+      });
+
+      setTimeout(() => {
+        bookingSection.classList.add('hidden-section');
+        
+        // Show success section
+        const successSection = document.getElementById('successSection');
+        successSection.classList.remove('hidden-section');
+        
+        const successElements = successSection.querySelectorAll('.fade-element');
+        successElements.forEach(el => {
+          setTimeout(() => {
+            el.classList.add('visible');
+          }, 100);
+        });
+      }, 600);
+    }
   </script>
 </body>
 </html>
