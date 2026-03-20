@@ -637,37 +637,61 @@
       width: 100%;
       border-radius: 1.5rem;
       overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
       position: relative;
+      background: transparent;
     }
 
-    .preview-image:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 60px rgba(255, 255, 255, 0.5);
-    }
-
-    .image-wrapper {
+    .image-container {
       position: relative;
       width: 100%;
-      overflow: hidden;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .theme-img {
       width: 100%;
       height: auto;
       display: block;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 1.5rem;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
     }
 
-    .theme-img.slide-down {
-      transform: translateY(100%);
-      opacity: 0;
+    .preview-image:hover .theme-img {
+      transform: scale(1.02);
+      box-shadow: 0 0 60px rgba(255, 255, 255, 0.5);
     }
 
-    .theme-img.slide-up {
-      transform: translateY(-100%);
-      opacity: 0;
+    .theme-img.fade-out {
+      animation: fadeOutScale 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .theme-img.fade-in {
+      animation: fadeInScale 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+    }
+
+    @keyframes fadeOutScale {
+      0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0.95) translateY(30px);
+      }
+    }
+
+    @keyframes fadeInScale {
+      0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(-30px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
     }
 
     .flow-footer {
@@ -858,6 +882,9 @@
       .toggle-option {
         padding: 0.5rem 1rem;
       }
+      .image-container {
+        min-height: 250px;
+      }
     }
   </style>
 </head>
@@ -1015,7 +1042,7 @@
           </div>
         </div>
         <div class="preview-image">
-          <div class="image-wrapper">
+          <div class="image-container">
             <img src="Dark.png" alt="Theme Preview" class="theme-img" id="themeImage">
           </div>
         </div>
@@ -1110,16 +1137,18 @@
         return;
       }
       
-      themeImage.classList.add(toDark ? 'slide-down' : 'slide-up');
+      themeImage.classList.add('fade-out');
       
       setTimeout(() => {
         themeImage.src = newSrc;
-        themeImage.classList.remove(toDark ? 'slide-down' : 'slide-up');
+        themeImage.classList.remove('fade-out');
+        themeImage.classList.add('fade-in');
         
         setTimeout(() => {
+          themeImage.classList.remove('fade-in');
           isAnimating = false;
-        }, 50);
-      }, 250);
+        }, 400);
+      }, 300);
     }
 
     toggleOptions.forEach(option => {
