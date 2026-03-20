@@ -1144,18 +1144,21 @@
         return;
       }
       
-      themeImage.classList.add('fade-out');
+      themeImage.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+      themeImage.style.opacity = '0';
+      themeImage.style.transform = 'scale(0.95) translateY(20px)';
       
       setTimeout(() => {
         themeImage.src = newSrc;
-        themeImage.classList.remove('fade-out');
-        themeImage.classList.add('fade-in');
+        themeImage.style.transition = 'all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
+        themeImage.style.opacity = '1';
+        themeImage.style.transform = 'scale(1) translateY(0)';
         
         setTimeout(() => {
-          themeImage.classList.remove('fade-in');
+          themeImage.style.transition = '';
           isAnimating = false;
         }, 400);
-      }, 300);
+      }, 400);
     }
 
     toggleOptions.forEach(option => {
