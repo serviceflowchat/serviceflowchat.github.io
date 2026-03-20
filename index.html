@@ -638,14 +638,6 @@
       position: relative;
     }
 
-    .image-container {
-      position: relative;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
     .theme-img {
       width: 100%;
       height: auto;
@@ -655,50 +647,6 @@
 
     .preview-image:hover .theme-img {
       transform: scale(1.05);
-    }
-
-    @keyframes fadeOutScale {
-      0% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(0.92) translateY(40px);
-      }
-    }
-
-    @keyframes fadeInScale {
-      0% {
-        opacity: 0;
-        transform: scale(0.92) translateY(-40px);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-
-    @keyframes fadeOutScale {
-      0% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(0.95) translateY(30px);
-      }
-    }
-
-    @keyframes fadeInScale {
-      0% {
-        opacity: 0;
-        transform: scale(0.95) translateY(-30px);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
     }
 
     .flow-footer {
@@ -889,13 +837,15 @@
       .toggle-option {
         padding: 0.5rem 1rem;
       }
-      .image-container {
-        min-height: 250px;
-      }
     }
   </style>
 </head>
 <body>
+  <div style="display: none;">
+    <img src="Dark.png" alt="preload dark">
+    <img src="Light.png" alt="preload light">
+  </div>
+
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
   <div class="mobile-menu" id="mobileMenu">
@@ -1049,9 +999,7 @@
           </div>
         </div>
         <div class="preview-image">
-          <div class="image-container">
-            <img src="Dark.png" alt="Theme Preview" class="theme-img" id="themeImage">
-          </div>
+          <img src="Dark.png" alt="Theme Preview" class="theme-img" id="themeImage">
         </div>
       </div>
     </div>
@@ -1150,14 +1098,17 @@
       
       setTimeout(() => {
         themeImage.src = newSrc;
-        themeImage.style.transition = 'opacity 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
-        themeImage.style.opacity = '1';
-        themeImage.style.transform = 'scale(1) translateY(0)';
         
         setTimeout(() => {
-          themeImage.style.transition = '';
-          isAnimating = false;
-        }, 400);
+          themeImage.style.transition = 'opacity 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
+          themeImage.style.opacity = '1';
+          themeImage.style.transform = 'scale(1) translateY(0)';
+          
+          setTimeout(() => {
+            themeImage.style.transition = '';
+            isAnimating = false;
+          }, 400);
+        }, 50);
       }, 400);
     }
 
