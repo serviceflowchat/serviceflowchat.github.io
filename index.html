@@ -33,6 +33,37 @@
       flex-direction: column;
     }
 
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    .delay-4 {
+      transition-delay: 0.4s;
+    }
+
+    .delay-5 {
+      transition-delay: 0.5s;
+    }
+
     .flow-nav {
       display: flex;
       justify-content: space-between;
@@ -41,6 +72,16 @@
       border-bottom: 1px solid rgba(255,255,255,0.05);
       margin-bottom: 2rem;
       position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: navFadeIn 0.8s ease forwards;
+    }
+
+    @keyframes navFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .flow-logo-wrapper {
@@ -121,7 +162,6 @@
     }
 
     .mobile-menu-btn:hover {
-      color: var(--accent-color);
       text-shadow: 0 0 15px rgba(255,255,255,0.7);
     }
 
@@ -761,18 +801,10 @@
       </button>
     </div>
     <div class="mobile-menu-content">
-      <a href="https://www.flow-chat.de/" class="mobile-menu-link" data-page="home">
-        <i class="fas fa-home"></i> Home
-      </a>
-      <a href="/guide" class="mobile-menu-link" data-page="guide">
-        <i class="fas fa-compass"></i> Erklärung
-      </a>
-      <a href="/contact" class="mobile-menu-link" data-page="contact">
-        <i class="fas fa-envelope"></i> Kontakt
-      </a>
-      <a href="/pricing" class="mobile-menu-link" data-page="pricing">
-        <i class="fas fa-euro-sign"></i> Preise
-      </a>
+      <a href="https://www.flow-chat.de/" class="mobile-menu-link"><i class="fas fa-home"></i> Home</a>
+      <a href="/guide" class="mobile-menu-link"><i class="fas fa-compass"></i> Erklärung</a>
+      <a href="/contact" class="mobile-menu-link"><i class="fas fa-envelope"></i> Kontakt</a>
+      <a href="/pricing" class="mobile-menu-link"><i class="fas fa-euro-sign"></i> Preise</a>
     </div>
   </div>
 
@@ -783,7 +815,7 @@
         <div class="flow-logo-text">Flow-chat<span>.de</span></div>
       </div>
       <div class="flow-nav-right">
-        <a href="https://www.flow-chat.de/" target="_self">Home</a>
+        <a href="https://www.flow-chat.de/">Home</a>
         <a href="/guide">Erklärung</a>
         <a href="/contact">Kontakt</a>
         <a href="/pricing">Preise</a>
@@ -795,17 +827,17 @@
 
     <div class="flow-hero">
       <div>
-        <h1 class="flow-headline">
+        <h1 class="flow-headline fade-up visible" id="heroTitle">
           <span>KI-Agenten für</span>
           <span>einzigartige</span>
           <span>Kundenerlebnisse</span>
         </h1>
-        <p class="flow-subheadline">
+        <p class="flow-subheadline fade-up delay-1 visible" id="heroText">
           FlowChat ist die umfassende Plattform zum Erstellen<br>
           und Bereitstellen von KI-Supportagenten<br>
           für Ihr Unternehmen.
         </p>
-        <div class="flow-cta-group">
+        <div class="flow-cta-group fade-up delay-2 visible" id="heroCta">
           <a href="/pricing" class="flow-button">
             Meeting vereinbaren
           </a>
@@ -815,7 +847,7 @@
           </div>
         </div>
       </div>
-      <div class="flow-video-placeholder">
+      <div class="flow-video-placeholder fade-up delay-3 visible" id="heroVideo">
         <video class="flow-video-player" controls playsinline preload="metadata" poster="Showcase2.png">
           <source src="Showcase.mov" type="video/mp4">
           <source src="Showcase.mov" type="video/quicktime">
@@ -825,26 +857,26 @@
 
     <div class="flow-feature-section">
       <div class="flow-feature-header">
-        <div class="flow-feature-title">Die vollständige Plattform für KI-Supportagenten</div>
-        <div class="flow-feature-description">Flowchat wurde entwickelt, um KI-gestützte Kundensupport-Agenten zu erstellen, die die schwierigsten Probleme Ihrer Kunden lösen und gleichzeitig Ihre Geschäftsergebnisse verbessern.</div>
+        <div class="flow-feature-title fade-up" id="featureTitle">Die vollständige Plattform für KI-Supportagenten</div>
+        <div class="flow-feature-description fade-up delay-1" id="featureDesc">Flowchat wurde entwickelt, um KI-gestützte Kundensupport-Agenten zu erstellen, die die schwierigsten Probleme Ihrer Kunden lösen und gleichzeitig Ihre Geschäftsergebnisse verbessern.</div>
       </div>
 
       <div class="flow-showcase">
-        <div class="flow-showcase-item">
+        <div class="flow-showcase-item fade-up" id="showcase1">
           <div class="flow-showcase-image">
             <img src="purpose-built-for-llms.png" alt="LLMs" onerror="this.style.background='#222'">
           </div>
           <h3>Speziell für LLMs entwickelt</h3>
           <p>Sprachmodelle mit logischen Schlussfolgerungsfähigkeiten für die effektive Lösung komplexer Kundensupport-Anfragen.</p>
         </div>
-        <div class="flow-showcase-item">
+        <div class="flow-showcase-item fade-up delay-1" id="showcase2">
           <div class="flow-showcase-image">
             <img src="designed-for-simplicity.png" alt="Simplicity" onerror="this.style.background='#222'">
           </div>
           <h3>Für maximale Einfachheit entwickelt</h3>
           <p>KI-Agenten einfach bei uns erstellen und individuell gestalten – Sie müssen uns nur kontaktieren.</p>
         </div>
-        <div class="flow-showcase-item">
+        <div class="flow-showcase-item fade-up delay-2" id="showcase3">
           <div class="flow-showcase-image">
             <img src="engineered-for-security.png" alt="Security" onerror="this.style.background='#222'">
           </div>
@@ -854,7 +886,7 @@
       </div>
 
       <div class="flow-feature-boxes">
-        <div class="flow-feature-box">
+        <div class="flow-feature-box fade-up" id="box1">
           <div class="flow-box-header">
             <div class="flow-box-icon">
               <i class="fas fa-code"></i>
@@ -865,7 +897,7 @@
             APIs, Client-Bibliotheken und Komponenten, um Support tief in Ihr Produkt zu integrieren.
           </div>
         </div>
-        <div class="flow-feature-box">
+        <div class="flow-feature-box fade-up delay-1" id="box2">
           <div class="flow-box-header">
             <div class="flow-box-icon">
               <i class="fas fa-paint-brush"></i>
@@ -879,11 +911,11 @@
       </div>
 
       <div class="flow-custom-section">
-        <div class="flow-custom-left">
+        <div class="flow-custom-left fade-up" id="customLeft">
           <h2>Custom ChatBox</h2>
           <p>Volles Chat-Interface nach Ihren Wünschen – wir passen jede Farbe, jedes Design, jede Antwort, jeden Link, alle Vorschläge und noch vieles mehr an.</p>
         </div>
-        <div class="flow-custom-right">
+        <div class="flow-custom-right fade-up delay-1" id="customRight">
           <div class="flow-custom-image">
             <img src="design1.png" alt="Design 1" onerror="this.style.background='#222'">
           </div>
@@ -953,6 +985,25 @@
         }, 300);
       });
     });
+
+    const fadeElements = document.querySelectorAll('.fade-up');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeElements.forEach(element => {
+      observer.observe(element);
+    });
+
+    document.getElementById('heroTitle').classList.add('visible');
+    document.getElementById('heroText').classList.add('visible');
+    document.getElementById('heroCta').classList.add('visible');
+    document.getElementById('heroVideo').classList.add('visible');
   </script>
 </body>
 </html>
