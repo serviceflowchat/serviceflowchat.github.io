@@ -398,94 +398,6 @@
       background: #0c0c0c;
     }
 
-    .design-preview-section {
-      margin: 5rem 0;
-    }
-
-    .design-preview-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .design-text h2 {
-      font-size: 2.8rem;
-      font-weight: 600;
-      color: white;
-      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-
-    .design-text p {
-      color: #aaa;
-      font-size: 1rem;
-      margin-bottom: 2rem;
-      line-height: 1.6;
-    }
-
-    .toggle-switch {
-      display: inline-flex;
-      align-items: center;
-      gap: 1rem;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 0.5rem 1rem;
-      border-radius: 60px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .toggle-switch:hover {
-      border-color: rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .toggle-option {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1rem;
-      border-radius: 40px;
-      transition: all 0.3s ease;
-      color: #888;
-    }
-
-    .toggle-option.active {
-      background: rgba(255, 255, 255, 0.15);
-      color: #FFD700;
-    }
-
-    .toggle-option i {
-      font-size: 1.2rem;
-    }
-
-    .toggle-option span {
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .preview-image {
-      width: 100%;
-      border-radius: 1.5rem;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
-    }
-
-    .preview-image:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 60px rgba(255, 255, 255, 0.5);
-    }
-
-    .preview-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: opacity 0.3s ease;
-    }
-
     .flow-feature-section {
       margin: 5rem 0 3rem 0;
     }
@@ -656,6 +568,108 @@
       color: #ddd;
     }
 
+    .design-preview-section {
+      margin: 5rem 0 5rem 0;
+    }
+
+    .design-preview-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .design-text h2 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .design-text p {
+      color: #aaa;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      max-width: 90%;
+    }
+
+    .toggle-switch {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 60px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .toggle-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #888;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .toggle-option i {
+      font-size: 1.1rem;
+    }
+
+    .toggle-option.active {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .toggle-option[data-theme="dark"].active {
+      color: #4a9eff;
+    }
+
+    .toggle-option[data-theme="light"].active {
+      color: #FFD700;
+    }
+
+    .preview-image {
+      width: 100%;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+      position: relative;
+    }
+
+    .preview-image:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 60px rgba(255, 255, 255, 0.5);
+    }
+
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .theme-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .theme-img.slide-down {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+
+    .theme-img.slide-up {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
     .flow-footer {
       margin-top: 5rem;
       border-top: 1px solid rgba(255,255,255,0.05);
@@ -788,6 +802,9 @@
       .design-text h2 {
         font-size: 2rem;
       }
+      .design-text p {
+        max-width: 100%;
+      }
       .flow-headline {
         font-size: 3.5rem;
       }
@@ -837,6 +854,9 @@
       }
       .flow-box-title {
         font-size: 1.6rem;
+      }
+      .toggle-option {
+        padding: 0.5rem 1rem;
       }
     }
   </style>
@@ -909,28 +929,6 @@
       </div>
     </div>
 
-    <div class="design-preview-section fade-up delay-2">
-      <div class="design-preview-container">
-        <div class="design-text">
-          <h2>Mach das Licht an<br>ich sehe nichts</h2>
-          <p>Du kannst im Meeting einstellen, wie du deine Box haben möchtest. Wir nehmen das Design deiner Website an – ob dunkel oder hell.</p>
-          <div class="toggle-switch" id="themeToggle">
-            <div class="toggle-option active" data-theme="dark">
-              <i class="fas fa-moon"></i>
-              <span>Dark</span>
-            </div>
-            <div class="toggle-option" data-theme="light">
-              <i class="fas fa-sun"></i>
-              <span>Light</span>
-            </div>
-          </div>
-        </div>
-        <div class="preview-image" id="previewImage">
-          <img src="Dark.png" alt="Dark Theme Preview" id="themeImage">
-        </div>
-      </div>
-    </div>
-
     <div class="flow-feature-section">
       <div class="flow-feature-header">
         <div class="flow-feature-title fade-up" id="featureTitle">Die vollständige Plattform für KI-Supportagenten</div>
@@ -995,6 +993,30 @@
           </div>
           <div class="flow-box-text">
             Volle Anpassung – Gestalten Sie Ihre Chatbox nach Ihren Wünschen: von Button-Designs, Texten, Verhalten und Farben über Chatverläufe, Tipps, Logos, Bot-Namen bis hin zu individuellem Training – alles nach Ihren Vorstellungen.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="design-preview-section fade-up delay-2">
+      <div class="design-preview-container">
+        <div class="design-text">
+          <h2>Mach das Licht an<br>ich sehe nichts</h2>
+          <p>Du kannst im Meeting einstellen, wie du deine Box haben möchtest. Wir nehmen das Design deiner Website an – ob dunkel oder hell.</p>
+          <div class="toggle-switch" id="themeToggle">
+            <div class="toggle-option active" data-theme="dark">
+              <i class="fas fa-moon"></i>
+              <span>Dark</span>
+            </div>
+            <div class="toggle-option" data-theme="light">
+              <i class="fas fa-sun"></i>
+              <span>Light</span>
+            </div>
+          </div>
+        </div>
+        <div class="preview-image">
+          <div class="image-wrapper">
+            <img src="Dark.png" alt="Theme Preview" class="theme-img" id="themeImage">
           </div>
         </div>
       </div>
@@ -1074,28 +1096,36 @@
 
     const toggleOptions = document.querySelectorAll('.toggle-option');
     const themeImage = document.getElementById('themeImage');
-    let isDark = true;
+    let isAnimating = false;
 
     function switchTheme(toDark) {
+      if (isAnimating) return;
+      isAnimating = true;
+      
       const currentSrc = themeImage.src;
       const newSrc = toDark ? 'Dark.png' : 'Light.png';
       
-      if (currentSrc.includes(newSrc)) return;
+      if (currentSrc.includes(newSrc)) {
+        isAnimating = false;
+        return;
+      }
       
-      themeImage.style.opacity = '0';
+      themeImage.classList.add(toDark ? 'slide-down' : 'slide-up');
       
       setTimeout(() => {
         themeImage.src = newSrc;
+        themeImage.classList.remove(toDark ? 'slide-down' : 'slide-up');
+        
         setTimeout(() => {
-          themeImage.style.opacity = '1';
+          isAnimating = false;
         }, 50);
-      }, 200);
-      
-      isDark = toDark;
+      }, 250);
     }
 
     toggleOptions.forEach(option => {
       option.addEventListener('click', function() {
+        if (isAnimating) return;
+        
         const theme = this.getAttribute('data-theme');
         
         toggleOptions.forEach(opt => opt.classList.remove('active'));
