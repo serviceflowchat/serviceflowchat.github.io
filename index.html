@@ -428,6 +428,109 @@
       line-height: 1.5;
     }
 
+    .flow-feature-boxes {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin: 3rem 0 4rem 0;
+    }
+
+    .flow-feature-box {
+      background: rgba(10, 10, 10, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 2rem;
+      padding: 2.5rem 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .flow-feature-box:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+    }
+
+    .flow-box-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .flow-box-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      font-size: 1.8rem;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .flow-box-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+
+    .flow-box-text {
+      color: #aaa;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .flow-custom-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin: 5rem 0;
+    }
+
+    .flow-custom-left h2 {
+      font-size: 3rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+      margin-bottom: 1.5rem;
+    }
+
+    .flow-custom-left p {
+      color: #aaa;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .flow-custom-right {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .flow-custom-image {
+      aspect-ratio: 402/620;
+      background: #111;
+      border-radius: 2rem;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .flow-custom-image:hover {
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 255, 255, 0.15);
+      transform: translateY(-5px);
+    }
+
+    .flow-custom-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
     .flow-footer {
       margin-top: 5rem;
       border-top: 1px solid rgba(255,255,255,0.05);
@@ -570,6 +673,16 @@
         grid-template-columns: 1fr;
         gap: 2.5rem;
       }
+      .flow-feature-boxes {
+        grid-template-columns: 1fr;
+      }
+      .flow-custom-section {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .flow-custom-right {
+        grid-template-columns: repeat(3, 1fr);
+      }
       .flow-footer-content {
         flex-direction: column;
         align-items: flex-start;
@@ -594,9 +707,15 @@
       .flow-button { padding: 0.8rem 2rem; font-size: 1rem; }
       .flow-logo-text { font-size: 1.2rem; }
       .flow-logo-text span { font-size: 1.2rem; }
+      .flow-custom-right {
+        grid-template-columns: 1fr;
+      }
       .flow-footer-categories {
         flex-direction: column;
         gap: 1.5rem;
+      }
+      .flow-box-title {
+        font-size: 1.6rem;
       }
     }
   </style>
@@ -704,6 +823,49 @@
           </div>
           <h3>Für höchste Sicherheit konzipiert</h3>
           <p>Profitieren Sie von maximaler Sicherheit dank starker Verschlüsselung, strenger Compliance-Standards und Sicherheitsmaßnahmen auf Unternehmensniveau.</p>
+        </div>
+      </div>
+
+      <div class="flow-feature-boxes">
+        <div class="flow-feature-box">
+          <div class="flow-box-header">
+            <div class="flow-box-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <div class="flow-box-title">API</div>
+          </div>
+          <div class="flow-box-text">
+            APIs, Client-Bibliotheken und Komponenten, um Support tief in Ihr Produkt zu integrieren.
+          </div>
+        </div>
+        <div class="flow-feature-box">
+          <div class="flow-box-header">
+            <div class="flow-box-icon">
+              <i class="fas fa-paint-brush"></i>
+            </div>
+            <div class="flow-box-title">Anpassung</div>
+          </div>
+          <div class="flow-box-text">
+            Volle Anpassung – Gestalten Sie Ihre Chatbox nach Ihren Wünschen: von Button-Designs, Texten, Verhalten und Farben über Chatverläufe, Tipps, Logos, Bot-Namen bis hin zu individuellem Training – alles nach Ihren Vorstellungen.
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-custom-section">
+        <div class="flow-custom-left">
+          <h2>Custom ChatBox</h2>
+          <p>Volles Chat-Interface nach Ihren Wünschen – wir passen jede Farbe, jedes Design, jede Antwort, jeden Link, alle Vorschläge und noch vieles mehr an.</p>
+        </div>
+        <div class="flow-custom-right">
+          <div class="flow-custom-image">
+            <img src="design1.png" alt="Design 1" onerror="this.style.background='#222'">
+          </div>
+          <div class="flow-custom-image">
+            <img src="design2.png" alt="Design 2" onerror="this.style.background='#222'">
+          </div>
+          <div class="flow-custom-image">
+            <img src="design3.png" alt="Design 3" onerror="this.style.background='#222'">
+          </div>
         </div>
       </div>
     </div>
