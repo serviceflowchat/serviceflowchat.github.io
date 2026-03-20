@@ -265,76 +265,98 @@
 
     .pricing-header {
       text-align: center;
-      margin: 3rem 0 4rem 0;
+      margin: 1rem 0 2.5rem 0;
     }
 
     .pricing-header h1 {
-      font-size: 3.5rem;
+      font-size: 3rem;
       font-weight: 600;
       color: white;
       text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     .pricing-header p {
       color: #aaa;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin: 2rem 0 5rem 0;
+      gap: 1.5rem;
+      margin: 0 0 4rem 0;
       align-items: stretch;
     }
 
     .pricing-card {
       background: rgba(10, 10, 10, 0.8);
       backdrop-filter: blur(10px);
-      border-radius: 2.5rem;
-      padding: 2.5rem 2rem;
+      border-radius: 2rem;
+      padding: 2rem 1.5rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: flex;
       flex-direction: column;
       position: relative;
       overflow: hidden;
     }
 
-    .pricing-card.popular {
-      transform: scale(1.05);
-      border: 2px solid transparent;
-      background: linear-gradient(#0a0a0a, #0a0a0a) padding-box, linear-gradient(135deg, #FFD700, #FFA500) border-box;
-      box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+    .pricing-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 40px currentColor;
+    }
+
+    .pricing-card.basic:hover {
+      box-shadow: 0 0 50px rgba(0, 255, 0, 0.4);
+    }
+
+    .pricing-card.popular:hover {
+      box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+    }
+
+    .pricing-card.pro:hover {
+      box-shadow: 0 0 50px rgba(255, 0, 255, 0.4);
     }
 
     .pricing-card.basic {
       background: linear-gradient(145deg, #0a0a0a, #0a2a0a);
-      border: 1px solid rgba(0, 255, 0, 0.3);
+      border: 1px solid rgba(0, 255, 0, 0.2);
+    }
+
+    .pricing-card.popular {
+      transform: scale(1.02);
+      border: 2px solid transparent;
+      background: linear-gradient(#0a0a0a, #0a0a0a) padding-box, linear-gradient(135deg, #FFD700, #FFA500) border-box;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+      z-index: 2;
+    }
+
+    .pricing-card.popular:hover {
+      transform: scale(1.05);
     }
 
     .pricing-card.pro {
       background: linear-gradient(145deg, #0a0a0a, #2a0a2a);
-      border: 1px solid rgba(255, 0, 255, 0.3);
+      border: 1px solid rgba(255, 0, 255, 0.2);
     }
 
     .popular-badge {
       position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
+      top: 1rem;
+      right: 1rem;
       background: linear-gradient(135deg, #FFD700, #FFA500);
       color: black;
-      padding: 0.4rem 1.2rem;
+      padding: 0.3rem 1rem;
       border-radius: 30px;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
 
     .plan-name {
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 600;
       margin-bottom: 0.5rem;
       display: flex;
@@ -343,32 +365,40 @@
     }
 
     .plan-name i {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
     }
 
     .basic .plan-name {
       color: #00ff00;
-      text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+      text-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
     }
 
     .popular .plan-name {
       color: #FFD700;
-      text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
     }
 
     .pro .plan-name {
       color: #ff00ff;
-      text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+      text-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
     }
 
     .price-container {
-      margin: 1.5rem 0;
-      padding: 1rem 0;
+      margin: 1rem 0;
+      padding: 0.8rem 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
+    .annual-note {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 0.2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
     .current-price {
-      font-size: 2.8rem;
+      font-size: 2.2rem;
       font-weight: 700;
       display: flex;
       align-items: baseline;
@@ -376,7 +406,7 @@
     }
 
     .current-price span {
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: #aaa;
       font-weight: 400;
     }
@@ -384,41 +414,43 @@
     .old-price {
       color: #888;
       text-decoration: line-through;
-      font-size: 1.2rem;
+      font-size: 1rem;
       margin-top: 0.2rem;
     }
 
     .save-badge {
       background: rgba(255, 255, 255, 0.1);
-      padding: 0.3rem 0.8rem;
+      padding: 0.2rem 0.6rem;
       border-radius: 20px;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: #4caf50;
       border: 1px solid rgba(76, 175, 80, 0.3);
       display: inline-block;
-      margin: 0.5rem 0;
+      margin: 0.3rem 0;
     }
 
     .features-list {
       flex: 1;
-      margin: 1.5rem 0;
+      margin: 1rem 0;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.7rem;
     }
 
     .feature-item {
       display: flex;
       align-items: flex-start;
-      gap: 0.8rem;
+      gap: 0.6rem;
       color: #ddd;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
+      line-height: 1.4;
     }
 
     .feature-item i {
       font-size: 1rem;
-      margin-top: 0.2rem;
+      margin-top: 0.1rem;
       flex-shrink: 0;
+      filter: drop-shadow(0 0 5px currentColor);
     }
 
     .basic .feature-item i {
@@ -436,15 +468,15 @@
     .feature-divider {
       height: 1px;
       background: rgba(255, 255, 255, 0.1);
-      margin: 0.5rem 0;
+      margin: 0.3rem 0;
     }
 
     .feature-subtitle {
       font-weight: 600;
       color: white;
-      margin-top: 0.5rem;
-      margin-bottom: 0.3rem;
-      font-size: 0.9rem;
+      margin-top: 0.3rem;
+      margin-bottom: 0.1rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -452,13 +484,13 @@
     .select-btn {
       background: transparent;
       border: 2px solid;
-      padding: 1rem;
+      padding: 0.8rem;
       border-radius: 40px;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       width: 100%;
     }
 
@@ -496,7 +528,7 @@
     }
 
     .flow-footer {
-      margin-top: 5rem;
+      margin-top: 3rem;
       border-top: 1px solid rgba(255,255,255,0.05);
       padding: 3rem 0 2rem 0;
     }
@@ -618,10 +650,13 @@
       }
       .pricing-grid {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
       }
       .pricing-card.popular {
         transform: scale(1);
+      }
+      .pricing-card.popular:hover {
+        transform: scale(1.03);
       }
       .flow-footer-content {
         flex-direction: column;
@@ -643,12 +678,15 @@
 
     @media (max-width: 500px) {
       body { padding: 0 1rem; }
-      .pricing-header h1 { font-size: 2.5rem; }
+      .pricing-header h1 { font-size: 2.2rem; }
       .flow-logo-text { font-size: 1.2rem; }
       .flow-logo-text span { font-size: 1.2rem; }
       .flow-footer-categories {
         flex-direction: column;
         gap: 1.5rem;
+      }
+      .pricing-card {
+        padding: 1.5rem 1rem;
       }
     }
   </style>
@@ -711,55 +749,59 @@
           <i class="fas fa-star"></i> Basic
         </div>
         <div class="price-container">
-          <div class="current-price">79,00 € <span>/Monat</span></div>
-          <div class="old-price">83,00 €</div>
-          <div class="save-badge">5% sparen</div>
+          <div class="annual-note">Jahreszahlung (12 Monate) · 10% Rabatt</div>
+          <div class="current-price">711,00 € <span>/Jahr</span></div>
+          <div class="old-price">948,00 €</div>
+          <div class="save-badge">10% sparen</div>
+          <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #aaa;">monatlich 59,25 €</div>
         </div>
         <div class="features-list">
           <div class="feature-subtitle">Für wen</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Kleine Unternehmen, einfacher Chatbot für Website</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Kleine Unternehmen, einfacher Chatbot für Website</div>
           
           <div class="feature-subtitle">Models</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Access to advanced models: OpenAI, Anthropic, Gemini, DeepSeek, Grok, Meta, Moonshot AI</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Zugang zu allen Modellen: OpenAI, Anthropic, Gemini, DeepSeek, Grok, Meta, Moonshot AI</div>
           
           <div class="feature-subtitle">Features</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> 5 enabled AI Actions for your chatbot</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> 10 MB for your AI agent</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> 5 aktivierte AI-Aktionen für Ihren Chatbot</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> 10 MB für Ihren KI-Agenten</div>
           
           <div class="feature-subtitle">Integrationen</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Shopify, Whatsapp, Instagram, Messenger, Slack, Calendly, Wordpress</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Shopify, Whatsapp, Instagram, Messenger, Slack, Calendly, Wordpress</div>
           
           <div class="feature-subtitle">Analytics</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Basic analytics send per email every week</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Basis-Analytics wöchentlich per E-Mail</div>
         </div>
-        <button class="select-btn">Plan auswählen</button>
+        <button class="select-btn">Meeting vereinbaren</button>
       </div>
 
       <!-- Standard Plan (Popular) -->
       <div class="pricing-card popular">
-        <div class="popular-badge">Popular</div>
+        <div class="popular-badge">Beliebt</div>
         <div class="plan-name">
           <i class="fas fa-star"></i> Standard
         </div>
         <div class="price-container">
-          <div class="current-price">190,00 € <span>/Monat</span></div>
-          <div class="old-price">210,00 €</div>
-          <div class="save-badge">10% sparen</div>
+          <div class="annual-note">Jahreszahlung (12 Monate) · 15% Rabatt</div>
+          <div class="current-price">1.938,00 € <span>/Jahr</span></div>
+          <div class="old-price">2.280,00 €</div>
+          <div class="save-badge">15% sparen</div>
+          <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #aaa;">monatlich 161,50 €</div>
         </div>
         <div class="features-list">
-          <div class="feature-item"><i class="fas fa-check-circle"></i> <strong>Everything in Basic +:</strong></div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Basic enthalten +:</strong></div>
           
           <div class="feature-subtitle">Features</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> 8 enabled AI Actions for your chatbot</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> 20 MB for your AI agent</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> 8 aktivierte AI-Aktionen für Ihren Chatbot</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> 20 MB für Ihren KI-Agenten</div>
           
           <div class="feature-subtitle">Personalisierung</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Your agent is able to identify logged-in users and reply them with personalized information (good for businesses)</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Ihr Agent erkennt eingeloggte Benutzer und antwortet mit personalisierten Informationen</div>
           
           <div class="feature-subtitle">Automatisierung</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Auto retrain agent (Automatically retrain your agents every 24 hours)</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Automatisches Retraining alle 24 Stunden</div>
         </div>
-        <button class="select-btn">Plan auswählen</button>
+        <button class="select-btn">Meeting vereinbaren</button>
       </div>
 
       <!-- Pro Plan -->
@@ -768,25 +810,27 @@
           <i class="fas fa-star"></i> Pro
         </div>
         <div class="price-container">
-          <div class="current-price">479,00 € <span>/Monat</span></div>
-          <div class="old-price">600,00 €</div>
+          <div class="annual-note">Jahreszahlung (12 Monate) · 20% Rabatt</div>
+          <div class="current-price">4.598,00 € <span>/Jahr</span></div>
+          <div class="old-price">5.748,00 €</div>
           <div class="save-badge">20% sparen</div>
+          <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #aaa;">monatlich 383,17 €</div>
         </div>
         <div class="features-list">
-          <div class="feature-item"><i class="fas fa-check-circle"></i> <strong>Everything in Standard +:</strong></div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Standard enthalten +:</strong></div>
           
           <div class="feature-subtitle">Features</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> 12 enabled AI Actions for your chatbot</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> 40 MB for your AI agent</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> 12 aktivierte AI-Aktionen für Ihren Chatbot</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> 40 MB für Ihren KI-Agenten</div>
           
           <div class="feature-subtitle">Analytics</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Advanced analytics send to you per email when ever you want</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Erweiterte Analytics auf Anfrage per E-Mail</div>
           
           <div class="feature-subtitle">Quellen</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Sources suggestions (Detect content gaps, detect conflicting sources)</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Tickets as a source (train your agent on zendesk and salesforce tickets)</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Quellen-Vorschläge (Erkennt Content-Lücken, erkennt widersprüchliche Quellen)</div>
+          <div class="feature-item"><i class="fas fa-circle-check"></i> Tickets als Quelle (Trainieren Sie Ihren Agenten mit Zendesk- und Salesforce-Tickets)</div>
         </div>
-        <button class="select-btn">Plan auswählen</button>
+        <button class="select-btn">Meeting vereinbaren</button>
       </div>
     </div>
 
