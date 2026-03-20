@@ -65,6 +65,10 @@
       transition-delay: 0.5s;
     }
 
+    .hidden-section {
+      display: none !important;
+    }
+
     .flow-nav {
       display: flex;
       justify-content: space-between;
@@ -323,22 +327,28 @@
       font-size: 1.1rem;
     }
 
-    .contact-container {
-      display: flex;
-      flex-direction: column;
-      gap: 3rem;
-      max-width: 800px;
-      margin: 0 auto 4rem auto;
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 2rem 0 2rem 0;
     }
 
-    .contact-form-card {
+    .contact-card {
       background: rgba(10, 10, 10, 0.6);
       border-radius: 2rem;
       padding: 2rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
 
-    .form-title {
+    .contact-card:hover {
+      border-color: rgba(255, 215, 0, 0.5);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+      transform: translateY(-5px);
+    }
+
+    .card-title {
       font-size: 1.8rem;
       font-weight: 600;
       color: white;
@@ -346,7 +356,7 @@
       margin-bottom: 0.5rem;
     }
 
-    .form-subtitle {
+    .card-subtitle {
       color: #aaa;
       font-size: 0.9rem;
       margin-bottom: 1.5rem;
@@ -379,12 +389,13 @@
 
     .form-group input:focus, .form-group textarea:focus {
       outline: none;
-      border-color: white;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+      border-color: #FFD700;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+      transform: scale(1.02);
     }
 
     .form-group input:hover, .form-group textarea:hover {
-      border-color: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 215, 0, 0.5);
     }
 
     .form-group textarea {
@@ -402,45 +413,101 @@
     .stars-container {
       display: flex;
       gap: 0.8rem;
-      margin: 1rem 0 1.5rem 0;
+      margin: 1rem 0 1rem 0;
+      justify-content: center;
     }
 
     .star {
       font-size: 2.5rem;
       cursor: pointer;
-      transition: all 0.2s ease;
-      color: #444;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      color: #333;
     }
 
     .star:hover {
-      transform: scale(1.1);
+      transform: scale(1.2);
     }
 
-    .star.selected {
+    .star.glow-5 {
+      color: #4caf50;
+      text-shadow: 0 0 20px #4caf50, 0 0 40px #4caf50;
+    }
+
+    .star.glow-4 {
+      color: #4caf50;
+      text-shadow: 0 0 15px #4caf50, 0 0 25px #4caf50;
+    }
+
+    .star.glow-3 {
       color: #FFD700;
+      text-shadow: 0 0 20px #FFD700, 0 0 35px #FFD700;
+    }
+
+    .star.glow-2 {
+      color: #ff9800;
+      text-shadow: 0 0 20px #ff9800, 0 0 35px #ff9800;
+    }
+
+    .star.glow-1 {
+      color: #ff4444;
+      text-shadow: 0 0 20px #ff4444, 0 0 35px #ff4444;
     }
 
     .rating-text {
+      text-align: center;
       color: #aaa;
-      font-size: 0.85rem;
-      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      margin: 0.5rem 0 1rem 0;
+      padding: 0.5rem;
+      border-radius: 40px;
+      transition: all 0.3s ease;
+    }
+
+    .rating-text.glow-5 {
+      background: rgba(76, 175, 80, 0.2);
+      color: #4caf50;
+      box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+    }
+
+    .rating-text.glow-4 {
+      background: rgba(76, 175, 80, 0.15);
+      color: #4caf50;
+    }
+
+    .rating-text.glow-3 {
+      background: rgba(255, 215, 0, 0.2);
+      color: #FFD700;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .rating-text.glow-2 {
+      background: rgba(255, 152, 0, 0.2);
+      color: #ff9800;
+      box-shadow: 0 0 20px rgba(255, 152, 0, 0.3);
+    }
+
+    .rating-text.glow-1 {
+      background: rgba(255, 68, 68, 0.2);
+      color: #ff4444;
+      box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
     }
 
     .contact-method-toggle {
-      margin: 1rem 0;
       text-align: center;
+      margin: 1rem 0;
     }
 
     .toggle-link {
       color: #888;
       font-size: 0.85rem;
       cursor: pointer;
-      transition: color 0.2s;
+      transition: all 0.3s ease;
       text-decoration: underline;
     }
 
     .toggle-link:hover {
       color: #FFD700;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     }
 
     .contact-field {
@@ -451,11 +518,6 @@
       opacity: 0;
       transform: translateY(-10px);
       pointer-events: none;
-    }
-
-    .contact-field.fade-in {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .submit-btn {
@@ -475,7 +537,7 @@
     .submit-btn:hover {
       background: #FFD700;
       color: black;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
       transform: scale(1.02);
     }
 
@@ -485,40 +547,30 @@
       pointer-events: none;
     }
 
-    .error-message {
-      color: #ff4444;
-      font-size: 0.85rem;
-      margin-top: 0.5rem;
-      text-align: center;
-    }
-
-    .success-message {
-      color: #4caf50;
-      font-size: 0.9rem;
-      margin-top: 1rem;
-      text-align: center;
-      padding: 1rem;
-      background: rgba(76, 175, 80, 0.1);
-      border-radius: 20px;
-      border: 1px solid rgba(76, 175, 80, 0.3);
-    }
-
-    .contact-info-card {
+    .info-card {
       background: rgba(10, 10, 10, 0.6);
       border-radius: 2rem;
       padding: 2rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
       text-align: center;
+      margin-bottom: 2rem;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
 
-    .contact-info-title {
+    .info-card:hover {
+      border-color: rgba(255, 215, 0, 0.5);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+      transform: translateY(-5px);
+    }
+
+    .info-title {
       font-size: 1.5rem;
       font-weight: 600;
       color: white;
       margin-bottom: 1.5rem;
     }
 
-    .contact-info-item {
+    .info-item {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -526,31 +578,197 @@
       margin-bottom: 1rem;
       padding: 0.8rem;
       background: rgba(255, 255, 255, 0.03);
-      border-radius: 40px;
+      border-radius: 60px;
+      transition: all 0.3s ease;
     }
 
-    .contact-info-item i {
+    .info-item:hover {
+      background: rgba(255, 215, 0, 0.1);
+      transform: scale(1.02);
+    }
+
+    .info-item i {
       font-size: 1.3rem;
       color: #FFD700;
+      filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+      transition: all 0.3s ease;
     }
 
-    .contact-info-item span {
+    .info-item:hover i {
+      filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+      transform: scale(1.1);
+    }
+
+    .info-item span {
       color: #ddd;
       font-size: 1rem;
     }
 
-    .feedback-section {
-      margin-top: 1rem;
+    .success-screen {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(10, 10, 10, 0.8);
+      border-radius: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin: 2rem 0;
+    }
+
+    .success-icon {
+      font-size: 5rem;
+      color: #4caf50;
+      filter: drop-shadow(0 0 30px rgba(76, 175, 80, 0.5));
+      margin-bottom: 1.5rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .success-screen h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+    }
+
+    .success-screen p {
+      color: #aaa;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .back-home-btn {
+      display: inline-block;
+      background: transparent;
+      border: 2px solid #FFD700;
+      color: #FFD700;
+      padding: 1rem 3rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 2rem;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .back-home-btn:hover {
+      background: #FFD700;
+      color: black;
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+      transform: scale(1.05);
     }
 
     .flow-footer {
       margin-top: 3rem;
       border-top: 1px solid rgba(255,255,255,0.05);
-      padding: 2rem 0;
-      text-align: center;
+      padding: 3rem 0 2rem 0;
     }
 
-    .flow-footer p {
+    .flow-footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .flow-footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .flow-footer-logo-icon {
+      width: 28px;
+      height: 22px;
+      background: white;
+      border-radius: 6px;
+      position: relative;
+      box-shadow: 0 0 10px rgba(255,255,255,0.4);
+    }
+
+    .flow-footer-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 8px;
+      width: 10px;
+      height: 8px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .flow-footer-logo-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .flow-footer-categories {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .flow-footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .flow-footer-category-title {
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.2rem;
+      text-shadow: 0 0 12px rgba(255,255,255,0.7);
+    }
+
+    .flow-footer-col a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .flow-footer-col a:hover {
+      color: white;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+
+    .flow-footer-contact {
+      flex: 0 0 auto;
+    }
+
+    .flow-footer-contact .contact-btn {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 0.7rem 2rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .flow-footer-contact .contact-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: white;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .flow-copyright {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
       color: #555;
       font-size: 0.8rem;
     }
@@ -562,11 +780,25 @@
       .mobile-menu-btn {
         display: block;
       }
-      .contact-container {
-        padding: 0 1rem;
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
-      .contact-form-card, .contact-info-card {
-        padding: 1.5rem;
+      .flow-footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+      }
+      .flow-footer-categories {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .flow-footer-contact {
+        width: 100%;
+      }
+      .flow-footer-contact .contact-btn {
+        width: 100%;
+        text-align: center;
       }
       .star {
         font-size: 2rem;
@@ -578,12 +810,21 @@
       .contact-header h1 { font-size: 2.2rem; }
       .flow-logo-text { font-size: 1.2rem; }
       .flow-logo-text span { font-size: 1.2rem; }
+      .contact-card, .info-card {
+        padding: 1.5rem;
+      }
       .star {
+        font-size: 1.6rem;
+      }
+      .card-title {
+        font-size: 1.4rem;
+      }
+      .success-screen h2 {
         font-size: 1.8rem;
       }
-      .contact-info-item {
+      .flow-footer-categories {
         flex-direction: column;
-        gap: 0.3rem;
+        gap: 1.5rem;
       }
     }
   </style>
@@ -626,80 +867,122 @@
       </button>
     </div>
 
-    <div class="contact-header">
-      <h1 class="fade-up">Contact Us</h1>
-      <p class="fade-up delay-1">Wir freuen uns auf deine Nachricht</p>
-    </div>
+    <div id="contactMainContent">
+      <div class="contact-header">
+        <h1 class="fade-up">Contact Us</h1>
+        <p class="fade-up delay-1">Wir freuen uns auf deine Nachricht</p>
+      </div>
 
-    <div class="contact-container">
-      <div class="contact-form-card fade-up delay-2">
-        <h2 class="form-title">Sende uns eine Email</h2>
-        <p class="form-subtitle">Wir antworten innerhalb von 24-48 Stunden</p>
-
-        <form id="contactForm">
+      <div class="contact-grid">
+        <div class="contact-card fade-up delay-2">
+          <h2 class="card-title">Sende uns eine Email</h2>
+          <p class="card-subtitle">Wir antworten innerhalb von 24-48 Stunden</p>
           <div class="form-group">
             <label>Deine Email *</label>
-            <input type="email" id="contactEmail" placeholder="name@beispiel.de" required>
+            <input type="email" id="contactEmail" placeholder="name@beispiel.de">
           </div>
           <div class="form-group">
             <label>Deine Nachricht *</label>
-            <textarea id="contactMessage" placeholder="Schreib uns alles, was du wissen möchtest..." maxlength="500" required></textarea>
+            <textarea id="contactMessage" placeholder="Schreib uns alles, was du wissen möchtest..." maxlength="500"></textarea>
             <div class="char-counter"><span id="contactCharCount">0</span>/500 Zeichen</div>
           </div>
-          <div id="contactFormError" class="error-message"></div>
-          <button type="button" class="submit-btn" id="contactSubmitBtn">Nachricht senden</button>
-        </form>
-      </div>
-
-      <div class="contact-form-card fade-up delay-3">
-        <h2 class="form-title">Feedback geben</h2>
-        <p class="form-subtitle">Deine Meinung hilft uns, besser zu werden</p>
-
-        <div class="stars-container" id="starContainer">
-          <i class="fas fa-star star" data-rating="1"></i>
-          <i class="fas fa-star star" data-rating="2"></i>
-          <i class="fas fa-star star" data-rating="3"></i>
-          <i class="fas fa-star star" data-rating="4"></i>
-          <i class="fas fa-star star" data-rating="5"></i>
+          <button class="submit-btn" id="contactSubmitBtn">Nachricht senden</button>
         </div>
-        <div class="rating-text" id="ratingText">Klicke auf die Sterne, um zu bewerten</div>
 
-        <div id="feedbackContactField" class="contact-field">
-          <div class="form-group">
-            <label id="contactFieldLabel">Deine Email *</label>
-            <input type="email" id="feedbackContactValue" placeholder="name@beispiel.de" required>
+        <div class="contact-card fade-up delay-3">
+          <h2 class="card-title">Feedback geben</h2>
+          <p class="card-subtitle">Deine Meinung hilft uns, besser zu werden</p>
+          
+          <div class="stars-container" id="starContainer">
+            <i class="fas fa-star star" data-rating="1"></i>
+            <i class="fas fa-star star" data-rating="2"></i>
+            <i class="fas fa-star star" data-rating="3"></i>
+            <i class="fas fa-star star" data-rating="4"></i>
+            <i class="fas fa-star star" data-rating="5"></i>
           </div>
-        </div>
+          <div class="rating-text" id="ratingText">Klicke auf die Sterne, um zu bewerten</div>
 
-        <div class="contact-method-toggle">
-          <span class="toggle-link" id="toggleContactMethod">Ich will nicht meine Email eingeben</span>
-        </div>
+          <div id="feedbackContactField" class="contact-field">
+            <div class="form-group">
+              <label id="contactFieldLabel">Deine Email *</label>
+              <input type="email" id="feedbackContactValue" placeholder="name@beispiel.de">
+            </div>
+          </div>
 
-        <div class="form-group">
-          <label>Dein Feedback *</label>
-          <textarea id="feedbackMessage" placeholder="Was können wir besser machen? Was gefällt dir besonders?" maxlength="500" required></textarea>
-          <div class="char-counter"><span id="feedbackCharCount">0</span>/500 Zeichen</div>
-        </div>
+          <div class="contact-method-toggle">
+            <span class="toggle-link" id="toggleContactMethod">Ich will nicht meine Email eingeben</span>
+          </div>
 
-        <div id="feedbackFormError" class="error-message"></div>
-        <button type="button" class="submit-btn" id="feedbackSubmitBtn">Feedback senden</button>
+          <div class="form-group">
+            <label>Dein Feedback *</label>
+            <textarea id="feedbackMessage" placeholder="Was können wir besser machen? Was gefällt dir besonders?" maxlength="500"></textarea>
+            <div class="char-counter"><span id="feedbackCharCount">0</span>/500 Zeichen</div>
+          </div>
+          <button class="submit-btn" id="feedbackSubmitBtn">Feedback senden</button>
+        </div>
       </div>
 
-      <div class="contact-info-card fade-up delay-4">
-        <h2 class="contact-info-title">Contact Us</h2>
-        <div class="contact-info-item">
+      <div class="info-card fade-up delay-4">
+        <h2 class="info-title">Contact Us</h2>
+        <div class="info-item">
           <i class="fas fa-phone-alt"></i>
           <span>+49 163 3614950</span>
         </div>
-        <div class="contact-info-item">
+        <div class="info-item">
           <i class="fas fa-envelope"></i>
           <span>flowchat.business@gmail.com</span>
         </div>
       </div>
     </div>
 
+    <div id="contactSuccessSection" class="hidden-section">
+      <div class="success-screen fade-up">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2 id="successTitle">Nachricht erfolgreich gesendet!</h2>
+        <p id="successMessage">Sie erhalten in Kürze (24 bis 48 Stunden) eine Antwort per E-Mail.</p>
+        <a href="https://www.flow-chat.de/" class="back-home-btn">Zurück zur Startseite</a>
+      </div>
+    </div>
+
+    <div id="feedbackSuccessSection" class="hidden-section">
+      <div class="success-screen fade-up">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Feedback erfolgreich gesendet!</h2>
+        <p>Vielen Dank für dein Feedback. Wir schätzen deine Meinung sehr!</p>
+        <a href="https://www.flow-chat.de/" class="back-home-btn">Zurück zur Startseite</a>
+      </div>
+    </div>
+
     <div class="flow-footer">
-      <p>© 2026 FlowChat, Inc.</p>
+      <div class="flow-footer-content">
+        <div class="flow-footer-logo">
+          <div class="flow-footer-logo-icon"></div>
+          <span class="flow-footer-logo-text">FlowChat</span>
+        </div>
+        <div class="flow-footer-categories">
+          <div class="flow-footer-col">
+            <div class="flow-footer-category-title">PRODUCT</div>
+            <a href="/pricing">Preise (pricing)</a>
+            <a href="/guide">Erklärung (guide)</a>
+            <a href="/changelog">Änderungen (changelog)</a>
+          </div>
+          <div class="flow-footer-col">
+            <div class="flow-footer-category-title">UNTERNEHMEN</div>
+            <a href="/about">Über uns (about)</a>
+            <a href="/contact">Kontakt Aufnehmen (contact)</a>
+          </div>
+        </div>
+        <div class="flow-footer-contact">
+          <a href="/contact" class="contact-btn">Kontakt</a>
+        </div>
+      </div>
+      <div class="flow-copyright">
+        © 2026 FlowChat, Inc.
+      </div>
     </div>
   </div>
 
@@ -748,44 +1031,70 @@
 
     let selectedRating = 0;
     let usePhoneInstead = false;
-    const starContainer = document.getElementById('starContainer');
     const stars = document.querySelectorAll('.star');
     const ratingText = document.getElementById('ratingText');
-    const feedbackContactField = document.getElementById('feedbackContactField');
-    const contactFieldLabel = document.getElementById('contactFieldLabel');
     const feedbackContactValue = document.getElementById('feedbackContactValue');
     const toggleLink = document.getElementById('toggleContactMethod');
+    const contactFieldLabel = document.getElementById('contactFieldLabel');
 
-    function getRatingColor(rating) {
-      if (rating >= 4) return '#4caf50';
-      if (rating === 3) return '#FFD700';
-      if (rating === 2) return '#ff9800';
-      return '#ff4444';
+    function clearStarGlow() {
+      stars.forEach(star => {
+        star.classList.remove('glow-5', 'glow-4', 'glow-3', 'glow-2', 'glow-1');
+        star.style.color = '#333';
+      });
+      ratingText.classList.remove('glow-5', 'glow-4', 'glow-3', 'glow-2', 'glow-1');
     }
 
     function updateStars(rating) {
+      clearStarGlow();
+      
       stars.forEach((star, index) => {
         const starRating = parseInt(star.getAttribute('data-rating'));
         if (starRating <= rating) {
-          star.style.color = getRatingColor(rating);
-          star.classList.add('selected');
-        } else {
-          star.style.color = '#444';
-          star.classList.remove('selected');
+          if (rating === 5) star.classList.add('glow-5');
+          else if (rating === 4) star.classList.add('glow-4');
+          else if (rating === 3) star.classList.add('glow-3');
+          else if (rating === 2) star.classList.add('glow-2');
+          else if (rating === 1) star.classList.add('glow-1');
         }
       });
       
-      if (rating >= 4) ratingText.textContent = 'Sehr gut! Vielen Dank für deine positive Bewertung ⭐';
-      else if (rating === 3) ratingText.textContent = 'Danke für dein ehrliches Feedback! Wir arbeiten daran 💛';
-      else if (rating === 2) ratingText.textContent = 'Danke für dein Feedback! Wir werden uns verbessern 🧡';
-      else if (rating === 1) ratingText.textContent = 'Danke für deine Ehrlichkeit! Wir nehmen das sehr ernst ❤️';
-      else ratingText.textContent = 'Klicke auf die Sterne, um zu bewerten';
+      if (rating === 5) {
+        ratingText.textContent = '⭐ Ausgezeichnet! Vielen Dank für deine großartige Bewertung! ⭐';
+        ratingText.classList.add('glow-5');
+      } else if (rating === 4) {
+        ratingText.textContent = '👍 Sehr gut! Danke für dein positives Feedback! 👍';
+        ratingText.classList.add('glow-4');
+      } else if (rating === 3) {
+        ratingText.textContent = '💛 Danke für dein ehrliches Feedback! Wir arbeiten daran, noch besser zu werden 💛';
+        ratingText.classList.add('glow-3');
+      } else if (rating === 2) {
+        ratingText.textContent = '🧡 Danke für dein Feedback! Deine Meinung hilft uns, uns zu verbessern 🧡';
+        ratingText.classList.add('glow-2');
+      } else if (rating === 1) {
+        ratingText.textContent = '❤️ Danke für deine Ehrlichkeit! Wir nehmen dein Feedback sehr ernst ❤️';
+        ratingText.classList.add('glow-1');
+      } else {
+        ratingText.textContent = 'Klicke auf die Sterne, um zu bewerten';
+      }
     }
 
     stars.forEach(star => {
       star.addEventListener('click', function() {
-        selectedRating = parseInt(this.getAttribute('data-rating'));
-        updateStars(selectedRating);
+        const newRating = parseInt(this.getAttribute('data-rating'));
+        if (selectedRating !== newRating) {
+          stars.forEach(s => {
+            s.style.transition = 'all 0.2s ease';
+            s.style.color = '#333';
+          });
+          setTimeout(() => {
+            selectedRating = newRating;
+            updateStars(selectedRating);
+          }, 50);
+        } else {
+          selectedRating = newRating;
+          updateStars(selectedRating);
+        }
       });
     });
 
@@ -833,127 +1142,75 @@
       feedbackCharCount.textContent = this.value.length;
     });
 
+    function showContactSuccess() {
+      const mainContent = document.getElementById('contactMainContent');
+      const successSection = document.getElementById('contactSuccessSection');
+      const fadeElementsMain = mainContent.querySelectorAll('.fade-up');
+      fadeElementsMain.forEach(el => el.classList.remove('visible'));
+      setTimeout(() => {
+        mainContent.classList.add('hidden-section');
+        successSection.classList.remove('hidden-section');
+        const successFade = successSection.querySelectorAll('.fade-up');
+        successFade.forEach(el => observer.observe(el));
+        setTimeout(() => {
+          successFade.forEach(el => el.classList.add('visible'));
+        }, 100);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 600);
+    }
+
+    function showFeedbackSuccess() {
+      const mainContent = document.getElementById('contactMainContent');
+      const successSection = document.getElementById('feedbackSuccessSection');
+      const fadeElementsMain = mainContent.querySelectorAll('.fade-up');
+      fadeElementsMain.forEach(el => el.classList.remove('visible'));
+      setTimeout(() => {
+        mainContent.classList.add('hidden-section');
+        successSection.classList.remove('hidden-section');
+        const successFade = successSection.querySelectorAll('.fade-up');
+        successFade.forEach(el => observer.observe(el));
+        setTimeout(() => {
+          successFade.forEach(el => el.classList.add('visible'));
+        }, 100);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 600);
+    }
+
     document.getElementById('contactSubmitBtn').addEventListener('click', function() {
       const email = document.getElementById('contactEmail').value.trim();
       const message = document.getElementById('contactMessage').value.trim();
-      const errorDiv = document.getElementById('contactFormError');
-      
-      if (!email) {
-        errorDiv.textContent = 'Bitte gib deine Email-Adresse ein.';
-        return;
-      }
-      
-      if (!email.includes('@') || !email.includes('.')) {
-        errorDiv.textContent = 'Bitte gib eine gültige Email-Adresse ein.';
-        return;
-      }
-      
-      if (!message) {
-        errorDiv.textContent = 'Bitte gib eine Nachricht ein.';
-        return;
-      }
-      
-      if (message.length < 10) {
-        errorDiv.textContent = 'Die Nachricht muss mindestens 10 Zeichen lang sein.';
-        return;
-      }
-      
       const btn = this;
+      
+      if (!email) { alert('Bitte gib deine Email-Adresse ein.'); return; }
+      if (!email.includes('@') || !email.includes('.')) { alert('Bitte gib eine gültige Email-Adresse ein.'); return; }
+      if (!message) { alert('Bitte gib eine Nachricht ein.'); return; }
+      if (message.length < 10) { alert('Die Nachricht muss mindestens 10 Zeichen lang sein.'); return; }
+      
       btn.textContent = 'Wird gesendet...';
       btn.classList.add('loading');
-      errorDiv.textContent = '';
       
-      const templateParams = {
-        from_email: email,
-        message: message
-      };
-      
-      emailjs.send('service_1melj6k', 'template_8ssr0mc', templateParams)
-        .then(() => {
-          errorDiv.style.color = '#4caf50';
-          errorDiv.textContent = '✅ Nachricht erfolgreich gesendet! Wir melden uns in Kürze.';
-          document.getElementById('contactEmail').value = '';
-          document.getElementById('contactMessage').value = '';
-          contactCharCount.textContent = '0';
-          btn.textContent = 'Nachricht senden';
-          btn.classList.remove('loading');
-          
-          setTimeout(() => {
-            errorDiv.style.color = '#ff4444';
-            errorDiv.textContent = '';
-          }, 5000);
-        })
-        .catch(() => {
-          errorDiv.textContent = 'Fehler beim Senden. Bitte versuche es später erneut.';
-          btn.textContent = 'Nachricht senden';
-          btn.classList.remove('loading');
-        });
+      emailjs.send('service_1melj6k', 'template_8ssr0mc', { from_email: email, message: message })
+        .then(() => { showContactSuccess(); })
+        .catch(() => { alert('Fehler beim Senden. Bitte versuche es später erneut.'); btn.textContent = 'Nachricht senden'; btn.classList.remove('loading'); });
     });
 
     document.getElementById('feedbackSubmitBtn').addEventListener('click', function() {
-      const contactValue = document.getElementById('feedbackContactValue').value.trim();
-      const message = document.getElementById('feedbackMessage').value.trim();
-      const errorDiv = document.getElementById('feedbackFormError');
-      
-      if (selectedRating === 0) {
-        errorDiv.textContent = 'Bitte wähle eine Bewertung mit den Sternen aus.';
-        return;
-      }
-      
-      if (!contactValue) {
-        errorDiv.textContent = usePhoneInstead ? 'Bitte gib deine Telefonnummer ein.' : 'Bitte gib deine Email-Adresse ein.';
-        return;
-      }
-      
-      if (!usePhoneInstead && (!contactValue.includes('@') || !contactValue.includes('.'))) {
-        errorDiv.textContent = 'Bitte gib eine gültige Email-Adresse ein.';
-        return;
-      }
-      
-      if (!message) {
-        errorDiv.textContent = 'Bitte gib dein Feedback ein.';
-        return;
-      }
-      
-      if (message.length < 10) {
-        errorDiv.textContent = 'Das Feedback muss mindestens 10 Zeichen lang sein.';
-        return;
-      }
-      
+      const contactValue = feedbackContactValue.value.trim();
+      const message = feedbackMessage.value.trim();
       const btn = this;
+      
+      if (selectedRating === 0) { alert('Bitte wähle eine Bewertung mit den Sternen aus.'); return; }
+      if (!contactValue) { alert(usePhoneInstead ? 'Bitte gib deine Telefonnummer ein.' : 'Bitte gib deine Email-Adresse ein.'); return; }
+      if (!usePhoneInstead && (!contactValue.includes('@') || !contactValue.includes('.'))) { alert('Bitte gib eine gültige Email-Adresse ein.'); return; }
+      if (!message) { alert('Bitte gib dein Feedback ein.'); return; }
+      if (message.length < 10) { alert('Das Feedback muss mindestens 10 Zeichen lang sein.'); return; }
+      
       btn.textContent = 'Wird gesendet...';
       btn.classList.add('loading');
-      errorDiv.textContent = '';
       
-      const templateParams = {
-        rating: selectedRating,
-        contact_method: usePhoneInstead ? 'Telefon' : 'Email',
-        contact_value: contactValue,
-        feedback: message
-      };
-      
-      emailjs.send('service_1melj6k', 'template_kwp1n6g', templateParams)
-        .then(() => {
-          errorDiv.style.color = '#4caf50';
-          errorDiv.textContent = 'Feedback erfolgreich gesendet! Vielen Dank!';
-          selectedRating = 0;
-          updateStars(0);
-          document.getElementById('feedbackContactValue').value = '';
-          document.getElementById('feedbackMessage').value = '';
-          feedbackCharCount.textContent = '0';
-          btn.textContent = 'Feedback senden';
-          btn.classList.remove('loading');
-          
-          setTimeout(() => {
-            errorDiv.style.color = '#ff4444';
-            errorDiv.textContent = '';
-          }, 5000);
-        })
-        .catch(() => {
-          errorDiv.textContent = 'Fehler beim Senden. Bitte versuche es später erneut.';
-          btn.textContent = 'Feedback senden';
-          btn.classList.remove('loading');
-        });
+      emailjs.send('service_1melj6k', 'template_kwp1n6g', { rating: selectedRating, contact_method: usePhoneInstead ? 'Telefon' : 'Email', contact_value: contactValue, feedback: message })
+        .then(() => { showFeedbackSuccess(); })
+        .catch(() => { alert('Fehler beim Senden. Bitte versuche es später erneut.'); btn.textContent = 'Feedback senden'; btn.classList.remove('loading'); });
     });
   </script>
 </body>
