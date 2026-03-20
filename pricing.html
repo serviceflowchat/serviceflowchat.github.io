@@ -590,6 +590,7 @@
 
     .booking-form-section {
       margin: 2rem 0 4rem 0;
+      scroll-margin-top: 2rem;
     }
 
     .selected-plan-box {
@@ -599,30 +600,49 @@
       border: 2px solid;
       margin-bottom: 2rem;
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: planGlow 2s infinite alternate;
+    }
+
+    @keyframes planGlow {
+      from {
+        box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      }
+      to {
+        box-shadow: 0 0 40px rgba(255,255,255,0.5);
+      }
     }
 
     .selected-plan-box.basic {
       border-color: #00ff00;
-      box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+      animation: basicGlow 2s infinite alternate;
+    }
+
+    @keyframes basicGlow {
+      from { box-shadow: 0 0 20px rgba(0, 255, 0, 0.3); }
+      to { box-shadow: 0 0 50px rgba(0, 255, 0, 0.6); }
     }
 
     .selected-plan-box.popular {
       border-color: #FFD700;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+      animation: popularGlow 2s infinite alternate;
+    }
+
+    @keyframes popularGlow {
+      from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+      to { box-shadow: 0 0 50px rgba(255, 215, 0, 0.7); }
     }
 
     .selected-plan-box.pro {
       border-color: #ff00ff;
-      box-shadow: 0 0 30px rgba(255, 0, 255, 0.2);
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+      animation: proGlow 2s infinite alternate;
     }
 
-    .selected-plan-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1rem;
+    @keyframes proGlow {
+      from { box-shadow: 0 0 20px rgba(255, 0, 255, 0.3); }
+      to { box-shadow: 0 0 50px rgba(255, 0, 255, 0.6); }
     }
 
     .selected-plan-title {
@@ -635,6 +655,25 @@
 
     .selected-plan-title i {
       transition: all 0.3s ease;
+      filter: drop-shadow(0 0 10px currentColor);
+    }
+
+    .selected-plan-title.basic i,
+    .selected-plan-title.basic span {
+      color: #00ff00;
+      text-shadow: 0 0 20px #00ff00;
+    }
+
+    .selected-plan-title.popular i,
+    .selected-plan-title.popular span {
+      color: #FFD700;
+      text-shadow: 0 0 20px #FFD700;
+    }
+
+    .selected-plan-title.pro i,
+    .selected-plan-title.pro span {
+      color: #ff00ff;
+      text-shadow: 0 0 20px #ff00ff;
     }
 
     .plan-switch-wrapper {
@@ -869,6 +908,27 @@
       margin-right: 0.5rem;
     }
 
+    .contact-warning {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 165, 0, 0.15);
+      border: 1px solid rgba(255, 165, 0, 0.3);
+      border-radius: 40px;
+      padding: 1rem 1.5rem;
+      margin: 1rem 0;
+      color: #ffaa00;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .contact-warning i {
+      font-size: 1.2rem;
+    }
+
+    .contact-warning.hidden {
+      display: none;
+    }
+
     .call-scheduling {
       display: none;
       margin: 1.5rem 0;
@@ -918,6 +978,13 @@
     .payment-method i {
       font-size: 1.2rem;
       margin-right: 0.5rem;
+    }
+
+    .payment-note {
+      color: #aaa;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      font-style: italic;
     }
 
     .submit-btn {
@@ -1343,10 +1410,10 @@
         <p class="fade-element fade-element-delay-1">Vereinbare ein Meeting mit uns und wir erzählen dir alles über unsere Chatbots und helfen dir deinen Chatbot einzurichten.</p>
       </div>
 
-      <div class="booking-form-section fade-element fade-element-delay-2">
+      <div class="booking-form-section fade-element fade-element-delay-2" id="bookingFormSection">
         <div class="selected-plan-box" id="selectedPlanBox">
           <div class="selected-plan-header">
-            <div class="selected-plan-title">
+            <div class="selected-plan-title" id="selectedPlanTitle">
               <i class="fas fa-star" id="selectedPlanIcon"></i>
               <span id="selectedPlanName">Basic</span>
             </div>
@@ -1470,6 +1537,11 @@
               </div>
             </div>
 
+            <div class="contact-warning hidden" id="contactWarning">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span>Wenn Sie "Nur Telefon" oder "Beides" wählen: Eine unbekannte Nummer um die gewählte Uhrzeit sind wahrscheinlich wir! Wir können Sie möglicherweise nicht mit dieser Nummer erreichen.</span>
+            </div>
+
             <div class="call-scheduling" id="callScheduling">
               <div class="form-row">
                 <div class="form-group">
@@ -1495,9 +1567,9 @@
               <div style="color: #888; font-size: 0.8rem; margin-top: 0.3rem;" id="useCaseCounter">0/500</div>
             </div>
 
-            <div style="margin: 1rem 0; color: white; font-weight: 600;">Zahlungsmethode wählen *</div>
+            <div style="margin: 1rem 0; color: white; font-weight: 600;">Bevorzugte Zahlungsmethode (optional)</div>
             <div class="payment-methods">
-              <div class="payment-method active" data-method="paypal" onclick="setPaymentMethod('paypal')">
+              <div class="payment-method" data-method="paypal" onclick="setPaymentMethod('paypal')">
                 <i class="fab fa-paypal"></i> PayPal
               </div>
               <div class="payment-method" data-method="paysafecard" id="paysafeMethod" onclick="setPaymentMethod('paysafecard')">
@@ -1510,6 +1582,7 @@
                 <i class="fab fa-google"></i> Google Pay
               </div>
             </div>
+            <div class="payment-note">Diese Angabe ist optional und kann später noch geändert werden.</div>
 
             <div id="formError" class="error-message"></div>
             <button type="button" class="submit-btn" id="submitBtn" onclick="submitForm()">Meeting anfragen</button>
@@ -1577,7 +1650,7 @@
     let currentPlanClass = 'basic';
     let currentInterval = 'monthly';
     let isBusiness = false;
-    let currentPaymentMethod = 'paypal';
+    let currentPaymentMethod = null;
     let currentContactMethod = 'email';
 
     const planData = {
@@ -1643,6 +1716,11 @@
           }, 100);
         });
 
+        // Scroll to top of booking section
+        setTimeout(() => {
+          document.getElementById('bookingFormSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 200);
+
         updateSelectedPlanBox();
       }, 600);
     }
@@ -1651,7 +1729,12 @@
       const box = document.getElementById('selectedPlanBox');
       box.className = `selected-plan-box ${currentPlanClass}`;
       
-      document.getElementById('selectedPlanIcon').className = `fas fa-star ${currentPlanClass}`;
+      const icon = document.getElementById('selectedPlanIcon');
+      icon.className = `fas fa-star`;
+      
+      const title = document.getElementById('selectedPlanTitle');
+      title.className = `selected-plan-title ${currentPlanClass}`;
+      
       document.getElementById('selectedPlanName').textContent = currentPlanType;
       
       document.getElementById('planSwitch').value = currentPlan;
@@ -1671,7 +1754,7 @@
         paysafeMethod.style.opacity = '0.3';
         paysafeMethod.style.cursor = 'not-allowed';
         if (currentPaymentMethod === 'paysafecard') {
-          setPaymentMethod('paypal');
+          setPaymentMethod(null);
         }
       }
     }
@@ -1718,10 +1801,14 @@
       }
 
       const callScheduling = document.getElementById('callScheduling');
-      if (method === 'phone') {
+      const contactWarning = document.getElementById('contactWarning');
+      
+      if (method === 'phone' || method === 'both') {
         callScheduling.classList.add('visible');
+        contactWarning.classList.remove('hidden');
       } else {
         callScheduling.classList.remove('visible');
+        contactWarning.classList.add('hidden');
       }
     }
 
@@ -1734,7 +1821,9 @@
       document.querySelectorAll('.payment-method').forEach(el => {
         el.classList.remove('active');
       });
-      document.querySelector(`[data-method="${method}"]`).classList.add('active');
+      if (method) {
+        document.querySelector(`[data-method="${method}"]`).classList.add('active');
+      }
     }
 
     document.getElementById('phone').addEventListener('input', function(e) {
@@ -1806,7 +1895,6 @@
       submitBtn.disabled = true;
 
       const templateParams = {
-        to_email: 'flowchat.business@gmail.com',
         plan: currentPlan,
         plan_name: currentPlanType,
         interval: currentInterval === 'monthly' ? 'monatlich' : 'jährlich',
@@ -1828,7 +1916,7 @@
         call_time: (currentContactMethod === 'phone' && document.getElementById('callTime').value) ? document.getElementById('callTime').value : 'None',
         business_description: document.getElementById('businessDescription').value || 'None',
         use_case: document.getElementById('useCase').value || 'None',
-        payment_method: currentPaymentMethod === 'paypal' ? 'PayPal' : currentPaymentMethod === 'paysafecard' ? 'Paysafecard' : currentPaymentMethod === 'applepay' ? 'Apple Pay' : 'Google Pay'
+        payment_method: currentPaymentMethod ? (currentPaymentMethod === 'paypal' ? 'PayPal' : currentPaymentMethod === 'paysafecard' ? 'Paysafecard' : currentPaymentMethod === 'applepay' ? 'Apple Pay' : 'Google Pay') : 'Nicht angegeben'
       };
 
       emailjs.send('service_aqffj86', 'template_rm2qqtu', templateParams)
