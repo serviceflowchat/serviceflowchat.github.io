@@ -1237,7 +1237,7 @@
       btn.textContent = 'Wird gesendet...';
       btn.classList.add('loading');
       
-      emailjs.send('service_1melj6k', 'template_8ssr0mc', { from_email: email, message: message })
+      emailjs.send('service_42295lw', 'template_8ssr0mc', { from_email: email, message: message })
         .then(() => { showContactSuccess(); })
         .catch(() => { alert('Fehler beim Senden. Bitte versuche es später erneut.'); btn.textContent = 'Nachricht senden'; btn.classList.remove('loading'); });
     });
@@ -1256,7 +1256,7 @@
       btn.textContent = 'Wird gesendet...';
       btn.classList.add('loading');
       
-      emailjs.send('service_1melj6k', 'template_kwp1n6g', { rating: selectedRating, contact_method: usePhoneInstead ? 'Telefon' : 'Email', contact_value: contactValue, feedback: message })
+      emailjs.send('service_42295lw', 'template_kwp1n6g', { rating: selectedRating, contact_method: usePhoneInstead ? 'Telefon' : 'Email', contact_value: contactValue, feedback: message })
         .then(() => { showFeedbackSuccess(); })
         .catch(() => { alert('Fehler beim Senden. Bitte versuche es später erneut.'); btn.textContent = 'Feedback senden'; btn.classList.remove('loading'); });
     });
