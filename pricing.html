@@ -34,31 +34,35 @@
       flex-direction: column;
     }
 
-    .fade-element {
+    .fade-up {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
 
-    .fade-element.visible {
+    .fade-up.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    .fade-element-delay-1 {
+    .delay-1 {
       transition-delay: 0.1s;
     }
 
-    .fade-element-delay-2 {
+    .delay-2 {
       transition-delay: 0.2s;
     }
 
-    .fade-element-delay-3 {
+    .delay-3 {
       transition-delay: 0.3s;
     }
 
-    .fade-element-delay-4 {
+    .delay-4 {
       transition-delay: 0.4s;
+    }
+
+    .delay-5 {
+      transition-delay: 0.5s;
     }
 
     .hidden-section {
@@ -73,6 +77,16 @@
       border-bottom: 1px solid rgba(255,255,255,0.05);
       margin-bottom: 2rem;
       position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: navFadeIn 0.8s ease forwards;
+    }
+
+    @keyframes navFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .flow-logo-wrapper {
@@ -332,6 +346,7 @@
       flex-direction: column;
       position: relative;
       overflow: hidden;
+      cursor: pointer;
     }
 
     .pricing-card:hover {
@@ -600,49 +615,30 @@
       border: 2px solid;
       margin-bottom: 2rem;
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      animation: planGlow 2s infinite alternate;
-    }
-
-    @keyframes planGlow {
-      from {
-        box-shadow: 0 0 20px rgba(255,255,255,0.2);
-      }
-      to {
-        box-shadow: 0 0 40px rgba(255,255,255,0.5);
-      }
     }
 
     .selected-plan-box.basic {
       border-color: #00ff00;
       box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
-      animation: basicGlow 2s infinite alternate;
-    }
-
-    @keyframes basicGlow {
-      from { box-shadow: 0 0 20px rgba(0, 255, 0, 0.3); }
-      to { box-shadow: 0 0 50px rgba(0, 255, 0, 0.6); }
     }
 
     .selected-plan-box.popular {
       border-color: #FFD700;
       box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-      animation: popularGlow 2s infinite alternate;
-    }
-
-    @keyframes popularGlow {
-      from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
-      to { box-shadow: 0 0 50px rgba(255, 215, 0, 0.7); }
     }
 
     .selected-plan-box.pro {
       border-color: #ff00ff;
       box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
-      animation: proGlow 2s infinite alternate;
     }
 
-    @keyframes proGlow {
-      from { box-shadow: 0 0 20px rgba(255, 0, 255, 0.3); }
-      to { box-shadow: 0 0 50px rgba(255, 0, 255, 0.6); }
+    .selected-plan-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .selected-plan-title {
@@ -651,11 +647,6 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-    }
-
-    .selected-plan-title i {
-      transition: all 0.3s ease;
-      filter: drop-shadow(0 0 10px currentColor);
     }
 
     .selected-plan-title.basic i,
@@ -918,11 +909,6 @@
       padding: 1rem 1.5rem;
       margin: 1rem 0;
       color: #ffaa00;
-      animation: fadeIn 0.5s ease;
-    }
-
-    .contact-warning i {
-      font-size: 1.2rem;
     }
 
     .contact-warning.hidden {
@@ -935,7 +921,6 @@
       padding: 1.5rem;
       background: rgba(255, 255, 255, 0.03);
       border-radius: 30px;
-      animation: slideDown 0.5s ease;
     }
 
     .call-scheduling.visible {
@@ -1038,13 +1023,6 @@
       color: #00ff00;
       filter: drop-shadow(0 0 50px rgba(0, 255, 0, 0.5));
       margin-bottom: 2rem;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
     }
 
     .success-screen h2 {
@@ -1231,6 +1209,13 @@
         width: 100%;
         text-align: center;
       }
+      .selected-plan-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .plan-switch-wrapper {
+        width: 100%;
+      }
     }
 
     @media (max-width: 500px) {
@@ -1251,6 +1236,12 @@
       .pricing-card {
         padding: 1.5rem 1rem;
       }
+      .booking-form {
+        padding: 1.5rem;
+      }
+      .selected-plan-title {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
@@ -1268,18 +1259,10 @@
       </button>
     </div>
     <div class="mobile-menu-content">
-      <a href="https://www.flow-chat.de/" class="mobile-menu-link" data-page="home">
-        <i class="fas fa-home"></i> Home
-      </a>
-      <a href="/guide" class="mobile-menu-link" data-page="guide">
-        <i class="fas fa-compass"></i> Erklärung
-      </a>
-      <a href="/contact" class="mobile-menu-link" data-page="contact">
-        <i class="fas fa-envelope"></i> Kontakt
-      </a>
-      <a href="/pricing" class="mobile-menu-link" data-page="pricing">
-        <i class="fas fa-euro-sign"></i> Preise
-      </a>
+      <a href="https://www.flow-chat.de/" class="mobile-menu-link"><i class="fas fa-home"></i> Home</a>
+      <a href="/guide" class="mobile-menu-link"><i class="fas fa-compass"></i> Erklärung</a>
+      <a href="/contact" class="mobile-menu-link"><i class="fas fa-envelope"></i> Kontakt</a>
+      <a href="/pricing" class="mobile-menu-link"><i class="fas fa-euro-sign"></i> Preise</a>
     </div>
   </div>
 
@@ -1290,7 +1273,7 @@
         <div class="flow-logo-text">Flow-chat<span>.de</span></div>
       </div>
       <div class="flow-nav-right">
-        <a href="https://www.flow-chat.de/" target="_self">Home</a>
+        <a href="https://www.flow-chat.de/">Home</a>
         <a href="/guide">Erklärung</a>
         <a href="/contact">Kontakt</a>
         <a href="/pricing">Preise</a>
@@ -1302,12 +1285,12 @@
 
     <div id="pricingSection">
       <div class="pricing-header">
-        <h1 class="fade-element">Preise & Pläne</h1>
-        <p class="fade-element fade-element-delay-1">Wählen Sie den perfekten Plan für Ihr Unternehmen</p>
+        <h1 class="fade-up">Preise & Pläne</h1>
+        <p class="fade-up delay-1">Wählen Sie den perfekten Plan für Ihr Unternehmen</p>
       </div>
 
       <div class="pricing-grid">
-        <div class="pricing-card basic fade-element fade-element-delay-2">
+        <div class="pricing-card basic fade-up delay-2" onclick="selectPlan('basic', 'Basic', 'basic')">
           <div class="plan-name">
             <i class="fas fa-star"></i> Basic
           </div>
@@ -1337,10 +1320,10 @@
             <div class="feature-subtitle">Analytics</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Basis-Analytics wöchentlich per E-Mail</div>
           </div>
-          <button class="select-btn" onclick="selectPlan('basic', 'Basic', 'basic')">Meeting vereinbaren</button>
+          <button class="select-btn">Meeting vereinbaren</button>
         </div>
 
-        <div class="pricing-card popular fade-element fade-element-delay-3">
+        <div class="pricing-card popular fade-up delay-3" onclick="selectPlan('standard', 'Standard', 'popular')">
           <div class="popular-badge">Beliebt</div>
           <div class="plan-name">
             <i class="fas fa-star"></i> Standard
@@ -1368,10 +1351,10 @@
             <div class="feature-subtitle">Automatisierung</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Automatisches Retraining alle 24 Stunden</div>
           </div>
-          <button class="select-btn" onclick="selectPlan('standard', 'Standard', 'popular')">Meeting vereinbaren</button>
+          <button class="select-btn">Meeting vereinbaren</button>
         </div>
 
-        <div class="pricing-card pro fade-element fade-element-delay-4">
+        <div class="pricing-card pro fade-up delay-4" onclick="selectPlan('pro', 'Pro', 'pro')">
           <div class="plan-name">
             <i class="fas fa-star"></i> Pro
           </div>
@@ -1399,18 +1382,18 @@
             <div class="feature-item"><i class="fas fa-circle-check"></i> Quellen-Vorschläge (Erkennt Content-Lücken, erkennt widersprüchliche Quellen)</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Tickets als Quelle (Trainieren Sie Ihren Agenten mit Zendesk- und Salesforce-Tickets)</div>
           </div>
-          <button class="select-btn" onclick="selectPlan('pro', 'Pro', 'pro')">Meeting vereinbaren</button>
+          <button class="select-btn">Meeting vereinbaren</button>
         </div>
       </div>
     </div>
 
     <div id="bookingSection" class="hidden-section">
       <div class="pricing-header">
-        <h1 class="fade-element">Meeting vereinbaren</h1>
-        <p class="fade-element fade-element-delay-1">Vereinbare ein Meeting mit uns und wir erzählen dir alles über unsere Chatbots und helfen dir deinen Chatbot einzurichten.</p>
+        <h1 class="fade-up">Meeting vereinbaren</h1>
+        <p class="fade-up delay-1">Vereinbare ein Meeting mit uns und wir erzählen dir alles über unsere Chatbots und helfen dir deinen Chatbot einzurichten.</p>
       </div>
 
-      <div class="booking-form-section fade-element fade-element-delay-2" id="bookingFormSection">
+      <div class="booking-form-section fade-up delay-2" id="bookingFormSection">
         <div class="selected-plan-box" id="selectedPlanBox">
           <div class="selected-plan-header">
             <div class="selected-plan-title" id="selectedPlanTitle">
@@ -1592,7 +1575,7 @@
     </div>
 
     <div id="successSection" class="hidden-section">
-      <div class="success-screen fade-element">
+      <div class="success-screen fade-up">
         <div class="success-icon">
           <i class="fas fa-check-circle"></i>
         </div>
@@ -1636,13 +1619,44 @@
   <script>
     emailjs.init("YDWmiDx4PCrhw8Rkx");
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const fadeElements = document.querySelectorAll('.fade-element');
-      fadeElements.forEach(el => {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+    function toggleMobileMenu() {
+      mobileMenu.classList.toggle('active');
+      mobileMenuOverlay.classList.toggle('active');
+      document.body.classList.toggle('no-scroll');
+    }
+
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+    mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        toggleMobileMenu();
         setTimeout(() => {
-          el.classList.add('visible');
-        }, 100);
+          window.location.href = href;
+        }, 300);
       });
+    });
+
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    fadeElements.forEach(element => {
+      observer.observe(element);
     });
 
     let currentPlan = 'basic';
@@ -1698,8 +1712,8 @@
       currentPlanClass = planClass;
 
       const pricingSection = document.getElementById('pricingSection');
-      const pricingElements = pricingSection.querySelectorAll('.fade-element');
-      pricingElements.forEach(el => {
+      const pricingFadeElements = pricingSection.querySelectorAll('.fade-up');
+      pricingFadeElements.forEach(el => {
         el.classList.remove('visible');
       });
 
@@ -1709,17 +1723,20 @@
         const bookingSection = document.getElementById('bookingSection');
         bookingSection.classList.remove('hidden-section');
         
-        const bookingElements = bookingSection.querySelectorAll('.fade-element');
-        bookingElements.forEach(el => {
+        const bookingFadeElements = bookingSection.querySelectorAll('.fade-up');
+        bookingFadeElements.forEach(el => {
+          observer.observe(el);
           setTimeout(() => {
-            el.classList.add('visible');
-          }, 100);
+            if (el.getBoundingClientRect().top < window.innerHeight) {
+              el.classList.add('visible');
+            }
+          }, 50);
         });
 
-        // Scroll to top of booking section
-        setTimeout(() => {
-          document.getElementById('bookingFormSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 200);
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
 
         updateSelectedPlanBox();
       }, 600);
@@ -1871,6 +1888,12 @@
         return;
       }
 
+      const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        errorDiv.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+        return;
+      }
+
       if (isBusiness) {
         const companyName = document.getElementById('companyName').value;
         const legalOwner = document.getElementById('legalOwner').value;
@@ -1880,7 +1903,7 @@
         }
       }
 
-      if (currentContactMethod === 'phone') {
+      if (currentContactMethod === 'phone' || currentContactMethod === 'both') {
         const callDate = document.getElementById('callDate').value;
         const callTime = document.getElementById('callTime').value;
         if (!callDate || !callTime) {
@@ -1898,22 +1921,22 @@
         plan: currentPlan,
         plan_name: currentPlanType,
         interval: currentInterval === 'monthly' ? 'monatlich' : 'jährlich',
-        first_name: firstName || 'None',
-        last_name: lastName || 'None',
-        street: street || 'None',
-        zip_code: zipCode || 'None',
-        city: city || 'None',
-        state: state || 'None',
-        country: country || 'None',
-        phone: phone || 'None',
-        email: email || 'None',
+        first_name: firstName,
+        last_name: lastName,
+        street: street,
+        zip_code: zipCode,
+        city: city,
+        state: state,
+        country: country,
+        phone: phone,
+        email: email,
         is_business: isBusiness ? 'Ja' : 'Nein',
         company_name: isBusiness ? (document.getElementById('companyName').value || 'None') : 'nicht zutreffend',
         legal_owner: isBusiness ? (document.getElementById('legalOwner').value || 'None') : 'nicht zutreffend',
         business_number: isBusiness ? (document.getElementById('businessNumber').value || 'None') : 'nicht zutreffend',
         contact_method: currentContactMethod === 'email' ? 'Nur E-Mail' : currentContactMethod === 'phone' ? 'Nur Telefon' : currentContactMethod === 'both' ? 'Beides' : 'Egal',
-        call_date: (currentContactMethod === 'phone' && document.getElementById('callDate').value) ? document.getElementById('callDate').value : 'None',
-        call_time: (currentContactMethod === 'phone' && document.getElementById('callTime').value) ? document.getElementById('callTime').value : 'None',
+        call_date: (currentContactMethod === 'phone' || currentContactMethod === 'both') && document.getElementById('callDate').value ? document.getElementById('callDate').value : 'None',
+        call_time: (currentContactMethod === 'phone' || currentContactMethod === 'both') && document.getElementById('callTime').value ? document.getElementById('callTime').value : 'None',
         business_description: document.getElementById('businessDescription').value || 'None',
         use_case: document.getElementById('useCase').value || 'None',
         payment_method: currentPaymentMethod ? (currentPaymentMethod === 'paypal' ? 'PayPal' : currentPaymentMethod === 'paysafecard' ? 'Paysafecard' : currentPaymentMethod === 'applepay' ? 'Apple Pay' : 'Google Pay') : 'Nicht angegeben'
@@ -1922,15 +1945,15 @@
       emailjs.send('service_aqffj86', 'template_rm2qqtu', templateParams)
         .then(function(response) {
           const successMessage = document.getElementById('successMessage');
-          if (currentContactMethod === 'phone') {
+          if (currentContactMethod === 'phone' || currentContactMethod === 'both') {
             successMessage.textContent = `Sie erhalten einen Anruf am ${document.getElementById('callDate').value} um ${document.getElementById('callTime').value}.`;
           } else {
             successMessage.textContent = 'Sie erhalten in Kürze (24 bis 48 Stunden) eine E-Mail.';
           }
 
           const bookingSection = document.getElementById('bookingSection');
-          const bookingElements = bookingSection.querySelectorAll('.fade-element');
-          bookingElements.forEach(el => {
+          const bookingFadeElements = bookingSection.querySelectorAll('.fade-up');
+          bookingFadeElements.forEach(el => {
             el.classList.remove('visible');
           });
 
@@ -1940,11 +1963,19 @@
             const successSection = document.getElementById('successSection');
             successSection.classList.remove('hidden-section');
             
-            const successElements = successSection.querySelectorAll('.fade-element');
-            successElements.forEach(el => {
+            const successFadeElements = successSection.querySelectorAll('.fade-up');
+            successFadeElements.forEach(el => {
+              observer.observe(el);
               setTimeout(() => {
-                el.classList.add('visible');
-              }, 100);
+                if (el.getBoundingClientRect().top < window.innerHeight) {
+                  el.classList.add('visible');
+                }
+              }, 50);
+            });
+            
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
             });
           }, 600);
         })
