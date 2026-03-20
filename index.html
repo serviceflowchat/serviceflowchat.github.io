@@ -1,1 +1,1133 @@
-w
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>FlowChat · KI-Agenten für Kundenerlebnisse</title>
+  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Crect width='70' height='44' x='15' y='8' fill='white' rx='12' ry='12' /%3E%3Cpolygon points='25,52 50,68 75,52' fill='white' /%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000000;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #ffffff;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 0 2rem;
+    }
+
+    .flow-page {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    .delay-4 {
+      transition-delay: 0.4s;
+    }
+
+    .delay-5 {
+      transition-delay: 0.5s;
+    }
+
+    .flow-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0 3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 2rem;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: navFadeIn 0.8s ease forwards;
+    }
+
+    @keyframes navFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .flow-logo-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .flow-logo-icon {
+      width: 32px;
+      height: 24px;
+      background: white;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    .flow-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      width: 12px;
+      height: 10px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+    }
+
+    .flow-logo-text {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #fff, #dddddd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .flow-logo-text span {
+      font-weight: 300;
+      color: #888;
+      background: none;
+      -webkit-text-fill-color: #888;
+      font-size: 1.4rem;
+    }
+
+    .flow-nav-right {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .flow-nav-right a {
+      color: #eee;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .flow-nav-right a:hover {
+      border-color: #fff;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 1001;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      text-shadow: 0 0 15px rgba(255,255,255,0.7);
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 9998;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-menu-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: rgba(10, 10, 10, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 9999;
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu-header {
+      padding: 25px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-menu-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-menu-logo-icon {
+      width: 32px;
+      height: 24px;
+      background: white;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    .mobile-menu-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      width: 12px;
+      height: 10px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .mobile-menu-logo-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .mobile-close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 10px 15px;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
+
+    .mobile-menu-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mobile-menu-link {
+      display: flex;
+      align-items: center;
+      padding: 18px 20px;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      border: 1px solid transparent;
+    }
+
+    .mobile-menu-link i {
+      margin-right: 15px;
+      width: 24px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .mobile-menu-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    .flow-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-bottom: 4rem;
+    }
+
+    .flow-headline {
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+    }
+
+    .flow-headline span {
+      display: block;
+    }
+
+    .flow-subheadline {
+      font-size: 1.2rem;
+      color: #bbbbbb;
+      max-width: 90%;
+      margin-bottom: 2.5rem;
+      font-weight: 350;
+    }
+
+    .flow-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .flow-button {
+      background-color: #ffffff;
+      color: #000000;
+      border: none;
+      padding: 1rem 2.8rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s ease;
+      box-shadow: 0 0 25px rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.2);
+      text-decoration: none;
+      color: #000000;
+    }
+
+    .flow-button:hover {
+      background-color: #f0f0f0;
+      transform: scale(1.02);
+      box-shadow: 0 0 35px rgba(255,255,255,0.6);
+    }
+
+    .flow-credit-note {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    .flow-credit-note i {
+      font-size: 1rem;
+      color: #aaa;
+    }
+
+    .flow-video-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #0c0c0c;
+      border-radius: 2rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 30px 50px -20px rgba(255,255,255,0.15);
+    }
+
+    .flow-video-player {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: none;
+      outline: none;
+      background: #0c0c0c;
+    }
+
+    .flow-feature-section {
+      margin: 5rem 0 3rem 0;
+    }
+
+    .flow-feature-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      align-items: start;
+    }
+
+    .flow-feature-title {
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 25px rgba(255,255,255,0.6);
+      line-height: 1.2;
+    }
+
+    .flow-feature-description {
+      color: #aaa;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .flow-showcase {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .flow-showcase-item {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .flow-showcase-item:hover {
+      transform: translateY(-8px);
+    }
+
+    .flow-showcase-image {
+      width: 100%;
+      aspect-ratio: 784/800;
+      background: #111;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 35px -15px rgba(255,255,255,0.15);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .flow-showcase-item:hover .flow-showcase-image {
+      border-color: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+      transform: scale(1.02);
+    }
+
+    .flow-showcase-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .flow-showcase-item:hover .flow-showcase-image img {
+      transform: scale(1.08);
+    }
+
+    .flow-showcase-item h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 15px rgba(255,255,255,0.5);
+      margin-top: 0.5rem;
+      transition: text-shadow 0.3s ease;
+    }
+
+    .flow-showcase-item:hover h3 {
+      text-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+    }
+
+    .flow-showcase-item p {
+      color: #aaa;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      transition: color 0.3s ease;
+    }
+
+    .flow-showcase-item:hover p {
+      color: #ddd;
+    }
+
+    .flow-feature-boxes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin: 3rem 0 5rem 0;
+    }
+
+    .flow-feature-box {
+      background: rgba(10, 10, 10, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 2rem;
+      padding: 2.5rem 2rem;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      cursor: default;
+    }
+
+    .flow-feature-box:hover {
+      transform: scale(1.02);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.25);
+      background: rgba(20, 20, 20, 0.8);
+    }
+
+    .flow-box-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .flow-box-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      font-size: 1.8rem;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .flow-feature-box:hover .flow-box-icon {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .flow-box-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      transition: text-shadow 0.3s ease;
+    }
+
+    .flow-feature-box:hover .flow-box-title {
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+    }
+
+    .flow-box-text {
+      color: #aaa;
+      font-size: 1rem;
+      line-height: 1.6;
+      transition: color 0.3s ease;
+    }
+
+    .flow-feature-box:hover .flow-box-text {
+      color: #ddd;
+    }
+
+    .design-preview-section {
+      margin: 5rem 0 5rem 0;
+    }
+
+    .design-preview-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .design-text h2 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .design-text p {
+      color: #aaa;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      max-width: 90%;
+    }
+
+    .toggle-switch {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 60px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .toggle-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #888;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .toggle-option i {
+      font-size: 1.1rem;
+    }
+
+    .toggle-option.active {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .toggle-option[data-theme="dark"].active {
+      color: #4a9eff;
+    }
+
+    .toggle-option[data-theme="light"].active {
+      color: #FFD700;
+    }
+
+    .preview-image {
+      width: 100%;
+      position: relative;
+    }
+
+    .theme-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .preview-image:hover .theme-img {
+      transform: scale(1.05);
+    }
+
+    .flow-footer {
+      margin-top: 5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 3rem 0 2rem 0;
+    }
+
+    .flow-footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .flow-footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .flow-footer-logo-icon {
+      width: 28px;
+      height: 22px;
+      background: white;
+      border-radius: 6px;
+      position: relative;
+      box-shadow: 0 0 10px rgba(255,255,255,0.4);
+    }
+
+    .flow-footer-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 8px;
+      width: 10px;
+      height: 8px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .flow-footer-logo-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .flow-footer-categories {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .flow-footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .flow-footer-category-title {
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.2rem;
+      text-shadow: 0 0 12px rgba(255,255,255,0.7);
+    }
+
+    .flow-footer-col a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .flow-footer-col a:hover {
+      color: white;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+
+    .flow-footer-contact {
+      flex: 0 0 auto;
+    }
+
+    .flow-footer-contact .contact-btn {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 0.7rem 2rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .flow-footer-contact .contact-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: white;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .flow-copyright {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+      color: #555;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .flow-nav-right {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .flow-hero {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .design-preview-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .design-text h2 {
+        font-size: 2rem;
+      }
+      .design-text p {
+        max-width: 100%;
+      }
+      .flow-headline {
+        font-size: 3.5rem;
+      }
+      .flow-subheadline {
+        max-width: 100%;
+      }
+      .flow-nav {
+        padding: 1rem 0 2rem 0;
+      }
+      .flow-feature-header {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .flow-showcase {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .flow-feature-boxes {
+        grid-template-columns: 1fr;
+      }
+      .flow-footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+      }
+      .flow-footer-categories {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .flow-footer-contact {
+        width: 100%;
+      }
+      .flow-footer-contact .contact-btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 500px) {
+      body { padding: 0 1rem; }
+      .flow-headline { font-size: 2.5rem; }
+      .flow-button { padding: 0.8rem 2rem; font-size: 1rem; }
+      .flow-logo-text { font-size: 1.2rem; }
+      .flow-logo-text span { font-size: 1.2rem; }
+      .design-text h2 {
+        font-size: 1.6rem;
+      }
+      .flow-box-title {
+        font-size: 1.6rem;
+      }
+      .toggle-option {
+        padding: 0.5rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div style="display: none;">
+    <img src="Dark.png" alt="preload dark">
+    <img src="Light.png" alt="preload light">
+  </div>
+
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="mobile-menu-logo">
+        <div class="mobile-menu-logo-icon"></div>
+        <span class="mobile-menu-logo-text">FlowChat</span>
+      </div>
+      <button class="mobile-close-btn" id="mobileCloseBtn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="mobile-menu-content">
+      <a href="https://www.flow-chat.de/" class="mobile-menu-link"><i class="fas fa-home"></i> Home</a>
+      <a href="/guide" class="mobile-menu-link"><i class="fas fa-compass"></i> Erklärung</a>
+      <a href="/contact" class="mobile-menu-link"><i class="fas fa-envelope"></i> Kontakt</a>
+      <a href="/pricing" class="mobile-menu-link"><i class="fas fa-euro-sign"></i> Preise</a>
+    </div>
+  </div>
+
+  <div class="flow-page">
+    <div class="flow-nav">
+      <div class="flow-logo-wrapper">
+        <div class="flow-logo-icon"></div>
+        <div class="flow-logo-text">Flow-chat<span>.de</span></div>
+      </div>
+      <div class="flow-nav-right">
+        <a href="https://www.flow-chat.de/">Home</a>
+        <a href="/guide">Erklärung</a>
+        <a href="/contact">Kontakt</a>
+        <a href="/pricing">Preise</a>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="flow-hero">
+      <div>
+        <h1 class="flow-headline fade-up" id="heroTitle">
+          <span>KI-Agenten für</span>
+          <span>einzigartige</span>
+          <span>Kundenerlebnisse</span>
+        </h1>
+        <p class="flow-subheadline fade-up delay-1" id="heroText">
+          FlowChat ist die umfassende Plattform zum Erstellen<br>
+          und Bereitstellen von KI-Supportagenten<br>
+          für Ihr Unternehmen.
+        </p>
+        <div class="flow-cta-group fade-up delay-2" id="heroCta">
+          <a href="/pricing" class="flow-button">
+            Meeting vereinbaren
+          </a>
+          <div class="flow-credit-note">
+            <i class="far fa-credit-card"></i>
+            <span>Keine Kreditkarte erforderlich</span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-video-placeholder fade-up delay-3" id="heroVideo">
+        <video class="flow-video-player" controls playsinline preload="metadata" poster="Showcase2.png">
+          <source src="Showcase.mov" type="video/mp4">
+          <source src="Showcase.mov" type="video/quicktime">
+        </video>
+      </div>
+    </div>
+
+    <div class="flow-feature-section">
+      <div class="flow-feature-header">
+        <div class="flow-feature-title fade-up" id="featureTitle">Die vollständige Plattform für KI-Supportagenten</div>
+        <div class="flow-feature-description fade-up delay-1" id="featureDesc">Flowchat wurde entwickelt, um KI-gestützte Kundensupport-Agenten zu erstellen, die die schwierigsten Probleme Ihrer Kunden lösen und gleichzeitig Ihre Geschäftsergebnisse verbessern.</div>
+      </div>
+
+      <div class="flow-showcase">
+        <div class="flow-showcase-item fade-up" id="showcase1">
+          <div class="flow-showcase-image">
+            <img src="purpose-built-for-llms.png" alt="LLMs" onerror="this.style.background='#222'">
+          </div>
+          <h3>Speziell für LLMs entwickelt</h3>
+          <p>Sprachmodelle mit logischen Schlussfolgerungsfähigkeiten für die effektive Lösung komplexer Kundensupport-Anfragen.</p>
+        </div>
+        <div class="flow-showcase-item fade-up delay-1" id="showcase2">
+          <div class="flow-showcase-image">
+            <img src="designed-for-simplicity.png" alt="Simplicity" onerror="this.style.background='#222'">
+          </div>
+          <h3>Für maximale Einfachheit entwickelt</h3>
+          <p>KI-Agenten einfach bei uns erstellen und individuell gestalten – Sie müssen uns nur kontaktieren.</p>
+        </div>
+        <div class="flow-showcase-item fade-up delay-2" id="showcase3">
+          <div class="flow-showcase-image">
+            <img src="engineered-for-security.png" alt="Security" onerror="this.style.background='#222'">
+          </div>
+          <h3>Für höchste Sicherheit konzipiert</h3>
+          <p>Profitieren Sie von maximaler Sicherheit dank starker Verschlüsselung, strenger Compliance-Standards und Sicherheitsmaßnahmen auf Unternehmensniveau.</p>
+        </div>
+      </div>
+
+      <div class="flow-feature-boxes">
+        <div class="flow-feature-box fade-up" id="box1">
+          <div class="flow-box-header">
+            <div class="flow-box-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <div class="flow-box-title">API</div>
+          </div>
+          <div class="flow-box-text">
+            APIs, Client-Bibliotheken und Komponenten, um Support tief in Ihr Produkt zu integrieren.
+          </div>
+        </div>
+        
+        <div class="flow-feature-box fade-up delay-1" id="boxCustomChat">
+          <div class="flow-box-header">
+            <div class="flow-box-icon">
+              <i class="fas fa-comment-dots"></i>
+            </div>
+            <div class="flow-box-title">Custom ChatBox</div>
+          </div>
+          <div class="flow-box-text">
+            Volles Chat-Interface nach Ihren Wünschen – wir passen jede Farbe, jedes Design, jede Antwort, jeden Link, alle Vorschläge und noch vieles mehr an.
+          </div>
+        </div>
+
+        <div class="flow-feature-box fade-up delay-2" id="box2">
+          <div class="flow-box-header">
+            <div class="flow-box-icon">
+              <i class="fas fa-paint-brush"></i>
+            </div>
+            <div class="flow-box-title">Anpassung</div>
+          </div>
+          <div class="flow-box-text">
+            Volle Anpassung – Gestalten Sie Ihre Chatbox nach Ihren Wünschen: von Button-Designs, Texten, Verhalten und Farben über Chatverläufe, Tipps, Logos, Bot-Namen bis hin zu individuellem Training – alles nach Ihren Vorstellungen.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="design-preview-section fade-up delay-2">
+      <div class="design-preview-container">
+        <div class="design-text">
+          <h2>Mach das Licht an<br>ich sehe nichts</h2>
+          <p>Du kannst im Meeting einstellen, wie du deine Box haben möchtest. Wir nehmen das Design deiner Website an – ob dunkel oder hell.</p>
+          <div class="toggle-switch" id="themeToggle">
+            <div class="toggle-option active" data-theme="dark">
+              <i class="fas fa-moon"></i>
+              <span>Dark</span>
+            </div>
+            <div class="toggle-option" data-theme="light">
+              <i class="fas fa-sun"></i>
+              <span>Light</span>
+            </div>
+          </div>
+        </div>
+        <div class="preview-image">
+          <img src="Dark.png" alt="Theme Preview" class="theme-img" id="themeImage">
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-footer">
+      <div class="flow-footer-content">
+        <div class="flow-footer-logo">
+          <div class="flow-footer-logo-icon"></div>
+          <span class="flow-footer-logo-text">FlowChat</span>
+        </div>
+        <div class="flow-footer-categories">
+          <div class="flow-footer-col">
+            <div class="flow-footer-category-title">PRODUCT</div>
+            <a href="/pricing">Preise (pricing)</a>
+            <a href="/guide">Erklärung (guide)</a>
+          </div>
+          <div class="flow-footer-col">
+            <div class="flow-footer-category-title">UNTERNEHMEN</div>
+            <a href="/about">Über uns (about)</a>
+            <a href="/contact">Kontakt Aufnehmen (contact)</a>
+          </div>
+        </div>
+        <div class="flow-footer-contact">
+          <a href="/contact" class="contact-btn">Kontakt</a>
+        </div>
+      </div>
+      <div class="flow-copyright">
+        © 2026 FlowChat, Inc.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+    function toggleMobileMenu() {
+      mobileMenu.classList.toggle('active');
+      mobileMenuOverlay.classList.toggle('active');
+      document.body.classList.toggle('no-scroll');
+    }
+
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+    mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        toggleMobileMenu();
+        setTimeout(() => {
+          window.location.href = href;
+        }, 300);
+      });
+    });
+
+    const fadeElements = document.querySelectorAll('.fade-up');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    fadeElements.forEach(element => {
+      observer.observe(element);
+    });
+
+    const toggleOptions = document.querySelectorAll('.toggle-option');
+    const themeImage = document.getElementById('themeImage');
+    let isAnimating = false;
+
+    function switchTheme(toDark) {
+      if (isAnimating) return;
+      isAnimating = true;
+      
+      const currentSrc = themeImage.src;
+      const newSrc = toDark ? 'Dark.png' : 'Light.png';
+      
+      if (currentSrc.includes(newSrc)) {
+        isAnimating = false;
+        return;
+      }
+      
+      themeImage.style.transition = 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+      themeImage.style.opacity = '0';
+      themeImage.style.transform = 'scale(0.95) translateY(20px)';
+      
+      setTimeout(() => {
+        themeImage.src = newSrc;
+        
+        setTimeout(() => {
+          themeImage.style.transition = 'opacity 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
+          themeImage.style.opacity = '1';
+          themeImage.style.transform = 'scale(1) translateY(0)';
+          
+          setTimeout(() => {
+            themeImage.style.transition = '';
+            isAnimating = false;
+          }, 400);
+        }, 50);
+      }, 400);
+    }
+
+    toggleOptions.forEach(option => {
+      option.addEventListener('click', function() {
+        if (isAnimating) return;
+        
+        const theme = this.getAttribute('data-theme');
+        
+        toggleOptions.forEach(opt => opt.classList.remove('active'));
+        this.classList.add('active');
+        
+        switchTheme(theme === 'dark');
+      });
+    });
+  </script>
+
+  <script>
+    (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="om035_aLot5AR9d9SonNF";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+  </script>
+</body>
+</html>
