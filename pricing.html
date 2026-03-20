@@ -6,7 +6,6 @@
   <title>FlowChat · Preise & Pläne</title>
   <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Crect width='70' height='44' x='15' y='8' fill='white' rx='12' ry='12' /%3E%3Cpolygon points='25,52 50,68 75,52' fill='white' /%3E%3C/svg%3E">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- EmailJS SDK einbinden -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
     * {
@@ -35,7 +34,6 @@
       flex-direction: column;
     }
 
-    /* Animation Classes */
     .fade-element {
       opacity: 0;
       transform: translateY(20px);
@@ -600,6 +598,7 @@
       padding: 2rem;
       border: 2px solid;
       margin-bottom: 2rem;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .selected-plan-box.basic {
@@ -634,24 +633,61 @@
       gap: 0.5rem;
     }
 
+    .selected-plan-title i {
+      transition: all 0.3s ease;
+    }
+
+    .plan-switch-wrapper {
+      position: relative;
+      min-width: 200px;
+    }
+
     .plan-switch-select {
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 100%;
+      background: rgba(20, 20, 20, 0.95);
+      border: 2px solid rgba(255, 255, 255, 0.1);
       color: white;
-      padding: 0.5rem 1rem;
+      padding: 0.8rem 2rem 0.8rem 1.5rem;
       border-radius: 40px;
-      font-size: 0.9rem;
+      font-size: 1rem;
       cursor: pointer;
+      appearance: none;
+      transition: all 0.3s ease;
+    }
+
+    .plan-switch-select:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .plan-switch-select:focus {
+      outline: none;
+      border-color: white;
     }
 
     .plan-switch-select option {
       background: #1a1a1a;
+      color: white;
+      padding: 1rem;
+    }
+
+    .plan-switch-wrapper::after {
+      content: '\f078';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      pointer-events: none;
+      font-size: 0.9rem;
     }
 
     .payment-interval {
       display: flex;
       gap: 1rem;
-      margin: 1rem 0;
+      margin: 1.5rem 0;
     }
 
     .interval-option {
@@ -659,7 +695,7 @@
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 40px;
-      padding: 0.8rem;
+      padding: 1rem;
       text-align: center;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -668,106 +704,196 @@
     .interval-option.active {
       background: rgba(255, 255, 255, 0.15);
       border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+
+    .interval-option:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
     .interval-option .price {
-      font-size: 1.2rem;
-      font-weight: 600;
+      font-size: 1.3rem;
+      font-weight: 700;
       color: white;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     }
 
     .interval-option .saving {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: #4caf50;
     }
 
     .booking-form {
-      background: rgba(10, 10, 10, 0.8);
-      border-radius: 2rem;
-      padding: 2rem;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 2.5rem;
+      padding: 2.5rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     }
 
     .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 1rem;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
     }
 
     .form-group {
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .form-group label {
       display: block;
-      color: #aaa;
-      font-size: 0.85rem;
-      margin-bottom: 0.3rem;
-    }
-
-    .form-group input, .form-group select {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 40px;
-      padding: 0.8rem 1.2rem;
       color: white;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
-    .form-group input:focus, .form-group select:focus {
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 1rem 1.5rem;
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
       outline: none;
       border-color: white;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+
+    .form-group input:hover, .form-group select:hover, .form-group textarea:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
     }
 
     .business-toggle {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      margin: 1rem 0;
-      padding: 1rem;
+      gap: 2rem;
+      margin: 2rem 0;
+      padding: 1.5rem;
       background: rgba(255, 255, 255, 0.05);
       border-radius: 40px;
     }
 
     .toggle-btn {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.2);
       color: white;
-      padding: 0.5rem 2rem;
+      padding: 0.8rem 2.5rem;
       border-radius: 40px;
       cursor: pointer;
       transition: all 0.3s ease;
+      font-weight: 600;
     }
 
     .toggle-btn.active {
       background: white;
       color: black;
       border-color: white;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+    }
+
+    .toggle-btn:hover:not(.active) {
+      border-color: rgba(255, 255, 255, 0.5);
     }
 
     .business-fields {
       display: none;
+      animation: slideDown 0.5s ease;
     }
 
     .business-fields.visible {
       display: block;
     }
 
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .contact-options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .contact-option {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 40px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .contact-option.active {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: white;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+
+    .contact-option:hover:not(.disabled) {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .contact-option.disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .contact-option i {
+      font-size: 1.2rem;
+      margin-right: 0.5rem;
+    }
+
+    .call-scheduling {
+      display: none;
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 30px;
+      animation: slideDown 0.5s ease;
+    }
+
+    .call-scheduling.visible {
+      display: block;
+    }
+
     .payment-methods {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 1rem;
-      margin: 1rem 0;
+      margin: 2rem 0;
     }
 
     .payment-method {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.1);
       border-radius: 40px;
-      padding: 0.8rem;
+      padding: 1rem;
       text-align: center;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -776,7 +902,12 @@
     .payment-method.active {
       background: rgba(255, 255, 255, 0.15);
       border-color: white;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+
+    .payment-method:hover:not(.disabled) {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
     .payment-method.disabled {
@@ -785,53 +916,79 @@
     }
 
     .payment-method i {
+      font-size: 1.2rem;
       margin-right: 0.5rem;
     }
 
     .submit-btn {
       width: 100%;
-      background: linear-gradient(135deg, #00ff00, #00cc00);
-      border: none;
-      padding: 1rem;
-      border-radius: 40px;
-      font-size: 1.1rem;
-      font-weight: 600;
+      background: transparent;
+      border: 3px solid white;
+      color: white;
+      padding: 1.2rem;
+      border-radius: 50px;
+      font-size: 1.3rem;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.3s ease;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
     }
 
     .submit-btn:hover {
+      background: white;
+      color: black;
+      box-shadow: 0 0 50px rgba(255, 255, 255, 0.5);
       transform: scale(1.02);
-      box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
     }
 
     .submit-btn.loading {
       opacity: 0.7;
       cursor: wait;
+      pointer-events: none;
+    }
+
+    .error-message {
+      color: #ff4444;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      text-align: center;
     }
 
     .success-screen {
       text-align: center;
-      padding: 4rem 2rem;
+      padding: 5rem 2rem;
+      background: rgba(10, 10, 10, 0.8);
+      border-radius: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin: 2rem 0;
     }
 
     .success-icon {
-      font-size: 5rem;
+      font-size: 6rem;
       color: #00ff00;
-      filter: drop-shadow(0 0 30px rgba(0, 255, 0, 0.5));
+      filter: drop-shadow(0 0 50px rgba(0, 255, 0, 0.5));
       margin-bottom: 2rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
 
     .success-screen h2 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       margin-bottom: 1rem;
       text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
     }
 
     .success-screen p {
       color: #aaa;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       margin-bottom: 0.5rem;
     }
 
@@ -839,24 +996,19 @@
       display: inline-block;
       background: white;
       color: black;
-      padding: 1rem 3rem;
-      border-radius: 40px;
+      padding: 1.2rem 4rem;
+      border-radius: 50px;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
       margin-top: 2rem;
       transition: all 0.3s ease;
+      font-size: 1.1rem;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
     }
 
     .back-home-btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-    }
-
-    .error-message {
-      color: #ff4444;
-      font-size: 0.85rem;
-      margin-top: 0.3rem;
-      text-align: center;
+      box-shadow: 0 0 60px rgba(255, 255, 255, 0.5);
     }
 
     .flow-footer {
@@ -993,6 +1145,9 @@
       .form-row {
         grid-template-columns: 1fr;
       }
+      .contact-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
       .flow-footer-content {
         flex-direction: column;
         align-items: flex-start;
@@ -1016,6 +1171,12 @@
       .pricing-header h1 { font-size: 2.2rem; }
       .flow-logo-text { font-size: 1.2rem; }
       .flow-logo-text span { font-size: 1.2rem; }
+      .contact-options {
+        grid-template-columns: 1fr;
+      }
+      .payment-methods {
+        grid-template-columns: 1fr;
+      }
       .flow-footer-categories {
         flex-direction: column;
         gap: 1.5rem;
@@ -1072,23 +1233,20 @@
       </button>
     </div>
 
-    <!-- Pricing Section -->
     <div id="pricingSection">
       <div class="pricing-header">
-        <h1 class="fade-element" id="pricingTitle">Preise & Pläne</h1>
-        <p class="fade-element fade-element-delay-1" id="pricingSubtitle">Wählen Sie den perfekten Plan für Ihr Unternehmen</p>
+        <h1 class="fade-element">Preise & Pläne</h1>
+        <p class="fade-element fade-element-delay-1">Wählen Sie den perfekten Plan für Ihr Unternehmen</p>
       </div>
 
-      <div class="pricing-grid" id="pricingGrid">
-        <!-- Basic Plan -->
-        <div class="pricing-card basic fade-element fade-element-delay-2" id="basicCard">
+      <div class="pricing-grid">
+        <div class="pricing-card basic fade-element fade-element-delay-2">
           <div class="plan-name">
             <i class="fas fa-star"></i> Basic
           </div>
           <div class="trial-period">48 Stunden Testphase</div>
           <div class="price-container">
             <div class="current-price">79,00 € <span>/Monat</span> <span class="old-price">83,00 €</span> <span class="save-badge">5% sparen</span></div>
-            
             <div class="annual-option">
               <div class="annual-price">
                 <strong>711,00 €</strong> <span>/Jahr</span>
@@ -1100,28 +1258,22 @@
           <div class="features-list">
             <div class="feature-subtitle">Support</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Basic Support</div>
-            
             <div class="feature-subtitle">Für wen</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Kleine Unternehmen, einfacher Chatbot für Website</div>
-            
             <div class="feature-subtitle">Models</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Zugang zu allen Modellen: OpenAI, Anthropic, Gemini, DeepSeek, Grok, Meta, Moonshot AI</div>
-            
             <div class="feature-subtitle">Features</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> 5 aktivierte AI-Aktionen für Ihren Chatbot</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> 10 MB für Ihren KI-Agenten</div>
-            
             <div class="feature-subtitle">Integrationen</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Shopify, Whatsapp, Instagram, Messenger, Slack, Calendly, Wordpress</div>
-            
             <div class="feature-subtitle">Analytics</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Basis-Analytics wöchentlich per E-Mail</div>
           </div>
           <button class="select-btn" onclick="selectPlan('basic', 'Basic', 'basic')">Meeting vereinbaren</button>
         </div>
 
-        <!-- Standard Plan (Popular) -->
-        <div class="pricing-card popular fade-element fade-element-delay-3" id="standardCard">
+        <div class="pricing-card popular fade-element fade-element-delay-3">
           <div class="popular-badge">Beliebt</div>
           <div class="plan-name">
             <i class="fas fa-star"></i> Standard
@@ -1129,7 +1281,6 @@
           <div class="trial-period">3 Tage Testphase</div>
           <div class="price-container">
             <div class="current-price">190,00 € <span>/Monat</span> <span class="old-price">210,00 €</span> <span class="save-badge">10% sparen</span></div>
-            
             <div class="annual-option">
               <div class="annual-price">
                 <strong>1.938,00 €</strong> <span>/Jahr</span>
@@ -1141,31 +1292,25 @@
           <div class="features-list">
             <div class="feature-subtitle">Support</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Premium Support</div>
-            
             <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Basic enthalten</strong></div>
-            
             <div class="feature-subtitle">Features</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> 8 aktivierte AI-Aktionen für Ihren Chatbot</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> 20 MB für Ihren KI-Agenten</div>
-            
             <div class="feature-subtitle">Personalisierung</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Ihr Agent erkennt eingeloggte Benutzer und antwortet mit personalisierten Informationen</div>
-            
             <div class="feature-subtitle">Automatisierung</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Automatisches Retraining alle 24 Stunden</div>
           </div>
           <button class="select-btn" onclick="selectPlan('standard', 'Standard', 'popular')">Meeting vereinbaren</button>
         </div>
 
-        <!-- Pro Plan -->
-        <div class="pricing-card pro fade-element fade-element-delay-4" id="proCard">
+        <div class="pricing-card pro fade-element fade-element-delay-4">
           <div class="plan-name">
             <i class="fas fa-star"></i> Pro
           </div>
           <div class="trial-period">7 Tage Testphase</div>
           <div class="price-container">
             <div class="current-price">479,00 € <span>/Monat</span> <span class="old-price">600,00 €</span> <span class="save-badge">20% sparen</span></div>
-            
             <div class="annual-option">
               <div class="annual-price">
                 <strong>4.598,00 €</strong> <span>/Jahr</span>
@@ -1177,16 +1322,12 @@
           <div class="features-list">
             <div class="feature-subtitle">Support</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Premium Support</div>
-            
             <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Standard enthalten</strong></div>
-            
             <div class="feature-subtitle">Features</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> 12 aktivierte AI-Aktionen für Ihren Chatbot</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> 40 MB für Ihren KI-Agenten</div>
-            
             <div class="feature-subtitle">Analytics</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Erweiterte Analytics auf Anfrage per E-Mail</div>
-            
             <div class="feature-subtitle">Quellen</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Quellen-Vorschläge (Erkennt Content-Lücken, erkennt widersprüchliche Quellen)</div>
             <div class="feature-item"><i class="fas fa-circle-check"></i> Tickets als Quelle (Trainieren Sie Ihren Agenten mit Zendesk- und Salesforce-Tickets)</div>
@@ -1196,44 +1337,42 @@
       </div>
     </div>
 
-    <!-- Booking Form Section (initially hidden) -->
     <div id="bookingSection" class="hidden-section">
       <div class="pricing-header">
-        <h1 class="fade-element" id="bookingTitle">Meeting vereinbaren</h1>
-        <p class="fade-element fade-element-delay-1" id="bookingSubtitle">Vereinbare ein Meeting mit uns und wir erzählen dir alles über unsere Chatbots und helfen dir deinen Chatbot einzurichten.</p>
+        <h1 class="fade-element">Meeting vereinbaren</h1>
+        <p class="fade-element fade-element-delay-1">Vereinbare ein Meeting mit uns und wir erzählen dir alles über unsere Chatbots und helfen dir deinen Chatbot einzurichten.</p>
       </div>
 
-      <div class="booking-form-section fade-element fade-element-delay-2" id="bookingFormSection">
-        <!-- Selected Plan Box -->
+      <div class="booking-form-section fade-element fade-element-delay-2">
         <div class="selected-plan-box" id="selectedPlanBox">
           <div class="selected-plan-header">
             <div class="selected-plan-title">
               <i class="fas fa-star" id="selectedPlanIcon"></i>
               <span id="selectedPlanName">Basic</span>
             </div>
-            <select class="plan-switch-select" id="planSwitch" onchange="switchPlan(this.value)">
-              <option value="basic">Basic wechseln</option>
-              <option value="standard">Standard wechseln</option>
-              <option value="pro">Pro wechseln</option>
-            </select>
+            <div class="plan-switch-wrapper">
+              <select class="plan-switch-select" id="planSwitch" onchange="switchPlan(this.value)">
+                <option value="basic">Basic</option>
+                <option value="standard">Standard</option>
+                <option value="pro">Pro</option>
+              </select>
+            </div>
           </div>
 
-          <!-- Payment Interval -->
-          <div class="payment-interval" id="paymentInterval">
+          <div class="payment-interval">
             <div class="interval-option active" data-interval="monthly" onclick="setInterval('monthly')">
               <div class="price" id="monthlyPrice">79,00 €</div>
               <div class="saving" id="monthlySaving">5% sparen</div>
-              <div style="font-size: 0.8rem;">monatlich</div>
+              <div style="font-size: 0.9rem;">monatlich</div>
             </div>
             <div class="interval-option" data-interval="yearly" onclick="setInterval('yearly')">
               <div class="price" id="yearlyPrice">711,00 €</div>
               <div class="saving" id="yearlySaving">+5% extra</div>
-              <div style="font-size: 0.8rem;">jährlich</div>
+              <div style="font-size: 0.9rem;">jährlich</div>
             </div>
           </div>
         </div>
 
-        <!-- Booking Form -->
         <div class="booking-form">
           <form id="bookingForm">
             <div class="form-row">
@@ -1247,16 +1386,41 @@
               </div>
             </div>
 
-            <!-- Business Toggle -->
+            <div class="form-row">
+              <div class="form-group">
+                <label>Straße & Hausnummer *</label>
+                <input type="text" id="street" required>
+              </div>
+              <div class="form-group">
+                <label>Postleitzahl *</label>
+                <input type="text" id="zipCode" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Stadt *</label>
+                <input type="text" id="city" required>
+              </div>
+              <div class="form-group">
+                <label>Bundesland *</label>
+                <input type="text" id="state" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Land *</label>
+              <input type="text" id="country" required>
+            </div>
+
             <div class="business-toggle">
-              <span>Für ein Unternehmen?</span>
+              <span style="font-weight: 600;">Für ein Unternehmen?</span>
               <div>
                 <button type="button" class="toggle-btn active" id="businessNo" onclick="setBusiness(false)">Nein</button>
                 <button type="button" class="toggle-btn" id="businessYes" onclick="setBusiness(true)">Ja</button>
               </div>
             </div>
 
-            <!-- Business Fields (hidden by default) -->
             <div class="business-fields" id="businessFields">
               <div class="form-row">
                 <div class="form-group">
@@ -1268,27 +1432,16 @@
                   <input type="text" id="legalOwner">
                 </div>
               </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>Unternehmensort (optional)</label>
-                  <input type="text" id="companyLocation">
-                </div>
-                <div class="form-group">
-                  <label>Postleitzahl (optional)</label>
-                  <input type="text" id="postalCode">
-                </div>
-              </div>
               <div class="form-group">
                 <label>Unternehmensnummer (optional)</label>
                 <input type="text" id="businessNumber">
               </div>
             </div>
 
-            <!-- Contact Fields -->
             <div class="form-row">
               <div class="form-group">
-                <label>Telefon (optional)</label>
-                <input type="tel" id="phone">
+                <label>Telefon *</label>
+                <input type="tel" id="phone" required>
               </div>
               <div class="form-group">
                 <label>E-Mail *</label>
@@ -1301,8 +1454,48 @@
               <input type="email" id="confirmEmail" required>
             </div>
 
-            <!-- Payment Methods -->
-            <div style="margin: 1rem 0; color: #aaa;">Zahlungsmethode wählen</div>
+            <div style="margin: 1rem 0; color: white; font-weight: 600;">Wie möchten Sie kontaktiert werden? *</div>
+            <div class="contact-options">
+              <div class="contact-option active" data-contact="email" onclick="setContactMethod('email')">
+                <i class="fas fa-envelope"></i> Nur E-Mail
+              </div>
+              <div class="contact-option" data-contact="phone" onclick="setContactMethod('phone')" id="phoneOnlyOption">
+                <i class="fas fa-phone"></i> Nur Telefon
+              </div>
+              <div class="contact-option" data-contact="both" onclick="setContactMethod('both')">
+                <i class="fas fa-globe"></i> Beides
+              </div>
+              <div class="contact-option" data-contact="any" onclick="setContactMethod('any')">
+                <i class="fas fa-random"></i> Egal
+              </div>
+            </div>
+
+            <div class="call-scheduling" id="callScheduling">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Gewünschtes Datum *</label>
+                  <input type="date" id="callDate">
+                </div>
+                <div class="form-group">
+                  <label>Gewünschte Uhrzeit *</label>
+                  <input type="time" id="callTime">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Erzählen Sie uns etwas über Ihr Unternehmen (optional)</label>
+              <textarea id="businessDescription" placeholder="z.B. Branche, Größe, Ziele..." maxlength="500"></textarea>
+              <div style="color: #888; font-size: 0.8rem; margin-top: 0.3rem;" id="businessDescCounter">0/500</div>
+            </div>
+
+            <div class="form-group">
+              <label>Wofür möchten Sie den Chatbot nutzen? (optional)</label>
+              <textarea id="useCase" placeholder="z.B. Kundensupport, Verkauf, Terminbuchung..." maxlength="500"></textarea>
+              <div style="color: #888; font-size: 0.8rem; margin-top: 0.3rem;" id="useCaseCounter">0/500</div>
+            </div>
+
+            <div style="margin: 1rem 0; color: white; font-weight: 600;">Zahlungsmethode wählen *</div>
             <div class="payment-methods">
               <div class="payment-method active" data-method="paypal" onclick="setPaymentMethod('paypal')">
                 <i class="fab fa-paypal"></i> PayPal
@@ -1325,14 +1518,13 @@
       </div>
     </div>
 
-    <!-- Success Screen (initially hidden) -->
     <div id="successSection" class="hidden-section">
       <div class="success-screen fade-element">
         <div class="success-icon">
           <i class="fas fa-check-circle"></i>
         </div>
         <h2>Formular erfolgreich abgesendet!</h2>
-        <p>Sie erhalten in Kürze (24 bis 48 Stunden) eine E-Mail.</p>
+        <p id="successMessage">Sie erhalten in Kürze (24 bis 48 Stunden) eine E-Mail.</p>
         <p style="color: #888; font-size: 0.9rem;">Wenn die E-Mail nicht ankommt, überprüfen Sie bitte Ihren Spam-Ordner.</p>
         <p style="color: #888; font-size: 0.9rem;">Bitte erstellen Sie keine weiteren Formulare!</p>
         <a href="https://www.flow-chat.de/" class="back-home-btn">Zurück zur Startseite</a>
@@ -1369,10 +1561,8 @@
   </div>
 
   <script>
-    // EmailJS initialisieren mit deiner Public Key (die du noch brauchst)
-    emailjs.init("YDWmiDx4PCrhw8Rkx"); // WICHTIG: Du musst deinen Public Key von EmailJS hier einfügen!
+    emailjs.init("YDWmiDx4PCrhw8Rkx");
 
-    // Animation on load
     document.addEventListener('DOMContentLoaded', function() {
       const fadeElements = document.querySelectorAll('.fade-element');
       fadeElements.forEach(el => {
@@ -1382,15 +1572,14 @@
       });
     });
 
-    // State variables
     let currentPlan = 'basic';
     let currentPlanType = 'Basic';
     let currentPlanClass = 'basic';
     let currentInterval = 'monthly';
     let isBusiness = false;
     let currentPaymentMethod = 'paypal';
+    let currentContactMethod = 'email';
 
-    // Plan data
     const planData = {
       basic: {
         name: 'Basic',
@@ -1435,7 +1624,6 @@
       currentPlanType = planName;
       currentPlanClass = planClass;
 
-      // Hide pricing section with fade
       const pricingSection = document.getElementById('pricingSection');
       const pricingElements = pricingSection.querySelectorAll('.fade-element');
       pricingElements.forEach(el => {
@@ -1445,7 +1633,6 @@
       setTimeout(() => {
         pricingSection.classList.add('hidden-section');
         
-        // Show booking section with fade
         const bookingSection = document.getElementById('bookingSection');
         bookingSection.classList.remove('hidden-section');
         
@@ -1456,7 +1643,6 @@
           }, 100);
         });
 
-        // Update selected plan box
         updateSelectedPlanBox();
       }, 600);
     }
@@ -1470,13 +1656,11 @@
       
       document.getElementById('planSwitch').value = currentPlan;
       
-      // Update prices
       document.getElementById('monthlyPrice').textContent = planData[currentPlan].monthlyPrice;
       document.getElementById('yearlyPrice').textContent = planData[currentPlan].yearlyPrice;
       document.getElementById('monthlySaving').textContent = planData[currentPlan].monthlySaving;
       document.getElementById('yearlySaving').textContent = planData[currentPlan].yearlySaving;
       
-      // Update paysafecard availability
       const paysafeMethod = document.getElementById('paysafeMethod');
       if (planData[currentPlan].paysafe) {
         paysafeMethod.classList.remove('disabled');
@@ -1498,8 +1682,6 @@
 
     function setInterval(interval) {
       currentInterval = interval;
-      
-      // Update active class
       document.querySelectorAll('.interval-option').forEach(el => {
         el.classList.remove('active');
       });
@@ -1508,12 +1690,9 @@
 
     function setBusiness(value) {
       isBusiness = value;
-      
-      // Update toggle buttons
       document.getElementById('businessNo').classList.toggle('active', !value);
       document.getElementById('businessYes').classList.toggle('active', value);
       
-      // Show/hide business fields
       const businessFields = document.getElementById('businessFields');
       if (value) {
         businessFields.classList.add('visible');
@@ -1522,44 +1701,87 @@
       }
     }
 
+    function setContactMethod(method) {
+      currentContactMethod = method;
+      document.querySelectorAll('.contact-option').forEach(el => {
+        el.classList.remove('active');
+      });
+      document.querySelector(`[data-contact="${method}"]`).classList.add('active');
+
+      const phoneOption = document.getElementById('phoneOnlyOption');
+      const phoneValue = document.getElementById('phone').value;
+      
+      if (method === 'phone' && !phoneValue) {
+        phoneOption.classList.add('disabled');
+        setContactMethod('email');
+        return;
+      }
+
+      const callScheduling = document.getElementById('callScheduling');
+      if (method === 'phone') {
+        callScheduling.classList.add('visible');
+      } else {
+        callScheduling.classList.remove('visible');
+      }
+    }
+
     function setPaymentMethod(method) {
       if (method === 'paysafecard' && !planData[currentPlan].paysafe) {
-        return; // Paysafecard not available for this plan
+        return;
       }
       
       currentPaymentMethod = method;
-      
-      // Update active class
       document.querySelectorAll('.payment-method').forEach(el => {
         el.classList.remove('active');
       });
       document.querySelector(`[data-method="${method}"]`).classList.add('active');
     }
 
+    document.getElementById('phone').addEventListener('input', function(e) {
+      const phoneOption = document.getElementById('phoneOnlyOption');
+      if (e.target.value) {
+        phoneOption.classList.remove('disabled');
+      } else {
+        phoneOption.classList.add('disabled');
+        if (currentContactMethod === 'phone') {
+          setContactMethod('email');
+        }
+      }
+    });
+
+    document.getElementById('businessDescription').addEventListener('input', function(e) {
+      document.getElementById('businessDescCounter').textContent = `${e.target.value.length}/500`;
+    });
+
+    document.getElementById('useCase').addEventListener('input', function(e) {
+      document.getElementById('useCaseCounter').textContent = `${e.target.value.length}/500`;
+    });
+
     function submitForm() {
       const errorDiv = document.getElementById('formError');
       errorDiv.textContent = '';
 
-      // Get form values
       const firstName = document.getElementById('firstName').value;
       const lastName = document.getElementById('lastName').value;
+      const street = document.getElementById('street').value;
+      const zipCode = document.getElementById('zipCode').value;
+      const city = document.getElementById('city').value;
+      const state = document.getElementById('state').value;
+      const country = document.getElementById('country').value;
+      const phone = document.getElementById('phone').value;
       const email = document.getElementById('email').value;
       const confirmEmail = document.getElementById('confirmEmail').value;
-      const phone = document.getElementById('phone').value;
 
-      // Validate required fields
-      if (!firstName || !lastName || !email || !confirmEmail) {
+      if (!firstName || !lastName || !street || !zipCode || !city || !state || !country || !phone || !email || !confirmEmail) {
         errorDiv.textContent = 'Bitte füllen Sie alle Pflichtfelder aus.';
         return;
       }
 
-      // Validate email match
       if (email !== confirmEmail) {
         errorDiv.textContent = 'E-Mail-Adressen stimmen nicht überein!';
         return;
       }
 
-      // Validate business fields if business is true
       if (isBusiness) {
         const companyName = document.getElementById('companyName').value;
         const legalOwner = document.getElementById('legalOwner').value;
@@ -1569,13 +1791,20 @@
         }
       }
 
-      // Show loading state
+      if (currentContactMethod === 'phone') {
+        const callDate = document.getElementById('callDate').value;
+        const callTime = document.getElementById('callTime').value;
+        if (!callDate || !callTime) {
+          errorDiv.textContent = 'Bitte wählen Sie Datum und Uhrzeit für den Rückruf.';
+          return;
+        }
+      }
+
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.textContent = 'Wird gesendet...';
       submitBtn.classList.add('loading');
       submitBtn.disabled = true;
 
-      // Prepare template parameters for EmailJS
       const templateParams = {
         to_email: 'flowchat.business@gmail.com',
         plan: currentPlan,
@@ -1583,23 +1812,34 @@
         interval: currentInterval === 'monthly' ? 'monatlich' : 'jährlich',
         first_name: firstName,
         last_name: lastName,
+        street: street,
+        zip_code: zipCode,
+        city: city,
+        state: state,
+        country: country,
+        phone: phone,
         email: email,
-        phone: phone || 'nicht angegeben',
         is_business: isBusiness ? 'Ja' : 'Nein',
         company_name: isBusiness ? document.getElementById('companyName').value : 'nicht zutreffend',
         legal_owner: isBusiness ? document.getElementById('legalOwner').value : 'nicht zutreffend',
-        company_location: isBusiness ? (document.getElementById('companyLocation').value || 'nicht angegeben') : 'nicht zutreffend',
-        postal_code: isBusiness ? (document.getElementById('postalCode').value || 'nicht angegeben') : 'nicht zutreffend',
         business_number: isBusiness ? (document.getElementById('businessNumber').value || 'nicht angegeben') : 'nicht zutreffend',
-        payment_method: currentPaymentMethod
+        contact_method: currentContactMethod === 'email' ? 'Nur E-Mail' : currentContactMethod === 'phone' ? 'Nur Telefon' : currentContactMethod === 'both' ? 'Beides' : 'Egal',
+        call_date: currentContactMethod === 'phone' ? document.getElementById('callDate').value : 'nicht zutreffend',
+        call_time: currentContactMethod === 'phone' ? document.getElementById('callTime').value : 'nicht zutreffend',
+        business_description: document.getElementById('businessDescription').value || 'nicht angegeben',
+        use_case: document.getElementById('useCase').value || 'nicht angegeben',
+        payment_method: currentPaymentMethod === 'paypal' ? 'PayPal' : currentPaymentMethod === 'paysafecard' ? 'Paysafecard' : currentPaymentMethod === 'applepay' ? 'Apple Pay' : 'Google Pay'
       };
 
-      // Send email via EmailJS
       emailjs.send('service_aqffj86', 'template_rm2qqtu', templateParams)
         .then(function(response) {
-          console.log('Email erfolgreich gesendet!', response);
-          
-          // Fade out booking section
+          const successMessage = document.getElementById('successMessage');
+          if (currentContactMethod === 'phone') {
+            successMessage.textContent = `Sie erhalten einen Anruf am ${document.getElementById('callDate').value} um ${document.getElementById('callTime').value}.`;
+          } else {
+            successMessage.textContent = 'Sie erhalten in Kürze (24 bis 48 Stunden) eine E-Mail.';
+          }
+
           const bookingSection = document.getElementById('bookingSection');
           const bookingElements = bookingSection.querySelectorAll('.fade-element');
           bookingElements.forEach(el => {
@@ -1609,7 +1849,6 @@
           setTimeout(() => {
             bookingSection.classList.add('hidden-section');
             
-            // Show success section
             const successSection = document.getElementById('successSection');
             successSection.classList.remove('hidden-section');
             
@@ -1622,7 +1861,6 @@
           }, 600);
         })
         .catch(function(error) {
-          console.log('Fehler beim Senden:', error);
           errorDiv.textContent = 'Fehler beim Senden. Bitte versuchen Sie es später erneut.';
           submitBtn.textContent = 'Meeting anfragen';
           submitBtn.classList.remove('loading');
