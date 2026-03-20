@@ -304,6 +304,24 @@
       overflow: hidden;
     }
 
+    .pricing-header {
+      text-align: center;
+      margin: 1rem 0 2.5rem 0;
+    }
+
+    .pricing-header h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-header p {
+      color: #aaa;
+      font-size: 1.1rem;
+    }
+
     .wiki-container {
       display: flex;
       gap: 3rem;
@@ -312,7 +330,7 @@
     }
 
     .wiki-sidebar {
-      width: 280px;
+      width: 300px;
       flex-shrink: 0;
       position: sticky;
       top: 2rem;
@@ -343,6 +361,9 @@
       transition: all 0.3s ease;
       color: #ccc;
       font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
     }
 
     .wiki-category-item:hover {
@@ -356,6 +377,18 @@
       border-color: rgba(255, 255, 255, 0.5);
       color: white;
       box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+
+    .wiki-category-number {
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 215, 0, 0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #FFD700;
     }
 
     .wiki-content {
@@ -443,6 +476,50 @@
 
     .highlight-box p {
       color: #ccc;
+    }
+
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .model-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .model-card h4 {
+      color: #FFD700;
+      margin-bottom: 0.5rem;
+    }
+
+    .integration-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .integration-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      padding: 0.8rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .integration-item i {
+      font-size: 1.2rem;
+      color: #FFD700;
     }
 
     .author-section {
@@ -624,8 +701,7 @@
       }
       .wiki-category-item {
         flex: 1;
-        min-width: 120px;
-        text-align: center;
+        min-width: 200px;
       }
       .wiki-content {
         padding: 1.5rem;
@@ -667,6 +743,7 @@
       .wiki-category-item {
         font-size: 0.85rem;
         padding: 0.6rem 0.8rem;
+        min-width: 100%;
       }
       .flow-footer-categories {
         flex-direction: column;
@@ -714,8 +791,8 @@
     </div>
 
     <div class="pricing-header fade-up">
-      <h1>Wiki & Erklärung</h1>
-      <p>Alles über die Erstellung deines KI-Assistenten</p>
+      <h1>Erklärung & Wiki</h1>
+      <p>Häufig gestellte Fragen und alles über deinen KI-Assistenten</p>
     </div>
 
     <div class="wiki-container">
@@ -725,14 +802,27 @@
         </div>
         <div class="wiki-category-list">
           <div class="wiki-category-item active" data-category="aufbau">
-            <i class="fas fa-robot"></i> Wie baut ihr meinen KI-Assistenten?
+            <div class="wiki-category-number">1</div>
+            <span>Wie baut ihr meinen KI-Assistenten?</span>
+          </div>
+          <div class="wiki-category-item" data-category="preise">
+            <div class="wiki-category-number">2</div>
+            <span>Preise & Pläne</span>
+          </div>
+          <div class="wiki-category-item" data-category="setup">
+            <div class="wiki-category-number">3</div>
+            <span>Setup & Support</span>
+          </div>
+          <div class="wiki-category-item" data-category="integrationen">
+            <div class="wiki-category-number">4</div>
+            <span>Integrationen & Systeme</span>
           </div>
         </div>
       </div>
 
       <div class="wiki-content fade-up delay-2">
         <div class="wiki-article active" id="article-aufbau">
-          <h1 class="article-title">Wie baut ihr meinen KI-Assistenten?</h1>
+          <h1 class="article-title">1. Wie baut ihr meinen KI-Assistenten?</h1>
           <div class="article-text">
             <p>Der Aufbau deines KI-Assistenten erfolgt Schritt für Schritt – mit dem Ziel, dass er nicht nur funktioniert, sondern aktiv Kunden gewinnt, Support übernimmt und Prozesse automatisiert.</p>
           </div>
@@ -750,7 +840,7 @@
 
             <div class="step-item">
               <div class="step-title">3. Training & Individualisierung</div>
-              <div class="step-desc">Jetzt wird dein Assistent komplett auf dich angepasst: Tonalität (professionell, locker, verkaufsstark), Antwortverhalten & Logik, Automationen (z. B. Termine, Weiterleitungen).</div>
+              <div class="step-desc">Jetzt wird dein Assistent komplett auf dich angepasst. <strong>Ab dem Standard Plan:</strong> Dein KI-Assistent kann mit einem Klick deine gesamte Website durchlesen und sich automatisch mit allen Daten trainieren, die auf deiner Website verfügbar sind. Das spart enorm viel Zeit und sorgt für eine perfekte Basis.<br><br>Darüber hinaus bieten wir auch <strong>Custom Training</strong> an – hier trainieren wir deinen Bot mit individuellen Daten, internen Dokumenten, CRM-Systemen und speziellen Anforderungen, die über das Standard-Training hinausgehen.<br><br>Anpassungen: Tonalität (professionell, locker, verkaufsstark), Antwortverhalten & Logik, Automationen (z. B. Termine, Weiterleitungen).</div>
             </div>
 
             <div class="highlight-box">
@@ -773,10 +863,170 @@
               <div class="step-title">5. Launch & Integration</div>
               <div class="step-desc">Dein KI-Assistent wird eingebunden in: Website, WhatsApp, Instagram, Messenger, Tools wie Shopify, Slack, etc.<br><br>Ab jetzt arbeitet dein Bot 24/7 für dich.</div>
             </div>
+
+            <div class="step-item">
+              <div class="step-title">6. Sicherheit & Datenschutz</div>
+              <div class="step-desc">Dein KI-Assistent ist so konfiguriert, dass er <strong>niemals persönliche Daten von dir oder deinem Unternehmen weitergibt</strong>, wenn sie nicht explizit dafür eingestellt wurden. Er kann keine illegalen Aktionen ausführen oder Inhalte generieren, die nicht deinen Vorgaben entsprechen. Standardmäßig leitet der Bot nur Fragen über deine Website-Inhalte weiter. Wenn du Integrationen (wie WhatsApp, E-Mail-Weiterleitung etc.) einbauen möchtest, können wir diese Funktionen <strong>im Pro Plan</strong> gezielt für dich aktivieren und individuell konfigurieren. So hast du jederzeit die volle Kontrolle über die Datenweitergabe und Funktionalitäten deines Assistenten.</div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-title">7. Dein eigenes KI-Modell</div>
+              <div class="step-desc">Wir bieten dir Zugang zu allen führenden KI-Modellen auf dem Markt. Du kannst frei wählen oder wir helfen dir bei der Auswahl des optimalen Modells für deine Anforderungen:</div>
+              <div class="model-grid">
+                <div class="model-card"><h4>OpenAI</h4><p>GPT-4o, GPT-4 Turbo</p></div>
+                <div class="model-card"><h4>Anthropic</h4><p>Claude 3, Claude 3.5</p></div>
+                <div class="model-card"><h4>Google</h4><p>Gemini Pro, Gemini Ultra</p></div>
+                <div class="model-card"><h4>DeepSeek</h4><p>DeepSeek-V3, DeepSeek-R1</p></div>
+                <div class="model-card"><h4>xAI</h4><p>Grok, Grok-2</p></div>
+                <div class="model-card"><h4>Meta</h4><p>Llama 3, Llama 3.1</p></div>
+                <div class="model-card"><h4>Moonshot AI</h4><p>Kimi, Moonshot-V1</p></div>
+              </div>
+              <div class="step-desc">Jedes Modell hat seine eigenen Stärken – wir beraten dich gerne, welches Modell am besten zu deinem Anwendungsfall passt. Alle Modelle sind über unsere Plattform nahtlos integriert und können je nach Bedarf genutzt werden.</div>
+            </div>
           </div>
 
           <div class="author-section">
             <div class="author-avatar" id="authorAvatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="author-info">
+              <div class="author-name">Nexoo</div>
+              <div class="author-title">Project Inhaber · FlowChat Team</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wiki-article" id="article-preise">
+          <h1 class="article-title">2. Preise & Pläne</h1>
+          <div class="article-text">
+            <p>Wir bieten zwei leistungsstarke Pläne, die auf die unterschiedlichen Bedürfnisse deines Unternehmens zugeschnitten sind. Hier findest du alle Details, damit du die richtige Wahl für dein Business treffen kannst.</p>
+          </div>
+
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-title">Standard Plan</div>
+              <div class="step-desc"><strong>Preis:</strong> 190,00 € monatlich (210,00 € regulär) · 1.938,00 € jährlich<br><br>
+              <strong>Was ist enthalten:</strong><br>
+              • Premium Support<br>
+              • Zugang zu allen KI-Modellen (OpenAI, Anthropic, Gemini, DeepSeek, Grok, Meta, Moonshot AI)<br>
+              • 8 aktivierte AI-Aktionen für deinen Chatbot<br>
+              • 20 MB Speicher für deinen KI-Agenten<br>
+              • Integrationen: Shopify, WhatsApp, Instagram, Messenger, Slack, Calendly, WordPress<br>
+              • Personalisierung: Dein Agent erkennt eingeloggte Benutzer und antwortet mit personalisierten Informationen<br>
+              • Automatisches Retraining alle 24 Stunden<br>
+              • Basis-Analytics wöchentlich per E-Mail<br>
+              • Vollständig anpassbares Design (Farben, Button, UI)<br>
+              • 3 Tage kostenlose Testphase</div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-title">Pro Plan</div>
+              <div class="step-desc"><strong>Preis:</strong> 479,00 € monatlich (600,00 € regulär) · 4.598,00 € jährlich<br><br>
+              <strong>Alles im Standard Plan enthalten, plus:</strong><br>
+              • 12 aktivierte AI-Aktionen für deinen Chatbot<br>
+              • 40 MB Speicher für deinen KI-Agenten<br>
+              • Erweiterte Analytics auf Anfrage per E-Mail<br>
+              • Quellen-Vorschläge (Erkennt Content-Lücken, erkennt widersprüchliche Quellen)<br>
+              • Tickets als Quelle (Trainiere deinen Agenten mit Zendesk- und Salesforce-Tickets)<br>
+              • Erweiterte Integrationsmöglichkeiten (WhatsApp, E-Mail-Weiterleitung, etc.)<br>
+              • 7 Tage kostenlose Testphase</div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4><i class="fas fa-gem"></i> Beide Pläne im Vergleich</h4>
+            <p>Der Standard Plan ist ideal für kleine bis mittlere Unternehmen, die einen professionellen Chatbot mit allen wichtigen Funktionen und Integrationen suchen. Der Pro Plan richtet sich an Unternehmen mit erweiterten Anforderungen, wie tiefergehenden Analysen, erweiterten Quellen-Optionen und mehr Speicherplatz für komplexe KI-Agenten.<br><br>Du entscheidest selbst, welcher Plan am besten zu deinen Zielen passt – wir beraten dich gerne bei der Auswahl.</p>
+          </div>
+
+          <div class="author-section">
+            <div class="author-avatar" id="authorAvatar2">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="author-info">
+              <div class="author-name">Nexoo</div>
+              <div class="author-title">Project Inhaber · FlowChat Team</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wiki-article" id="article-setup">
+          <h1 class="article-title">3. Setup & Support</h1>
+          <div class="article-text">
+            <p>Nachdem du das Formular auf unserer Pricing-Seite ausgefüllt hast, startet unser gemeinsamer Weg. Hier erfährst du, wie der gesamte Prozess abläuft und welchen Support du von uns erwarten kannst.</p>
+          </div>
+
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-title">1. Kontaktaufnahme & Meeting</div>
+              <div class="step-desc">Sobald wir deine Anfrage erhalten haben, melden wir uns innerhalb von 24-48 Stunden bei dir. Wir vereinbaren ein persönliches Meeting – ganz nach deinen Wünschen über <strong>Discord, Telefon oder Zoom</strong>. In diesem Gespräch lernen wir dich und dein Unternehmen kennen, besprechen deine Ziele und zeigen dir unser Produkt im Detail.</div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-title">2. Einrichtung & Integration</div>
+              <div class="step-desc">Nachdem wir deinen KI-Assistenten nach deinen Wünschen konfiguriert haben, binden wir ihn in deine Website ein. Das geht denkbar einfach: Du erhältst von uns <strong>eine einzige Zeile Code</strong>, die du in deine Website einfügst. Schon ist dein Chatbot live und einsatzbereit. Für komplexere Integrationen (wie WhatsApp, Slack etc.) unterstützen wir dich natürlich ebenfalls.</div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-title">3. Premium Support</div>
+              <div class="step-desc">Wir stehen dir nicht nur während der Einrichtung zur Seite, sondern auch danach. Mit unserem <strong>Premium Support</strong> erhältst du:<br><br>
+              • Schnelle Antworten auf deine Fragen (in der Regel innerhalb weniger Stunden)<br>
+              • Direkten Draht zu unserem Team für technische Anliegen<br>
+              • Regelmäßige Optimierungsvorschläge für deinen KI-Assistenten<br>
+              • Unterstützung bei der Weiterentwicklung und neuen Funktionen<br><br>
+              Zusätzlich kannst du jederzeit über unseren eigenen <strong>KI-gestützten Chatbot</strong> auf unserer Website erste Fragen stellen – er hilft dir bei häufigen Anliegen und leitet dich bei komplexeren Themen direkt an unser Team weiter.</div>
+            </div>
+          </div>
+
+          <div class="author-section">
+            <div class="author-avatar" id="authorAvatar3">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="author-info">
+              <div class="author-name">Nexoo</div>
+              <div class="author-title">Project Inhaber · FlowChat Team</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wiki-article" id="article-integrationen">
+          <h1 class="article-title">4. Integrationen & Systeme</h1>
+          <div class="article-text">
+            <p>Ab dem Standard Plan können wir deinen KI-Assistenten nahtlos in deine bestehenden Systeme und Plattformen integrieren. So arbeitet dein Bot genau dort, wo deine Kunden sind – und wo du ihn benötigst.</p>
+          </div>
+
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-title">Verfügbare Integrationen</div>
+              <div class="step-desc">Wir unterstützen eine Vielzahl von Plattformen und Systemen, um deinen KI-Assistenten perfekt in deine Geschäftsprozesse einzubinden:</div>
+              <div class="integration-grid">
+                <div class="integration-item"><i class="fab fa-shopify"></i> Shopify</div>
+                <div class="integration-item"><i class="fab fa-whatsapp"></i> WhatsApp</div>
+                <div class="integration-item"><i class="fab fa-instagram"></i> Instagram</div>
+                <div class="integration-item"><i class="fab fa-facebook-messenger"></i> Messenger</div>
+                <div class="integration-item"><i class="fab fa-slack"></i> Slack</div>
+                <div class="integration-item"><i class="fas fa-calendar-alt"></i> Calendly</div>
+                <div class="integration-item"><i class="fab fa-wordpress"></i> WordPress</div>
+                <div class="integration-item"><i class="fas fa-envelope"></i> E-Mail (Pro Plan)</div>
+                <div class="integration-item"><i class="fas fa-ticket-alt"></i> Zendesk (Pro Plan)</div>
+                <div class="integration-item"><i class="fas fa-chart-line"></i> Salesforce (Pro Plan)</div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-title">Nahtlose Funktionalität</div>
+              <div class="step-desc">Unsere Integrationen sind so konzipiert, dass sie vollständig und perfekt funktionieren. Egal ob du deinen KI-Assistenten auf deiner Website, in deinem Messenger oder in deinem CRM-System benötigst – wir stellen sicher, dass alle Systeme reibungslos miteinander kommunizieren. Dein Bot kann:<br><br>
+              • Termine über Calendly buchen<br>
+              • Support-Tickets in Zendesk verwalten<br>
+              • Kundendaten aus Salesforce abrufen<br>
+              • Bestellungen über Shopify verfolgen<br>
+              • Nachrichten über WhatsApp, Instagram und Messenger beantworten<br>
+              • Interne Kommunikation über Slack steuern<br><br>
+              Alle Integrationen werden von unserem Team individuell für dich eingerichtet und auf deine spezifischen Anforderungen angepasst. Wenn du eine Plattform nutzt, die hier nicht aufgeführt ist – sprich uns einfach an. Wir finden eine Lösung.</div>
+            </div>
+          </div>
+
+          <div class="author-section">
+            <div class="author-avatar" id="authorAvatar4">
               <i class="fas fa-user"></i>
             </div>
             <div class="author-info">
@@ -880,13 +1130,15 @@
     });
 
     const savedAvatar = localStorage.getItem('Nexoo.png');
-    const authorAvatarDiv = document.getElementById('authorAvatar');
+    const authorAvatars = document.querySelectorAll('.author-avatar');
     
-    if (savedAvatar) {
-      authorAvatarDiv.innerHTML = `<img src="${savedAvatar}" alt="Nexoo">`;
-    } else {
-      authorAvatarDiv.innerHTML = '<i class="fas fa-user"></i>';
-    }
+    authorAvatars.forEach(avatar => {
+      if (savedAvatar) {
+        avatar.innerHTML = `<img src="${savedAvatar}" alt="Nexoo">`;
+      } else {
+        avatar.innerHTML = '<i class="fas fa-user"></i>';
+      }
+    });
   </script>
 </body>
 </html>
