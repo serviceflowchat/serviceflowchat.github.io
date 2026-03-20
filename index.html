@@ -398,6 +398,94 @@
       background: #0c0c0c;
     }
 
+    .design-preview-section {
+      margin: 5rem 0;
+    }
+
+    .design-preview-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .design-text h2 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .design-text p {
+      color: #aaa;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .toggle-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.5rem 1rem;
+      border-radius: 60px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-switch:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .toggle-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 40px;
+      transition: all 0.3s ease;
+      color: #888;
+    }
+
+    .toggle-option.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: #FFD700;
+    }
+
+    .toggle-option i {
+      font-size: 1.2rem;
+    }
+
+    .toggle-option span {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .preview-image {
+      width: 100%;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+
+    .preview-image:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 60px rgba(255, 255, 255, 0.5);
+    }
+
+    .preview-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+
     .flow-feature-section {
       margin: 5rem 0 3rem 0;
     }
@@ -568,194 +656,6 @@
       color: #ddd;
     }
 
-    .chat-preview-section {
-      margin: 4rem 0;
-    }
-
-    .chat-preview-container {
-      background: #0a0a0a;
-      border-radius: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .chat-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 1.5rem;
-      background: rgba(0, 0, 0, 0.5);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .chat-header h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      color: white;
-    }
-
-    .mode-toggle {
-      display: flex;
-      gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 0.3rem;
-      border-radius: 40px;
-    }
-
-    .mode-btn {
-      background: transparent;
-      border: none;
-      color: #888;
-      padding: 0.3rem 0.8rem;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .mode-btn.active {
-      background: white;
-      color: black;
-    }
-
-    .chat-window {
-      min-height: 400px;
-      padding: 1.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .chat-window.dark {
-      background: #0f0f0f;
-    }
-
-    .chat-window.light {
-      background: #f5f5f5;
-    }
-
-    .chat-message {
-      display: flex;
-      gap: 0.8rem;
-      margin-bottom: 1.5rem;
-      animation: fadeInUp 0.3s ease;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .chat-avatar {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, #FFD700, #FFA500);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      font-weight: bold;
-      color: black;
-      flex-shrink: 0;
-    }
-
-    .chat-bubble {
-      max-width: 70%;
-      padding: 0.8rem 1rem;
-      border-radius: 1.2rem;
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-
-    .chat-window.dark .chat-bubble.bot {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border-bottom-left-radius: 0.3rem;
-    }
-
-    .chat-window.light .chat-bubble.bot {
-      background: #e8e8e8;
-      color: #1a1a1a;
-      border-bottom-left-radius: 0.3rem;
-    }
-
-    .chat-window.dark .chat-bubble.user {
-      background: rgba(255, 215, 0, 0.2);
-      color: white;
-      border-bottom-right-radius: 0.3rem;
-      margin-left: auto;
-    }
-
-    .chat-window.light .chat-bubble.user {
-      background: #FFD700;
-      color: #1a1a1a;
-      border-bottom-right-radius: 0.3rem;
-      margin-left: auto;
-    }
-
-    .chat-input-area {
-      padding: 1rem 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      gap: 0.8rem;
-    }
-
-    .chat-window.light .chat-input-area {
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    .chat-input-area input {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 30px;
-      padding: 0.8rem 1.2rem;
-      color: white;
-      font-size: 0.9rem;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-
-    .chat-window.light .chat-input-area input {
-      background: white;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      color: #1a1a1a;
-    }
-
-    .chat-input-area input:focus {
-      border-color: #FFD700;
-    }
-
-    .chat-input-area button {
-      background: transparent;
-      border: 1px solid #FFD700;
-      color: #FFD700;
-      padding: 0.8rem 1.5rem;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.85rem;
-    }
-
-    .chat-input-area button:hover {
-      background: #FFD700;
-      color: black;
-    }
-
-    .preview-note {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.75rem;
-      color: #666;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
     .flow-footer {
       margin-top: 5rem;
       border-top: 1px solid rgba(255,255,255,0.05);
@@ -881,6 +781,13 @@
         grid-template-columns: 1fr;
         gap: 2rem;
       }
+      .design-preview-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .design-text h2 {
+        font-size: 2rem;
+      }
       .flow-headline {
         font-size: 3.5rem;
       }
@@ -900,9 +807,6 @@
       }
       .flow-feature-boxes {
         grid-template-columns: 1fr;
-      }
-      .chat-bubble {
-        max-width: 85%;
       }
       .flow-footer-content {
         flex-direction: column;
@@ -928,15 +832,11 @@
       .flow-button { padding: 0.8rem 2rem; font-size: 1rem; }
       .flow-logo-text { font-size: 1.2rem; }
       .flow-logo-text span { font-size: 1.2rem; }
-      .flow-box-title {
+      .design-text h2 {
         font-size: 1.6rem;
       }
-      .chat-bubble {
-        max-width: 90%;
-      }
-      .mode-btn {
-        padding: 0.2rem 0.6rem;
-        font-size: 0.7rem;
+      .flow-box-title {
+        font-size: 1.6rem;
       }
     }
   </style>
@@ -1009,6 +909,28 @@
       </div>
     </div>
 
+    <div class="design-preview-section fade-up delay-2">
+      <div class="design-preview-container">
+        <div class="design-text">
+          <h2>Mach das Licht an<br>ich sehe nichts</h2>
+          <p>Du kannst im Meeting einstellen, wie du deine Box haben möchtest. Wir nehmen das Design deiner Website an – ob dunkel oder hell.</p>
+          <div class="toggle-switch" id="themeToggle">
+            <div class="toggle-option active" data-theme="dark">
+              <i class="fas fa-moon"></i>
+              <span>Dark</span>
+            </div>
+            <div class="toggle-option" data-theme="light">
+              <i class="fas fa-sun"></i>
+              <span>Light</span>
+            </div>
+          </div>
+        </div>
+        <div class="preview-image" id="previewImage">
+          <img src="Dark.png" alt="Dark Theme Preview" id="themeImage">
+        </div>
+      </div>
+    </div>
+
     <div class="flow-feature-section">
       <div class="flow-feature-header">
         <div class="flow-feature-title fade-up" id="featureTitle">Die vollständige Plattform für KI-Supportagenten</div>
@@ -1074,40 +996,6 @@
           <div class="flow-box-text">
             Volle Anpassung – Gestalten Sie Ihre Chatbox nach Ihren Wünschen: von Button-Designs, Texten, Verhalten und Farben über Chatverläufe, Tipps, Logos, Bot-Namen bis hin zu individuellem Training – alles nach Ihren Vorstellungen.
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="chat-preview-section fade-up delay-2">
-      <div class="flow-feature-header">
-        <div class="flow-feature-title">Live Chat Preview</div>
-        <div class="flow-feature-description">Erlebe deinen zukünftigen KI-Assistenten – genau so personalisierbar wie du es dir vorstellst.</div>
-      </div>
-
-      <div class="chat-preview-container">
-        <div class="chat-header">
-          <h3><i class="fas fa-comment-dots"></i> FlowChat Assistant</h3>
-          <div class="mode-toggle">
-            <button class="mode-btn active" data-mode="dark">Dark</button>
-            <button class="mode-btn" data-mode="light">Light</button>
-          </div>
-        </div>
-        <div class="chat-window dark" id="chatWindow">
-          <div class="chat-message">
-            <div class="chat-avatar">
-              <i class="fas fa-robot"></i>
-            </div>
-            <div class="chat-bubble bot">
-              Hey! Willkommen bei FlowChat! 👋<br>Was kann ich heute für dich tun?
-            </div>
-          </div>
-        </div>
-        <div class="chat-input-area">
-          <input type="text" id="chatInput" placeholder="Nachricht eingeben... (Preview)">
-          <button id="sendBtn" disabled style="opacity:0.5; cursor:not-allowed;">Senden</button>
-        </div>
-        <div class="preview-note">
-          💡 Dies ist eine Live-Vorschau – dein echter Chatbot wird genau so aussehen und voll funktionsfähig sein.
         </div>
       </div>
     </div>
@@ -1184,22 +1072,37 @@
       observer.observe(element);
     });
 
-    const modeBtns = document.querySelectorAll('.mode-btn');
-    const chatWindow = document.getElementById('chatWindow');
+    const toggleOptions = document.querySelectorAll('.toggle-option');
+    const themeImage = document.getElementById('themeImage');
+    let isDark = true;
 
-    modeBtns.forEach(btn => {
-      btn.addEventListener('click', function() {
-        modeBtns.forEach(b => b.classList.remove('active'));
+    function switchTheme(toDark) {
+      const currentSrc = themeImage.src;
+      const newSrc = toDark ? 'Dark.png' : 'Light.png';
+      
+      if (currentSrc.includes(newSrc)) return;
+      
+      themeImage.style.opacity = '0';
+      
+      setTimeout(() => {
+        themeImage.src = newSrc;
+        setTimeout(() => {
+          themeImage.style.opacity = '1';
+        }, 50);
+      }, 200);
+      
+      isDark = toDark;
+    }
+
+    toggleOptions.forEach(option => {
+      option.addEventListener('click', function() {
+        const theme = this.getAttribute('data-theme');
+        
+        toggleOptions.forEach(opt => opt.classList.remove('active'));
         this.classList.add('active');
-        const mode = this.getAttribute('data-mode');
-        chatWindow.classList.remove('dark', 'light');
-        chatWindow.classList.add(mode);
+        
+        switchTheme(theme === 'dark');
       });
-    });
-
-    const chatInput = document.getElementById('chatInput');
-    chatInput.addEventListener('focus', function() {
-      this.placeholder = 'Dies ist eine Vorschau – bald kannst du hier chatten!';
     });
   </script>
 
