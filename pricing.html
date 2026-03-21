@@ -1726,6 +1726,8 @@
       const pricingFadeElements = pricingSection.querySelectorAll('.fade-up');
       pricingFadeElements.forEach(el => el.classList.remove('visible'));
 
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
       setTimeout(() => {
         pricingSection.classList.add('hidden-section');
         const bookingSection = document.getElementById('bookingSection');
