@@ -1,1 +1,2107 @@
-w
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>FlowChat · Preise & Pläne</title>
+  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Crect width='70' height='44' x='15' y='8' fill='white' rx='12' ry='12' /%3E%3Cpolygon points='25,52 50,68 75,52' fill='white' /%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000000;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #ffffff;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 0 2rem;
+    }
+
+    .flow-page {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    .delay-4 {
+      transition-delay: 0.4s;
+    }
+
+    .delay-5 {
+      transition-delay: 0.5s;
+    }
+
+    .hidden-section {
+      display: none !important;
+    }
+
+    .flow-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0 3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 2rem;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: navFadeIn 0.8s ease forwards;
+    }
+
+    @keyframes navFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .flow-logo-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .flow-logo-icon {
+      width: 32px;
+      height: 24px;
+      background: white;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    .flow-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      width: 12px;
+      height: 10px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+    }
+
+    .flow-logo-text {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #fff, #dddddd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .flow-logo-text span {
+      font-weight: 300;
+      color: #888;
+      background: none;
+      -webkit-text-fill-color: #888;
+      font-size: 1.4rem;
+    }
+
+    .flow-nav-right {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .flow-nav-right a {
+      color: #eee;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .flow-nav-right a:hover {
+      border-color: #fff;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 1001;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      text-shadow: 0 0 15px rgba(255,255,255,0.7);
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 9998;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-menu-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: rgba(10, 10, 10, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 9999;
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-menu-header {
+      padding: 25px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-menu-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-menu-logo-icon {
+      width: 32px;
+      height: 24px;
+      background: white;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    .mobile-menu-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      width: 12px;
+      height: 10px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .mobile-menu-logo-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .mobile-close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 10px 15px;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
+
+    .mobile-menu-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mobile-menu-link {
+      display: flex;
+      align-items: center;
+      padding: 18px 20px;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      border: 1px solid transparent;
+    }
+
+    .mobile-menu-link i {
+      margin-right: 15px;
+      width: 24px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .mobile-menu-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    .pricing-header {
+      text-align: center;
+      margin: 1rem 0 2.5rem 0;
+    }
+
+    .pricing-header h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-header p {
+      color: #aaa;
+      font-size: 1.1rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin: 0 0 4rem 0;
+      align-items: stretch;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .pricing-card {
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 2rem;
+      padding: 2rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .pricing-card:hover {
+      transform: scale(1.02);
+    }
+
+    .pricing-card.popular {
+      transform: scale(1.02);
+      border: 2px solid transparent;
+      background: linear-gradient(#0a0a0a, #0a0a0a) padding-box, linear-gradient(135deg, #FFD700, #FFA500) border-box;
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+      z-index: 2;
+    }
+
+    .pricing-card.popular:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 60px rgba(255, 215, 0, 0.6);
+    }
+
+    .pricing-card.pro {
+      background: linear-gradient(145deg, #0a0a0a, #2a0a2a);
+      border: 2px solid rgba(255, 0, 255, 0.3);
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+    }
+
+    .pricing-card.pro:hover {
+      transform: scale(1.03);
+      border-color: rgba(255, 0, 255, 0.8);
+      box-shadow: 0 0 50px rgba(255, 0, 255, 0.5);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      color: black;
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .plan-name {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .plan-name i {
+      font-size: 1.5rem;
+    }
+
+    .trial-period {
+      color: #aaa;
+      font-size: 0.85rem;
+      margin-bottom: 0.8rem;
+      font-style: italic;
+    }
+
+    .popular .plan-name {
+      color: #FFD700;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+
+    .pro .plan-name {
+      color: #ff00ff;
+      text-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+    }
+
+    .price-options {
+      margin: 0.5rem 0 0.5rem 0;
+    }
+
+    .monthly-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .price-option {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 1rem;
+      padding: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .price-option.selected {
+      border-color: currentColor;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .popular .price-option.selected {
+      border-color: #FFD700;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .pro .price-option.selected {
+      border-color: #ff00ff;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .best-badge {
+      position: absolute;
+      top: -8px;
+      right: 10px;
+      background: #4caf50;
+      color: white;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .popular .best-badge {
+      background: #FFD700;
+      color: black;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    .pro .best-badge {
+      background: #ff00ff;
+      color: white;
+      box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    }
+
+    .price-main {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .price-main span {
+      font-size: 0.8rem;
+      color: #aaa;
+      font-weight: 400;
+    }
+
+    .price-old {
+      color: #888;
+      text-decoration: line-through;
+      font-size: 0.8rem;
+      margin-left: 0.3rem;
+    }
+
+    .price-note {
+      font-size: 0.7rem;
+      color: #888;
+      margin-top: 0.3rem;
+    }
+
+    .annual-option {
+      margin-top: 1rem;
+      padding-top: 0.8rem;
+      border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    }
+
+    .annual-price {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      color: #aaa;
+      font-size: 0.85rem;
+    }
+
+    .annual-price strong {
+      color: white;
+      font-size: 1rem;
+    }
+
+    .annual-save {
+      background: rgba(76, 175, 80, 0.2);
+      color: #4caf50;
+      padding: 0.2rem 0.5rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+    }
+
+    .features-list {
+      flex: 1;
+      margin: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      color: #ddd;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .feature-item i {
+      font-size: 1rem;
+      margin-top: 0.1rem;
+      flex-shrink: 0;
+    }
+
+    .popular .feature-item i {
+      color: #FFD700;
+    }
+
+    .pro .feature-item i {
+      color: #ff00ff;
+    }
+
+    .feature-subtitle {
+      font-weight: 600;
+      color: white;
+      margin-top: 0.3rem;
+      margin-bottom: 0.1rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .select-btn {
+      background: transparent;
+      border: 2px solid;
+      padding: 0.8rem;
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+      width: 100%;
+    }
+
+    .popular .select-btn {
+      border-color: #FFD700;
+      color: #FFD700;
+    }
+
+    .popular .select-btn:hover {
+      background: #FFD700;
+      color: black;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    }
+
+    .pro .select-btn {
+      border-color: #ff00ff;
+      color: #ff00ff;
+    }
+
+    .pro .select-btn:hover {
+      background: #ff00ff;
+      color: black;
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+    }
+
+    .booking-form-section {
+      margin: 2rem 0 4rem 0;
+      scroll-margin-top: 2rem;
+    }
+
+    .selected-plan-box {
+      background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+      border-radius: 2rem;
+      padding: 2rem;
+      border: 2px solid;
+      margin-bottom: 2rem;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .selected-plan-box.popular {
+      border-color: #FFD700;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+    }
+
+    .selected-plan-box.pro {
+      border-color: #ff00ff;
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+    }
+
+    .selected-plan-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .selected-plan-title {
+      font-size: 2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .selected-plan-title.popular i,
+    .selected-plan-title.popular span {
+      color: #FFD700;
+      text-shadow: 0 0 20px #FFD700;
+    }
+
+    .selected-plan-title.pro i,
+    .selected-plan-title.pro span {
+      color: #ff00ff;
+      text-shadow: 0 0 20px #ff00ff;
+    }
+
+    .plan-switch-wrapper {
+      position: relative;
+      min-width: 200px;
+    }
+
+    .plan-switch-select {
+      width: 100%;
+      background: rgba(20, 20, 20, 0.95);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 0.8rem 2rem 0.8rem 1.5rem;
+      border-radius: 40px;
+      font-size: 1rem;
+      cursor: pointer;
+      appearance: none;
+      transition: all 0.3s ease;
+    }
+
+    .plan-switch-select:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .plan-switch-select:focus {
+      outline: none;
+      border-color: white;
+    }
+
+    .plan-switch-select option {
+      background: #1a1a1a;
+      color: white;
+      padding: 1rem;
+    }
+
+    .plan-switch-wrapper::after {
+      content: '\f078';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      pointer-events: none;
+      font-size: 0.9rem;
+    }
+
+    .price-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin: 1.5rem 0;
+    }
+
+    .price-selector-option {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .price-selector-option.selected {
+      border-width: 2px;
+    }
+
+    .popular .price-selector-option.selected {
+      border-color: #FFD700;
+      background: rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .pro .price-selector-option.selected {
+      border-color: #ff00ff;
+      background: rgba(255, 0, 255, 0.1);
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .price-selector-main {
+      font-size: 1.4rem;
+      font-weight: 700;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .price-selector-main span {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #aaa;
+    }
+
+    .price-selector-note {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 0.3rem;
+    }
+
+    .booking-form {
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 2.5rem;
+      padding: 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      color: white;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 1rem 1.5rem;
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: #ffffff;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+      transform: scale(1.01);
+    }
+
+    .form-group input:hover, .form-group textarea:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .business-toggle {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin: 2rem 0;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 40px;
+      flex-wrap: wrap;
+    }
+
+    .toggle-btn {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .toggle-btn.active {
+      background: white;
+      color: black;
+      border-color: white;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .address-fields {
+      display: block;
+      animation: slideDown 0.4s ease;
+    }
+
+    .address-fields.hidden {
+      display: none;
+    }
+
+    .business-fields {
+      display: none;
+      animation: slideDown 0.4s ease;
+    }
+
+    .business-fields.visible {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .contact-options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .contact-option {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 40px;
+      padding: 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .contact-option.active {
+      border-color: currentColor;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .popular .contact-option.active {
+      border-color: #ffffff;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .pro .contact-option.active {
+      border-color: #ff00ff;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .contact-option.disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .contact-warning {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 165, 0, 0.15);
+      border: 1px solid rgba(255, 165, 0, 0.3);
+      border-radius: 40px;
+      padding: 0.8rem 1.2rem;
+      margin: 1rem 0;
+      color: #ffaa00;
+      font-size: 0.8rem;
+    }
+
+    .contact-warning.hidden {
+      display: none;
+    }
+
+    .call-scheduling {
+      display: none;
+      margin: 1rem 0;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 20px;
+    }
+
+    .call-scheduling.visible {
+      display: block;
+    }
+
+    .payment-buttons, .platform-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1rem 0;
+    }
+
+    .payment-option, .platform-option {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 40px;
+      padding: 0.7rem 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .payment-option.selected, .platform-option.selected {
+      border-color: #ffffff;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: transparent;
+      border: 3px solid white;
+      color: white;
+      padding: 1rem;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .submit-btn:hover {
+      background: white;
+      color: black;
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+      transform: scale(1.02);
+    }
+
+    .submit-btn.loading {
+      opacity: 0.7;
+      cursor: wait;
+      pointer-events: none;
+    }
+
+    .error-message {
+      color: #ff4444;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+
+    .success-screen {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(10, 10, 10, 0.8);
+      border-radius: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin: 2rem 0;
+    }
+
+    .success-icon {
+      font-size: 5rem;
+      color: #4caf50;
+      filter: drop-shadow(0 0 30px rgba(76, 175, 80, 0.5));
+      margin-bottom: 1.5rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .success-screen h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .success-screen p {
+      color: #aaa;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .back-home-btn {
+      display: inline-block;
+      background: white;
+      color: black;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .back-home-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+    }
+
+    .flow-footer {
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 3rem 0 2rem 0;
+    }
+
+    .flow-footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .flow-footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .flow-footer-logo-icon {
+      width: 28px;
+      height: 22px;
+      background: white;
+      border-radius: 6px;
+      position: relative;
+      box-shadow: 0 0 10px rgba(255,255,255,0.4);
+    }
+
+    .flow-footer-logo-icon::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 8px;
+      width: 10px;
+      height: 8px;
+      background: white;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .flow-footer-logo-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .flow-footer-categories {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .flow-footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .flow-footer-category-title {
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.2rem;
+      text-shadow: 0 0 12px rgba(255,255,255,0.7);
+    }
+
+    .flow-footer-col a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .flow-footer-col a:hover {
+      color: white;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+
+    .flow-footer-contact {
+      flex: 0 0 auto;
+    }
+
+    .flow-footer-contact .contact-btn {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 0.7rem 2rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .flow-footer-contact .contact-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: white;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .flow-copyright {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+      color: #555;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .flow-nav-right {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .pricing-card.popular {
+        transform: scale(1);
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .contact-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .flow-footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+      }
+      .flow-footer-categories {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .selected-plan-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .plan-switch-wrapper {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 500px) {
+      body { padding: 0 1rem; }
+      .pricing-header h1 { font-size: 2.2rem; }
+      .flow-logo-text { font-size: 1.2rem; }
+      .flow-logo-text span { font-size: 1.2rem; }
+      .contact-options {
+        grid-template-columns: 1fr;
+      }
+      .payment-buttons, .platform-buttons {
+        flex-direction: column;
+      }
+      .pricing-card {
+        padding: 1.5rem 1rem;
+      }
+      .booking-form {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="mobile-menu-logo">
+        <div class="mobile-menu-logo-icon"></div>
+        <span class="mobile-menu-logo-text">FlowChat</span>
+      </div>
+      <button class="mobile-close-btn" id="mobileCloseBtn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="mobile-menu-content">
+      <a href="https://www.flow-chat.de/" class="mobile-menu-link"><i class="fas fa-home"></i> Home</a>
+      <a href="/guide" class="mobile-menu-link"><i class="fas fa-compass"></i> Erklärung</a>
+      <a href="/contact" class="mobile-menu-link"><i class="fas fa-envelope"></i> Kontakt</a>
+      <a href="/pricing" class="mobile-menu-link"><i class="fas fa-euro-sign"></i> Preise</a>
+      <a href="/about" class="mobile-menu-link"><i class="fas fa-users"></i> Über uns</a>
+    </div>
+  </div>
+
+  <div class="flow-page">
+    <div class="flow-nav">
+      <div class="flow-logo-wrapper">
+        <div class="flow-logo-icon"></div>
+        <div class="flow-logo-text">Flow-chat<span>.de</span></div>
+      </div>
+    <div class="mobile-menu-content">
+      <a href="https://www.flow-chat.de/" class="mobile-menu-link"><i class="fas fa-home"></i> Home</a>
+      <a href="/guide" class="mobile-menu-link"><i class="fas fa-compass"></i> Erklärung</a>
+      <a href="/contact" class="mobile-menu-link"><i class="fas fa-envelope"></i> Kontakt</a>
+      <a href="/pricing" class="mobile-menu-link"><i class="fas fa-euro-sign"></i> Preise</a>
+      <a href="/about" class="mobile-menu-link"><i class="fas fa-users"></i> Über uns</a>
+    </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div id="pricingSection">
+      <div class="pricing-header">
+        <h1 class="fade-up">Preise & Pläne</h1>
+        <p class="fade-up delay-1">Wählen Sie den perfekten Plan für Ihr Unternehmen</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="pricing-card popular fade-up delay-2">
+          <div class="popular-badge">Beliebt</div>
+          <div class="plan-name">
+            <i class="fas fa-star"></i> Standard
+          </div>
+          <div class="trial-period">2 Tage kostenlose Testphase</div>
+          
+          <div class="price-options">
+            <div class="monthly-options">
+              <div class="price-option" data-plan="standard" data-type="action">
+                <div class="best-badge">BESTES ANGEBOT</div>
+                <div class="price-main">279,00 € <span>erster Monat</span></div>
+                <div class="price-note">danach nur 49,99 € monatlich</div>
+              </div>
+              <div class="price-option" data-plan="standard" data-type="regular">
+                <div class="price-main">139,00 € <span>/Monat</span></div>
+                <div class="price-note">fester Preis, jederzeit kündbar</div>
+              </div>
+            </div>
+            <div class="annual-option">
+              <div class="annual-price">
+                <strong>3.534,00 €</strong> <span>/Jahr</span>
+                <span class="annual-save">+5% extra Rabatt</span>
+              </div>
+              <div style="color: #888; font-size: 0.7rem;">monatlich 294,50 €</div>
+            </div>
+          </div>
+
+          <div class="features-list">
+            <div class="feature-subtitle">Support</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Premium Support</div>
+            <div class="feature-subtitle">Für wen</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Kleine & mittlere Unternehmen, professioneller Chatbot</div>
+            <div class="feature-subtitle">Models</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Zugang zu allen KI-Modellen</div>
+            <div class="feature-subtitle">Features</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> 8 aktivierte AI-Aktionen</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> 20 MB Speicher</div>
+            <div class="feature-subtitle">Integrationen</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Shopify, WhatsApp, Instagram, Messenger, Slack, Calendly, WordPress</div>
+            <div class="feature-subtitle">Personalisierung</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Erkennung eingeloggter Benutzer</div>
+            <div class="feature-subtitle">Automatisierung</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Automatisches Retraining alle 24h</div>
+          </div>
+          <button class="select-btn" onclick="selectPlanWithPrice('standard', 'Standard', 'popular', 'action')">Meeting vereinbaren</button>
+        </div>
+
+        <div class="pricing-card pro fade-up delay-3">
+          <div class="plan-name">
+            <i class="fas fa-star"></i> Pro
+          </div>
+          <div class="trial-period">4 Tage kostenlose Testphase</div>
+          
+          <div class="price-options">
+            <div class="monthly-options">
+              <div class="price-option" data-plan="pro" data-type="action">
+                <div class="best-badge">BESTES ANGEBOT</div>
+                <div class="price-main">399,00 € <span>erster Monat</span></div>
+                <div class="price-note">danach nur 199,00 € monatlich</div>
+              </div>
+              <div class="price-option" data-plan="pro" data-type="regular">
+                <div class="price-main">299,00 € <span>/Monat</span></div>
+                <div class="price-note">fester Preis, jederzeit kündbar</div>
+              </div>
+            </div>
+            <div class="annual-option">
+              <div class="annual-price">
+                <strong>5.685,75 €</strong> <span>/Jahr</span>
+                <span class="annual-save">+5% extra Rabatt</span>
+              </div>
+              <div style="color: #888; font-size: 0.7rem;">monatlich 473,81 €</div>
+            </div>
+          </div>
+
+          <div class="features-list">
+            <div class="feature-subtitle">Support</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Premium Support</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> <strong>Alles im Standard enthalten</strong></div>
+            <div class="feature-subtitle">Features</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> 12 aktivierte AI-Aktionen</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> 40 MB Speicher</div>
+            <div class="feature-subtitle">Analytics</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Erweiterte Analytics auf Anfrage</div>
+            <div class="feature-subtitle">Quellen</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Quellen-Vorschläge</div>
+            <div class="feature-item"><i class="fas fa-circle-check"></i> Tickets als Quelle (Zendesk, Salesforce)</div>
+          </div>
+          <button class="select-btn" onclick="selectPlanWithPrice('pro', 'Pro', 'pro', 'action')">Meeting vereinbaren</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="bookingSection" class="hidden-section">
+      <div class="pricing-header">
+        <h1 class="fade-up">Meeting vereinbaren</h1>
+        <p class="fade-up delay-1">Vereinbare ein Meeting mit uns – wir zeigen dir alles und helfen dir bei der Einrichtung.</p>
+      </div>
+
+      <div class="booking-form-section fade-up delay-2" id="bookingFormSection">
+        <div class="selected-plan-box" id="selectedPlanBox">
+          <div class="selected-plan-header">
+            <div class="selected-plan-title" id="selectedPlanTitle">
+              <i class="fas fa-star" id="selectedPlanIcon"></i>
+              <span id="selectedPlanName">Standard</span>
+            </div>
+            <div class="plan-switch-wrapper">
+              <select class="plan-switch-select" id="planSwitch" onchange="switchPlan(this.value)">
+                <option value="standard" selected>Standard</option>
+                <option value="pro">Pro</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="price-selector" id="priceSelector">
+            <div class="price-selector-option" data-price-type="action">
+              <div class="price-selector-main" id="actionPriceDisplay">279,00 € <span>erster Monat</span></div>
+              <div class="price-selector-note" id="actionNoteDisplay">danach nur 49,99 € monatlich</div>
+            </div>
+            <div class="price-selector-option" data-price-type="regular">
+              <div class="price-selector-main" id="regularPriceDisplay">139,00 € <span>/Monat</span></div>
+              <div class="price-selector-note">fester Preis, jederzeit kündbar</div>
+            </div>
+            <div class="price-selector-option" data-price-type="yearly">
+              <div class="price-selector-main" id="yearlyPriceDisplay">3.534,00 € <span>/Jahr</span></div>
+              <div class="price-selector-note">monatlich 294,50 € +5% Rabatt</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-form">
+          <form id="bookingForm">
+            <div class="business-toggle">
+              <span style="font-weight: 600;">Für ein Unternehmen?</span>
+              <div>
+                <button type="button" class="toggle-btn active" id="businessNo" onclick="setBusiness(false)">Nein</button>
+                <button type="button" class="toggle-btn" id="businessYes" onclick="setBusiness(true)">Ja</button>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Vorname *</label>
+                <input type="text" id="firstName" required>
+              </div>
+              <div class="form-group">
+                <label>Nachname *</label>
+                <input type="text" id="lastName" required>
+              </div>
+            </div>
+
+            <div id="addressFields" class="address-fields">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Straße & Hausnummer *</label>
+                  <input type="text" id="street">
+                </div>
+                <div class="form-group">
+                  <label>Postleitzahl *</label>
+                  <input type="text" id="zipCode">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Stadt *</label>
+                  <input type="text" id="city">
+                </div>
+                <div class="form-group">
+                  <label>Bundesland *</label>
+                  <input type="text" id="state">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Land *</label>
+                <input type="text" id="country">
+              </div>
+            </div>
+
+            <div class="business-fields" id="businessFields">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Unternehmensname *</label>
+                  <input type="text" id="companyName">
+                </div>
+                <div class="form-group">
+                  <label>Rechtlicher Inhaber *</label>
+                  <input type="text" id="legalOwner">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Unternehmensnummer (optional)</label>
+                <input type="text" id="businessNumber">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Telefon (optional)</label>
+                <input type="tel" id="phone">
+              </div>
+              <div class="form-group">
+                <label>E-Mail *</label>
+                <input type="email" id="email" required>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>E-Mail bestätigen *</label>
+              <input type="email" id="confirmEmail" required>
+            </div>
+
+            <div style="margin: 1rem 0; color: white; font-weight: 600;">Wie möchten Sie kontaktiert werden? *</div>
+            <div class="contact-options" id="contactOptions">
+              <div class="contact-option active" data-contact="email" onclick="setContactMethod('email')">
+                <i class="fas fa-envelope"></i> Nur E-Mail
+              </div>
+              <div class="contact-option" data-contact="phone" onclick="setContactMethod('phone')" id="phoneOnlyOption">
+                <i class="fas fa-phone"></i> Nur Telefon
+              </div>
+              <div class="contact-option" data-contact="both" onclick="setContactMethod('both')">
+                <i class="fas fa-globe"></i> Beides
+              </div>
+              <div class="contact-option" data-contact="any" onclick="setContactMethod('any')">
+                <i class="fas fa-random"></i> Egal
+              </div>
+            </div>
+
+            <div class="contact-warning hidden" id="contactWarning">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span>Bei Telefon-Kontakt: Eine unbekannte Nummer um die gewünschte Uhrzeit sind wir! Bitte Telefonnummer angeben.</span>
+            </div>
+
+            <div class="call-scheduling" id="callScheduling">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Gewünschtes Datum *</label>
+                  <input type="date" id="callDate">
+                </div>
+                <div class="form-group">
+                  <label>Gewünschte Uhrzeit *</label>
+                  <input type="time" id="callTime">
+                </div>
+              </div>
+            </div>
+
+            <div style="margin: 1rem 0; color: white; font-weight: 600;">Bevorzugte Meeting Plattform (optional)</div>
+            <div class="platform-buttons" id="platformButtons">
+              <div class="platform-option" data-platform="discord"><i class="fab fa-discord"></i> Discord</div>
+              <div class="platform-option" data-platform="zoom"><i class="fas fa-video"></i> Zoom</div>
+              <div class="platform-option" data-platform="google"><i class="fab fa-google"></i> Google Meet</div>
+              <div class="platform-option" data-platform="unsure"><i class="fas fa-question"></i> Unsicher</div>
+              <div class="platform-option" data-platform="other"><i class="fas fa-comment"></i> Anderes</div>
+            </div>
+
+            <div class="form-group">
+              <label>Erzählen Sie uns etwas über Ihr Unternehmen (optional)</label>
+              <textarea id="businessDescription" placeholder="z.B. Branche, Größe, Ziele..." maxlength="500"></textarea>
+              <div style="color: #888; font-size: 0.75rem; margin-top: 0.3rem;"><span id="businessDescCounter">0</span>/500</div>
+            </div>
+
+            <div class="form-group">
+              <label>Wofür möchten Sie den Chatbot nutzen? (optional)</label>
+              <textarea id="useCase" placeholder="z.B. Kundensupport, Verkauf, Terminbuchung..." maxlength="500"></textarea>
+              <div style="color: #888; font-size: 0.75rem; margin-top: 0.3rem;"><span id="useCaseCounter">0</span>/500</div>
+            </div>
+
+            <div style="margin: 1rem 0; color: white; font-weight: 600;">Bevorzugte Zahlungsmethode (optional)</div>
+            <div class="payment-buttons" id="paymentButtons">
+              <div class="payment-option" data-method="paypal"><i class="fab fa-paypal"></i> PayPal</div>
+              <div class="payment-option" data-method="paysafecard"><i class="fas fa-credit-card"></i> Paysafecard</div>
+              <div class="payment-option" data-method="applepay"><i class="fab fa-apple"></i> Apple Pay</div>
+              <div class="payment-option" data-method="googlepay"><i class="fab fa-google"></i> Google Pay</div>
+              <div class="payment-option" data-method="unsure"><i class="fas fa-question"></i> Unsicher</div>
+            </div>
+
+            <div id="formError" class="error-message"></div>
+            <button type="button" class="submit-btn" id="submitBtn" onclick="submitForm()">Meeting anfragen</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="successSection" class="hidden-section">
+      <div class="success-screen fade-up">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Formular erfolgreich abgesendet!</h2>
+        <p id="successMessage">Sie erhalten in Kürze (24 bis 48 Stunden) eine Antwort.</p>
+        <p style="color: #888; font-size: 0.85rem;">Bitte erstellen Sie keine weiteren Formulare!</p>
+        <a href="https://www.flow-chat.de/" class="back-home-btn">Zurück zur Startseite</a>
+      </div>
+    </div>
+
+    <div class="flow-footer">
+      <div class="flow-footer-content">
+        <div class="flow-footer-logo">
+          <div class="flow-footer-logo-icon"></div>
+          <span class="flow-footer-logo-text">FlowChat</span>
+        </div>
+        <div class="flow-footer-categories">
+          <div class="flow-footer-col">
+            <div class="flow-footer-category-title">PRODUCT</div>
+            <a href="/pricing">Preise (pricing)</a>
+            <a href="/guide">Erklärung (guide)</a>
+          </div>
+          <div class="flow-footer-col">
+            <div class="flow-footer-category-title">UNTERNEHMEN</div>
+            <a href="/about">Über uns (about)</a>
+            <a href="/contact">Kontakt Aufnehmen (contact)</a>
+          </div>
+        </div>
+        <div class="flow-footer-contact">
+          <a href="/contact" class="contact-btn">Kontakt</a>
+        </div>
+      </div>
+      <div class="flow-copyright">
+        © 2026 FlowChat, Inc.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    emailjs.init("YDWmiDx4PCrhw8Rkx");
+
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+    function toggleMobileMenu() {
+      mobileMenu.classList.toggle('active');
+      mobileMenuOverlay.classList.toggle('active');
+      document.body.classList.toggle('no-scroll');
+    }
+
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+    mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        toggleMobileMenu();
+        setTimeout(() => {
+          window.location.href = href;
+        }, 300);
+      });
+    });
+
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    fadeElements.forEach(element => {
+      observer.observe(element);
+    });
+
+    let currentPlan = 'standard';
+    let currentPlanType = 'Standard';
+    let currentPlanClass = 'popular';
+    let currentPriceType = 'action';
+    let isBusiness = false;
+    let currentPaymentMethod = null;
+    let currentContactMethod = 'email';
+    let currentPlatform = null;
+
+    const planData = {
+      standard: {
+        name: 'Standard',
+        class: 'popular',
+        actionPrice: '279,00 €',
+        actionNote: 'danach nur 49,99 € monatlich',
+        regularPrice: '139,00 €',
+        regularNote: 'fester Preis, jederzeit kündbar',
+        yearlyPrice: '3.534,00 €',
+        yearlyNote: 'monatlich 294,50 €',
+        yearlySave: '+5% Rabatt'
+      },
+      pro: {
+        name: 'Pro',
+        class: 'pro',
+        actionPrice: '399,00 €',
+        actionNote: 'danach nur 199,00 € monatlich',
+        regularPrice: '299,00 €',
+        regularNote: 'fester Preis, jederzeit kündbar',
+        yearlyPrice: '5.685,75 €',
+        yearlyNote: 'monatlich 473,81 €',
+        yearlySave: '+5% Rabatt'
+      }
+    };
+
+    function updateContactOptionsGlow() {
+      const options = document.querySelectorAll('.contact-option');
+      options.forEach(opt => {
+        if (opt.classList.contains('active')) {
+          if (currentPlanClass === 'popular') {
+            opt.style.borderColor = '#ffffff';
+            opt.style.boxShadow = '0 0 20px rgba(255, 255, 255, 0.3)';
+          } else {
+            opt.style.borderColor = '#ff00ff';
+            opt.style.boxShadow = '0 0 20px rgba(255, 0, 255, 0.3)';
+          }
+        } else {
+          opt.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          opt.style.boxShadow = 'none';
+        }
+      });
+    }
+
+    function updateAllGlows() {
+      const activeColor = currentPlanClass === 'popular' ? '#ffffff' : '#ff00ff';
+      const activeShadow = currentPlanClass === 'popular' ? '0 0 20px rgba(255, 255, 255, 0.4)' : '0 0 20px rgba(255, 0, 255, 0.4)';
+      
+      document.querySelectorAll('.payment-option.selected, .platform-option.selected').forEach(el => {
+        el.style.borderColor = activeColor;
+        el.style.boxShadow = activeShadow;
+      });
+      
+      document.querySelectorAll('.payment-option, .platform-option').forEach(el => {
+        if (!el.classList.contains('selected')) {
+          el.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          el.style.boxShadow = 'none';
+        }
+      });
+    }
+
+    function updatePriceSelector() {
+      const data = planData[currentPlan];
+      document.getElementById('actionPriceDisplay').innerHTML = `${data.actionPrice} <span>erster Monat</span>`;
+      document.getElementById('actionNoteDisplay').innerHTML = data.actionNote;
+      document.getElementById('regularPriceDisplay').innerHTML = `${data.regularPrice} <span>/Monat</span>`;
+      document.getElementById('yearlyPriceDisplay').innerHTML = `${data.yearlyPrice} <span>/Jahr</span>`;
+      
+      const selectorOptions = document.querySelectorAll('.price-selector-option');
+      selectorOptions.forEach(opt => {
+        const type = opt.getAttribute('data-price-type');
+        if (type === currentPriceType) {
+          opt.classList.add('selected');
+        } else {
+          opt.classList.remove('selected');
+        }
+      });
+    }
+
+    function selectPlanWithPrice(planId, planName, planClass, priceType) {
+      currentPlan = planId;
+      currentPlanType = planName;
+      currentPlanClass = planClass;
+      currentPriceType = priceType;
+
+      const pricingSection = document.getElementById('pricingSection');
+      const pricingFadeElements = pricingSection.querySelectorAll('.fade-up');
+      pricingFadeElements.forEach(el => el.classList.remove('visible'));
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      setTimeout(() => {
+        pricingSection.classList.add('hidden-section');
+        const bookingSection = document.getElementById('bookingSection');
+        bookingSection.classList.remove('hidden-section');
+        
+        const bookingFadeElements = bookingSection.querySelectorAll('.fade-up');
+        bookingFadeElements.forEach(el => {
+          observer.observe(el);
+          setTimeout(() => {
+            if (el.getBoundingClientRect().top < window.innerHeight) {
+              el.classList.add('visible');
+            }
+          }, 50);
+        });
+
+        updateSelectedPlanBox();
+        updatePriceSelector();
+        updateContactOptionsGlow();
+        updateAllGlows();
+        
+        document.querySelectorAll('.payment-option').forEach(el => {
+          el.classList.remove('selected');
+          el.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          el.style.boxShadow = 'none';
+        });
+        
+        document.querySelectorAll('.platform-option').forEach(el => {
+          el.classList.remove('selected');
+          el.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          el.style.boxShadow = 'none';
+        });
+        
+        currentPaymentMethod = null;
+        currentPlatform = null;
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 600);
+    }
+
+    function updateSelectedPlanBox() {
+      const box = document.getElementById('selectedPlanBox');
+      box.className = `selected-plan-box ${currentPlanClass}`;
+      
+      const icon = document.getElementById('selectedPlanIcon');
+      icon.className = `fas fa-star`;
+      
+      const title = document.getElementById('selectedPlanTitle');
+      title.className = `selected-plan-title ${currentPlanClass}`;
+      
+      document.getElementById('selectedPlanName').textContent = currentPlanType;
+      document.getElementById('planSwitch').value = currentPlan;
+    }
+
+    function switchPlan(planId) {
+      selectPlanWithPrice(planId, planData[planId].name, planData[planId].class, 'action');
+    }
+
+    document.querySelectorAll('.price-selector-option').forEach(opt => {
+      opt.addEventListener('click', function() {
+        const type = this.getAttribute('data-price-type');
+        currentPriceType = type;
+        updatePriceSelector();
+      });
+    });
+
+    function setBusiness(value) {
+      isBusiness = value;
+      document.getElementById('businessNo').classList.toggle('active', !value);
+      document.getElementById('businessYes').classList.toggle('active', value);
+      
+      const addressFields = document.getElementById('addressFields');
+      const businessFields = document.getElementById('businessFields');
+      
+      if (value) {
+        addressFields.classList.add('hidden');
+        businessFields.classList.add('visible');
+      } else {
+        addressFields.classList.remove('hidden');
+        businessFields.classList.remove('visible');
+      }
+    }
+
+    function setContactMethod(method) {
+      const phoneValue = document.getElementById('phone').value.trim();
+      const phoneOption = document.getElementById('phoneOnlyOption');
+      
+      if (method === 'phone' && !phoneValue) {
+        phoneOption.classList.add('disabled');
+        return;
+      }
+      
+      if (method === 'both' && !phoneValue) {
+        const bothOption = document.querySelector('[data-contact="both"]');
+        bothOption.classList.add('disabled');
+        return;
+      }
+      
+      currentContactMethod = method;
+      document.querySelectorAll('.contact-option').forEach(el => el.classList.remove('active'));
+      document.querySelector(`[data-contact="${method}"]`).classList.add('active');
+      
+      updateContactOptionsGlow();
+
+      const callScheduling = document.getElementById('callScheduling');
+      const contactWarning = document.getElementById('contactWarning');
+      
+      if (method === 'phone' || method === 'both') {
+        callScheduling.classList.add('visible');
+        contactWarning.classList.remove('hidden');
+      } else {
+        callScheduling.classList.remove('visible');
+        contactWarning.classList.add('hidden');
+      }
+    }
+
+    document.getElementById('phone').addEventListener('input', function(e) {
+      const phoneValue = e.target.value.trim();
+      const phoneOption = document.getElementById('phoneOnlyOption');
+      const bothOption = document.querySelector('[data-contact="both"]');
+      
+      if (phoneValue) {
+        phoneOption.classList.remove('disabled');
+        bothOption.classList.remove('disabled');
+        
+        if (currentContactMethod === 'phone') {
+          document.querySelector(`[data-contact="phone"]`).classList.add('active');
+          updateContactOptionsGlow();
+        } else if (currentContactMethod === 'both') {
+          document.querySelector(`[data-contact="both"]`).classList.add('active');
+          updateContactOptionsGlow();
+        }
+      } else {
+        phoneOption.classList.add('disabled');
+        bothOption.classList.add('disabled');
+        
+        if (currentContactMethod === 'phone' || currentContactMethod === 'both') {
+          setContactMethod('email');
+        }
+      }
+    });
+
+    document.querySelectorAll('.payment-option').forEach(opt => {
+      opt.addEventListener('click', function() {
+        if (this.classList.contains('selected')) {
+          this.classList.remove('selected');
+          currentPaymentMethod = null;
+          this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          this.style.boxShadow = 'none';
+        } else {
+          document.querySelectorAll('.payment-option').forEach(o => {
+            o.classList.remove('selected');
+            o.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            o.style.boxShadow = 'none';
+          });
+          this.classList.add('selected');
+          currentPaymentMethod = this.getAttribute('data-method');
+          const activeColor = currentPlanClass === 'popular' ? '#ffffff' : '#ff00ff';
+          const activeShadow = currentPlanClass === 'popular' ? '0 0 20px rgba(255, 255, 255, 0.4)' : '0 0 20px rgba(255, 0, 255, 0.4)';
+          this.style.borderColor = activeColor;
+          this.style.boxShadow = activeShadow;
+        }
+      });
+    });
+
+    document.querySelectorAll('.platform-option').forEach(opt => {
+      opt.addEventListener('click', function() {
+        if (this.classList.contains('selected')) {
+          this.classList.remove('selected');
+          currentPlatform = null;
+          this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          this.style.boxShadow = 'none';
+        } else {
+          document.querySelectorAll('.platform-option').forEach(o => {
+            o.classList.remove('selected');
+            o.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            o.style.boxShadow = 'none';
+          });
+          this.classList.add('selected');
+          currentPlatform = this.getAttribute('data-platform');
+          const activeColor = currentPlanClass === 'popular' ? '#ffffff' : '#ff00ff';
+          const activeShadow = currentPlanClass === 'popular' ? '0 0 20px rgba(255, 255, 255, 0.4)' : '0 0 20px rgba(255, 0, 255, 0.4)';
+          this.style.borderColor = activeColor;
+          this.style.boxShadow = activeShadow;
+        }
+      });
+    });
+
+    document.getElementById('businessDescription').addEventListener('input', function(e) {
+      document.getElementById('businessDescCounter').textContent = e.target.value.length;
+    });
+
+    document.getElementById('useCase').addEventListener('input', function(e) {
+      document.getElementById('useCaseCounter').textContent = e.target.value.length;
+    });
+
+    function showSuccess(message) {
+      const mainContent = document.getElementById('pricingSection');
+      const successSection = document.getElementById('successSection');
+      const successMessage = document.getElementById('successMessage');
+      successMessage.textContent = message;
+      
+      if (mainContent) {
+        const fadeElementsMain = mainContent.querySelectorAll('.fade-up');
+        fadeElementsMain.forEach(el => el.classList.remove('visible'));
+      }
+      const bookingSection = document.getElementById('bookingSection');
+      if (bookingSection) {
+        const bookingFade = bookingSection.querySelectorAll('.fade-up');
+        bookingFade.forEach(el => el.classList.remove('visible'));
+      }
+      
+      setTimeout(() => {
+        if (mainContent) mainContent.classList.add('hidden-section');
+        if (bookingSection) bookingSection.classList.add('hidden-section');
+        successSection.classList.remove('hidden-section');
+        const successFade = successSection.querySelectorAll('.fade-up');
+        successFade.forEach(el => observer.observe(el));
+        setTimeout(() => successFade.forEach(el => el.classList.add('visible')), 100);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 600);
+    }
+
+    function submitForm() {
+      const errorDiv = document.getElementById('formError');
+      errorDiv.textContent = '';
+
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const email = document.getElementById('email').value;
+      const confirmEmail = document.getElementById('confirmEmail').value;
+      const phone = document.getElementById('phone').value;
+
+      if (!firstName || !lastName || !email || !confirmEmail) {
+        errorDiv.textContent = 'Bitte füllen Sie alle Pflichtfelder aus.';
+        return;
+      }
+
+      if (email !== confirmEmail) {
+        errorDiv.textContent = 'E-Mail-Adressen stimmen nicht überein!';
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        errorDiv.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+        return;
+      }
+
+      if (!isBusiness) {
+        const street = document.getElementById('street').value;
+        const zipCode = document.getElementById('zipCode').value;
+        const city = document.getElementById('city').value;
+        const state = document.getElementById('state').value;
+        const country = document.getElementById('country').value;
+        if (!street || !zipCode || !city || !state || !country) {
+          errorDiv.textContent = 'Bitte füllen Sie alle Adressfelder aus.';
+          return;
+        }
+      } else {
+        const companyName = document.getElementById('companyName').value;
+        const legalOwner = document.getElementById('legalOwner').value;
+        if (!companyName || !legalOwner) {
+          errorDiv.textContent = 'Bitte füllen Sie die Unternehmensdaten aus.';
+          return;
+        }
+      }
+
+      if ((currentContactMethod === 'phone' || currentContactMethod === 'both') && !phone) {
+        errorDiv.textContent = 'Für Telefon-Kontakt benötigen wir Ihre Telefonnummer.';
+        return;
+      }
+
+      if (currentContactMethod === 'phone' || currentContactMethod === 'both') {
+        const callDate = document.getElementById('callDate').value;
+        const callTime = document.getElementById('callTime').value;
+        if (!callDate || !callTime) {
+          errorDiv.textContent = 'Bitte wählen Sie Datum und Uhrzeit für den Rückruf.';
+          return;
+        }
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.textContent = 'Wird gesendet...';
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      const data = planData[currentPlan];
+      let priceInfo = '';
+      if (currentPriceType === 'action') {
+        priceInfo = `${data.actionPrice} (1. Monat, ${data.actionNote})`;
+      } else if (currentPriceType === 'regular') {
+        priceInfo = `${data.regularPrice} (${data.regularNote})`;
+      } else {
+        priceInfo = `${data.yearlyPrice} (jährlich, ${data.yearlyNote})`;
+      }
+
+      const templateParams = {
+        plan: currentPlan,
+        plan_name: currentPlanType,
+        price_option: priceInfo,
+        first_name: firstName,
+        last_name: lastName,
+        street: isBusiness ? 'Geschäftskunde' : (document.getElementById('street').value || 'None'),
+        zip_code: isBusiness ? 'Geschäftskunde' : (document.getElementById('zipCode').value || 'None'),
+        city: isBusiness ? 'Geschäftskunde' : (document.getElementById('city').value || 'None'),
+        state: isBusiness ? 'Geschäftskunde' : (document.getElementById('state').value || 'None'),
+        country: isBusiness ? 'Geschäftskunde' : (document.getElementById('country').value || 'None'),
+        phone: phone || 'Nicht angegeben',
+        email: email,
+        is_business: isBusiness ? 'Ja' : 'Nein',
+        company_name: isBusiness ? (document.getElementById('companyName').value || 'None') : 'nicht zutreffend',
+        legal_owner: isBusiness ? (document.getElementById('legalOwner').value || 'None') : 'nicht zutreffend',
+        business_number: isBusiness ? (document.getElementById('businessNumber').value || 'None') : 'nicht zutreffend',
+        contact_method: currentContactMethod === 'email' ? 'Nur E-Mail' : currentContactMethod === 'phone' ? 'Nur Telefon' : currentContactMethod === 'both' ? 'Beides' : 'Egal',
+        call_date: (currentContactMethod === 'phone' || currentContactMethod === 'both') && document.getElementById('callDate').value ? document.getElementById('callDate').value : 'None',
+        call_time: (currentContactMethod === 'phone' || currentContactMethod === 'both') && document.getElementById('callTime').value ? document.getElementById('callTime').value : 'None',
+        meeting_platform: currentPlatform ? currentPlatform : 'Nicht angegeben',
+        business_description: document.getElementById('businessDescription').value || 'None',
+        use_case: document.getElementById('useCase').value || 'None',
+        payment_method: currentPaymentMethod ? currentPaymentMethod : 'Nicht angegeben'
+      };
+
+      emailjs.send('service_aqffj86', 'template_rm2qqtu', templateParams)
+        .then(() => {
+          const message = (currentContactMethod === 'phone' || currentContactMethod === 'both') 
+            ? `Sie erhalten einen Anruf am ${document.getElementById('callDate').value} um ${document.getElementById('callTime').value}.` 
+            : 'Sie erhalten in Kürze (24 bis 48 Stunden) eine Antwort per E-Mail.';
+          showSuccess(message);
+        })
+        .catch(() => {
+          errorDiv.textContent = 'Fehler beim Senden. Bitte versuchen Sie es später erneut.';
+          submitBtn.textContent = 'Meeting anfragen';
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+        });
+    }
+
+    document.querySelectorAll('.price-option').forEach(opt => {
+      opt.addEventListener('click', function() {
+        const plan = this.getAttribute('data-plan');
+        const type = this.getAttribute('data-type');
+        if (plan && type && plan === currentPlan) {
+          currentPriceType = type;
+        }
+      });
+    });
+    
+    if (!document.getElementById('phone').value.trim()) {
+      document.getElementById('phoneOnlyOption').classList.add('disabled');
+      document.querySelector('[data-contact="both"]').classList.add('disabled');
+    }
+  </script>
+
+  <script>
+    (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="om035_aLot5AR9d9SonNF";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+  </script>
+</body>
+</html>
