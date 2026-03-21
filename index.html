@@ -636,6 +636,7 @@
     .preview-image {
       width: 100%;
       position: relative;
+      display: block;
     }
 
     .theme-img {
@@ -1106,6 +1107,7 @@
           
           setTimeout(() => {
             themeImage.style.transition = '';
+            themeImage.style.transform = '';
             isAnimating = false;
           }, 400);
         }, 50);
