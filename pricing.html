@@ -1682,8 +1682,15 @@
     };
 
     function updateAllGlows() {
-      const activeColor = currentPlanClass === 'popular' ? '#FFD700' : '#ff00ff';
-      const activeShadow = currentPlanClass === 'popular' ? '0 0 20px rgba(255, 215, 0, 0.3)' : '0 0 20px rgba(255, 0, 255, 0.3)';
+      let activeColor, activeShadow;
+      
+      if (currentPlanClass === 'popular') {
+        activeColor = '#ffffff';
+        activeShadow = '0 0 20px rgba(255, 255, 255, 0.4)';
+      } else {
+        activeColor = '#ff00ff';
+        activeShadow = '0 0 20px rgba(255, 0, 255, 0.4)';
+      }
       
       document.querySelectorAll('.payment-option.selected, .platform-option.selected').forEach(el => {
         el.style.borderColor = activeColor;
