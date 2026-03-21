@@ -393,7 +393,6 @@
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
       font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
@@ -721,63 +720,58 @@
       font-size: 0.9rem;
     }
 
-    .payment-interval {
+    .price-selector {
       display: flex;
-      gap: 1rem;
+      flex-direction: column;
+      gap: 0.8rem;
       margin: 1.5rem 0;
     }
 
-    .interval-option {
-      flex: 1;
+    .price-selector-option {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 40px;
+      border-radius: 1rem;
       padding: 1rem;
-      text-align: center;
       cursor: pointer;
       transition: all 0.3s ease;
+      position: relative;
     }
 
-    .interval-option.active {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    .price-selector-option.selected {
+      border-width: 2px;
     }
 
-    .interval-option:hover {
-      transform: translateY(-2px);
-      border-color: rgba(255, 255, 255, 0.3);
+    .popular .price-selector-option.selected {
+      border-color: #FFD700;
+      background: rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
     }
 
-    .interval-option .price {
-      font-size: 1.3rem;
+    .pro .price-selector-option.selected {
+      border-color: #ff00ff;
+      background: rgba(255, 0, 255, 0.1);
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .price-selector-main {
+      font-size: 1.4rem;
       font-weight: 700;
-      color: white;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
-    .interval-option .saving {
-      font-size: 0.85rem;
-      color: #4caf50;
+    .price-selector-main span {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #aaa;
     }
 
-    .form-highlight {
-      text-align: center;
-      margin: 1rem 0 1.5rem 0;
-      padding: 0.5rem;
-      border-radius: 40px;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .popular .form-highlight {
-      color: #FFD700;
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    }
-
-    .pro .form-highlight {
-      color: #ff00ff;
-      text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    .price-selector-note {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 0.3rem;
     }
 
     .booking-form {
@@ -873,6 +867,15 @@
       display: none;
     }
 
+    .business-fields {
+      display: none;
+      animation: slideDown 0.4s ease;
+    }
+
+    .business-fields.visible {
+      display: block;
+    }
+
     @keyframes slideDown {
       from {
         opacity: 0;
@@ -882,110 +885,6 @@
         opacity: 1;
         transform: translateY(0);
       }
-    }
-
-    .custom-select {
-      position: relative;
-      width: 100%;
-    }
-
-    .custom-select-trigger {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 1rem 1.5rem;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .custom-select-trigger:hover {
-      border-color: rgba(255, 215, 0, 0.5);
-    }
-
-    .custom-select-trigger.active {
-      border-color: #FFD700;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-    }
-
-    .custom-select-dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: #1a1a1a;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 16px;
-      margin-top: 0.5rem;
-      z-index: 100;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-      overflow: hidden;
-    }
-
-    .custom-select-dropdown.open {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    .custom-select-option {
-      padding: 0.8rem 1.5rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      color: #ddd;
-    }
-
-    .custom-select-option:hover {
-      background: rgba(255, 215, 0, 0.2);
-      color: white;
-    }
-
-    .custom-select-option.selected {
-      background: rgba(255, 215, 0, 0.3);
-      color: #FFD700;
-    }
-
-    .payment-buttons, .platform-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin: 1rem 0;
-    }
-
-    .payment-option, .platform-option {
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 40px;
-      padding: 0.7rem 1.2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .payment-option i, .platform-option i {
-      font-size: 1rem;
-    }
-
-    .payment-option.selected, .platform-option.selected {
-      border-color: #FFD700;
-      background: rgba(255, 215, 0, 0.15);
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-    }
-
-    .payment-option:hover, .platform-option:hover {
-      border-color: rgba(255, 215, 0, 0.5);
-      transform: translateY(-2px);
     }
 
     .contact-options {
@@ -1006,9 +905,18 @@
     }
 
     .contact-option.active {
-      background: rgba(255, 215, 0, 0.15);
+      border-color: currentColor;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .popular .contact-option.active {
       border-color: #FFD700;
       box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .pro .contact-option.active {
+      border-color: #ff00ff;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
     }
 
     .contact-option.disabled {
@@ -1043,6 +951,32 @@
 
     .call-scheduling.visible {
       display: block;
+    }
+
+    .payment-buttons, .platform-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1rem 0;
+    }
+
+    .payment-option, .platform-option {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 40px;
+      padding: 0.7rem 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .payment-option.selected, .platform-option.selected {
+      border-color: #FFD700;
+      background: rgba(255, 215, 0, 0.15);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
     }
 
     .submit-btn {
@@ -1305,7 +1239,6 @@
 </head>
 <body>
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
       <div class="mobile-menu-logo">
@@ -1461,7 +1394,21 @@
               </select>
             </div>
           </div>
-          <div class="form-highlight" id="priceHighlight"></div>
+          
+          <div class="price-selector" id="priceSelector">
+            <div class="price-selector-option" data-price-type="action">
+              <div class="price-selector-main" id="actionPriceDisplay">279,00 € <span>erster Monat</span></div>
+              <div class="price-selector-note" id="actionNoteDisplay">danach nur 49,99 € monatlich</div>
+            </div>
+            <div class="price-selector-option" data-price-type="regular">
+              <div class="price-selector-main" id="regularPriceDisplay">139,00 € <span>/Monat</span></div>
+              <div class="price-selector-note">fester Preis, jederzeit kündbar</div>
+            </div>
+            <div class="price-selector-option" data-price-type="yearly">
+              <div class="price-selector-main" id="yearlyPriceDisplay">3.534,00 € <span>/Jahr</span></div>
+              <div class="price-selector-note">monatlich 294,50 € +5% Rabatt</div>
+            </div>
+          </div>
         </div>
 
         <div class="booking-form">
@@ -1546,7 +1493,7 @@
             </div>
 
             <div style="margin: 1rem 0; color: white; font-weight: 600;">Wie möchten Sie kontaktiert werden? *</div>
-            <div class="contact-options">
+            <div class="contact-options" id="contactOptions">
               <div class="contact-option active" data-contact="email" onclick="setContactMethod('email')">
                 <i class="fas fa-envelope"></i> Nur E-Mail
               </div>
@@ -1713,35 +1660,62 @@
       standard: {
         name: 'Standard',
         class: 'popular',
-        icon: 'fas fa-star',
         actionPrice: '279,00 €',
+        actionNote: 'danach nur 49,99 € monatlich',
         regularPrice: '139,00 €',
+        regularNote: 'fester Preis, jederzeit kündbar',
         yearlyPrice: '3.534,00 €',
-        actionNote: '1. Monat 279€, danach 49,99€',
-        regularNote: '139€ monatlich',
-        yearlyNote: 'jährlich 3.534€'
+        yearlyNote: 'monatlich 294,50 €',
+        yearlySave: '+5% Rabatt'
       },
       pro: {
         name: 'Pro',
         class: 'pro',
-        icon: 'fas fa-star',
         actionPrice: '399,00 €',
+        actionNote: 'danach nur 199,00 € monatlich',
         regularPrice: '299,00 €',
+        regularNote: 'fester Preis, jederzeit kündbar',
         yearlyPrice: '5.685,75 €',
-        actionNote: '1. Monat 399€, danach 199€',
-        regularNote: '299€ monatlich',
-        yearlyNote: 'jährlich 5.685,75€'
+        yearlyNote: 'monatlich 473,81 €',
+        yearlySave: '+5% Rabatt'
       }
     };
 
-    document.querySelectorAll('.price-option').forEach(option => {
-      option.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const parent = this.parentElement.parentElement.parentElement;
-        parent.querySelectorAll('.price-option').forEach(opt => opt.classList.remove('selected'));
-        this.classList.add('selected');
+    function updateContactOptionsGlow() {
+      const options = document.querySelectorAll('.contact-option');
+      options.forEach(opt => {
+        if (opt.classList.contains('active')) {
+          if (currentPlanClass === 'popular') {
+            opt.style.borderColor = '#FFD700';
+            opt.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.3)';
+          } else {
+            opt.style.borderColor = '#ff00ff';
+            opt.style.boxShadow = '0 0 20px rgba(255, 0, 255, 0.3)';
+          }
+        } else {
+          opt.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          opt.style.boxShadow = 'none';
+        }
       });
-    });
+    }
+
+    function updatePriceSelector() {
+      const data = planData[currentPlan];
+      document.getElementById('actionPriceDisplay').innerHTML = `${data.actionPrice} <span>erster Monat</span>`;
+      document.getElementById('actionNoteDisplay').innerHTML = data.actionNote;
+      document.getElementById('regularPriceDisplay').innerHTML = `${data.regularPrice} <span>/Monat</span>`;
+      document.getElementById('yearlyPriceDisplay').innerHTML = `${data.yearlyPrice} <span>/Jahr</span>`;
+      
+      const selectorOptions = document.querySelectorAll('.price-selector-option');
+      selectorOptions.forEach(opt => {
+        const type = opt.getAttribute('data-price-type');
+        if (type === currentPriceType) {
+          opt.classList.add('selected');
+        } else {
+          opt.classList.remove('selected');
+        }
+      });
+    }
 
     function selectPlanWithPrice(planId, planName, planClass, priceType) {
       currentPlan = planId;
@@ -1768,8 +1742,11 @@
           }, 50);
         });
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
         updateSelectedPlanBox();
+        updatePriceSelector();
+        updateContactOptionsGlow();
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 600);
     }
 
@@ -1785,19 +1762,19 @@
       
       document.getElementById('selectedPlanName').textContent = currentPlanType;
       document.getElementById('planSwitch').value = currentPlan;
-      
-      const highlight = document.getElementById('priceHighlight');
-      const data = planData[currentPlan];
-      if (currentPriceType === 'action') {
-        highlight.innerHTML = `✨ Ausgewählt: ${data.actionPrice} – ${data.actionNote} ✨`;
-      } else {
-        highlight.innerHTML = `✨ Ausgewählt: ${data.regularPrice} – ${data.regularNote} ✨`;
-      }
     }
 
     function switchPlan(planId) {
       selectPlanWithPrice(planId, planData[planId].name, planData[planId].class, 'action');
     }
+
+    document.querySelectorAll('.price-selector-option').forEach(opt => {
+      opt.addEventListener('click', function() {
+        const type = this.getAttribute('data-price-type');
+        currentPriceType = type;
+        updatePriceSelector();
+      });
+    });
 
     function setBusiness(value) {
       isBusiness = value;
@@ -1820,6 +1797,8 @@
       currentContactMethod = method;
       document.querySelectorAll('.contact-option').forEach(el => el.classList.remove('active'));
       document.querySelector(`[data-contact="${method}"]`).classList.add('active');
+      
+      updateContactOptionsGlow();
 
       const phoneValue = document.getElementById('phone').value;
       const phoneOption = document.getElementById('phoneOnlyOption');
@@ -1889,7 +1868,7 @@
     });
 
     function showSuccess(message) {
-      const mainContent = document.getElementById('contactMainContent') || document.getElementById('pricingSection');
+      const mainContent = document.getElementById('pricingSection');
       const successSection = document.getElementById('successSection');
       const successMessage = document.getElementById('successMessage');
       successMessage.textContent = message;
@@ -1898,10 +1877,14 @@
         const fadeElementsMain = mainContent.querySelectorAll('.fade-up');
         fadeElementsMain.forEach(el => el.classList.remove('visible'));
       }
+      const bookingSection = document.getElementById('bookingSection');
+      if (bookingSection) {
+        const bookingFade = bookingSection.querySelectorAll('.fade-up');
+        bookingFade.forEach(el => el.classList.remove('visible'));
+      }
       
       setTimeout(() => {
         if (mainContent) mainContent.classList.add('hidden-section');
-        const bookingSection = document.getElementById('bookingSection');
         if (bookingSection) bookingSection.classList.add('hidden-section');
         successSection.classList.remove('hidden-section');
         const successFade = successSection.querySelectorAll('.fade-up');
@@ -1978,16 +1961,17 @@
       const data = planData[currentPlan];
       let priceInfo = '';
       if (currentPriceType === 'action') {
-        priceInfo = `${data.actionPrice} (${data.actionNote})`;
-      } else {
+        priceInfo = `${data.actionPrice} (1. Monat, danach ${data.actionNote})`;
+      } else if (currentPriceType === 'regular') {
         priceInfo = `${data.regularPrice} (${data.regularNote})`;
+      } else {
+        priceInfo = `${data.yearlyPrice} (jährlich, ${data.yearlyNote})`;
       }
 
       const templateParams = {
         plan: currentPlan,
         plan_name: currentPlanType,
         price_option: priceInfo,
-        interval: currentInterval === 'monthly' ? 'monatlich' : 'jährlich',
         first_name: firstName,
         last_name: lastName,
         street: isBusiness ? 'Geschäftskunde' : (document.getElementById('street').value || 'None'),
@@ -2029,7 +2013,7 @@
       opt.addEventListener('click', function() {
         const plan = this.getAttribute('data-plan');
         const type = this.getAttribute('data-type');
-        if (plan && type) {
+        if (plan && type && plan === currentPlan) {
           currentPriceType = type;
         }
       });
