@@ -815,8 +815,8 @@
 
     .form-group input:focus, .form-group textarea:focus {
       outline: none;
-      border-color: #FFD700;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+      border-color: #ffffff;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
       transform: scale(1.01);
     }
 
@@ -910,8 +910,8 @@
     }
 
     .popular .contact-option.active {
-      border-color: #FFD700;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+      border-color: #ffffff;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
     }
 
     .pro .contact-option.active {
@@ -1794,20 +1794,25 @@
     }
 
     function setContactMethod(method) {
+      const phoneValue = document.getElementById('phone').value.trim();
+      const phoneOption = document.getElementById('phoneOnlyOption');
+      
+      if (method === 'phone' && !phoneValue) {
+        phoneOption.classList.add('disabled');
+        return;
+      }
+      
+      if (method === 'both' && !phoneValue) {
+        const bothOption = document.querySelector('[data-contact="both"]');
+        bothOption.classList.add('disabled');
+        return;
+      }
+      
       currentContactMethod = method;
       document.querySelectorAll('.contact-option').forEach(el => el.classList.remove('active'));
       document.querySelector(`[data-contact="${method}"]`).classList.add('active');
       
       updateContactOptionsGlow();
-
-      const phoneValue = document.getElementById('phone').value;
-      const phoneOption = document.getElementById('phoneOnlyOption');
-      
-      if (method === 'phone' && !phoneValue) {
-        phoneOption.classList.add('disabled');
-        setContactMethod('email');
-        return;
-      }
 
       const callScheduling = document.getElementById('callScheduling');
       const contactWarning = document.getElementById('contactWarning');
@@ -1822,12 +1827,26 @@
     }
 
     document.getElementById('phone').addEventListener('input', function(e) {
+      const phoneValue = e.target.value.trim();
       const phoneOption = document.getElementById('phoneOnlyOption');
-      if (e.target.value) {
+      const bothOption = document.querySelector('[data-contact="both"]');
+      
+      if (phoneValue) {
         phoneOption.classList.remove('disabled');
+        bothOption.classList.remove('disabled');
+        
+        if (currentContactMethod === 'phone') {
+          document.querySelector(`[data-contact="phone"]`).classList.add('active');
+          updateContactOptionsGlow();
+        } else if (currentContactMethod === 'both') {
+          document.querySelector(`[data-contact="both"]`).classList.add('active');
+          updateContactOptionsGlow();
+        }
       } else {
         phoneOption.classList.add('disabled');
-        if (currentContactMethod === 'phone') {
+        bothOption.classList.add('disabled');
+        
+        if (currentContactMethod === 'phone' || currentContactMethod === 'both') {
           setContactMethod('email');
         }
       }
@@ -2041,6 +2060,11 @@
   </script>
 
   <script>
+    if (!document.getElementById('phone').value.trim()) {
+      document.getElementById('phoneOnlyOption').classList.add('disabled');
+      document.querySelector('[data-contact="both"]').classList.add('disabled');
+    }
+    
     (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="om035_aLot5AR9d9SonNF";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
   </script>
 </body>
