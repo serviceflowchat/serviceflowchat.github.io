@@ -1681,20 +1681,19 @@
       }
     };
 
-    function updateContactOptionsGlow() {
-      const options = document.querySelectorAll('.contact-option');
-      options.forEach(opt => {
-        if (opt.classList.contains('active')) {
-          if (currentPlanClass === 'popular') {
-            opt.style.borderColor = '#FFD700';
-            opt.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.3)';
-          } else {
-            opt.style.borderColor = '#ff00ff';
-            opt.style.boxShadow = '0 0 20px rgba(255, 0, 255, 0.3)';
-          }
-        } else {
-          opt.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-          opt.style.boxShadow = 'none';
+    function updateAllGlows() {
+      const activeColor = currentPlanClass === 'popular' ? '#FFD700' : '#ff00ff';
+      const activeShadow = currentPlanClass === 'popular' ? '0 0 20px rgba(255, 215, 0, 0.3)' : '0 0 20px rgba(255, 0, 255, 0.3)';
+      
+      document.querySelectorAll('.payment-option.selected, .platform-option.selected').forEach(el => {
+        el.style.borderColor = activeColor;
+        el.style.boxShadow = activeShadow;
+      });
+      
+      document.querySelectorAll('.payment-option, .platform-option').forEach(el => {
+        if (!el.classList.contains('selected')) {
+          el.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          el.style.boxShadow = 'none';
         }
       });
     }
@@ -1745,6 +1744,7 @@
         updateSelectedPlanBox();
         updatePriceSelector();
         updateContactOptionsGlow();
+        updateAllGlows();
         
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 600);
@@ -1838,10 +1838,20 @@
         if (this.classList.contains('selected')) {
           this.classList.remove('selected');
           currentPaymentMethod = null;
+          this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          this.style.boxShadow = 'none';
         } else {
-          document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+          document.querySelectorAll('.payment-option').forEach(o => {
+            o.classList.remove('selected');
+            o.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            o.style.boxShadow = 'none';
+          });
           this.classList.add('selected');
           currentPaymentMethod = this.getAttribute('data-method');
+          const activeColor = currentPlanClass === 'popular' ? '#FFD700' : '#ff00ff';
+          const activeShadow = currentPlanClass === 'popular' ? '0 0 20px rgba(255, 215, 0, 0.3)' : '0 0 20px rgba(255, 0, 255, 0.3)';
+          this.style.borderColor = activeColor;
+          this.style.boxShadow = activeShadow;
         }
       });
     });
@@ -1851,10 +1861,20 @@
         if (this.classList.contains('selected')) {
           this.classList.remove('selected');
           currentPlatform = null;
+          this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          this.style.boxShadow = 'none';
         } else {
-          document.querySelectorAll('.platform-option').forEach(o => o.classList.remove('selected'));
+          document.querySelectorAll('.platform-option').forEach(o => {
+            o.classList.remove('selected');
+            o.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            o.style.boxShadow = 'none';
+          });
           this.classList.add('selected');
           currentPlatform = this.getAttribute('data-platform');
+          const activeColor = currentPlanClass === 'popular' ? '#FFD700' : '#ff00ff';
+          const activeShadow = currentPlanClass === 'popular' ? '0 0 20px rgba(255, 215, 0, 0.3)' : '0 0 20px rgba(255, 0, 255, 0.3)';
+          this.style.borderColor = activeColor;
+          this.style.boxShadow = activeShadow;
         }
       });
     });
