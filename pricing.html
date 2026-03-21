@@ -2034,7 +2034,7 @@
       const data = planData[currentPlan];
       let priceInfo = '';
       if (currentPriceType === 'action') {
-        priceInfo = `${data.actionPrice} (1. Monat, danach ${data.actionNote})`;
+        priceInfo = `${data.actionPrice} (1. Monat, ${data.actionNote})`;
       } else if (currentPriceType === 'regular') {
         priceInfo = `${data.regularPrice} (${data.regularNote})`;
       } else {
