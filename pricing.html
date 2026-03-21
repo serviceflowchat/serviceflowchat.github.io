@@ -1755,7 +1755,13 @@
         updateContactOptionsGlow();
         updateAllGlows();
         
-        document.querySelectorAll('.payment-option.selected, .platform-option.selected').forEach(el => {
+        document.querySelectorAll('.payment-option').forEach(el => {
+          el.classList.remove('selected');
+          el.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          el.style.boxShadow = 'none';
+        });
+        
+        document.querySelectorAll('.platform-option').forEach(el => {
           el.classList.remove('selected');
           el.style.borderColor = 'rgba(255, 255, 255, 0.1)';
           el.style.boxShadow = 'none';
